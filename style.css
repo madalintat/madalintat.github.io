@@ -1,3 +1,4 @@
+/* General Styles */
 * {
     margin: 0;
     padding: 0;
@@ -22,6 +23,7 @@ body {
     text-align: center;
 }
 
+/* Header */
 header {
     margin-bottom: 20px;
 }
@@ -43,6 +45,7 @@ p {
     color: #666;
 }
 
+/* Social Links */
 .social-links {
     margin: 20px 0;
 }
@@ -63,6 +66,61 @@ p {
     color: #fff;
 }
 
+/* Projects Section */
+.projects {
+    margin-top: 40px;
+}
+
+.projects h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.projects-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.project {
+    background-color: #f4f4f4;
+    padding: 20px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.project img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.project h3 {
+    margin: 10px 0;
+    font-size: 1.2rem;
+}
+
+.project p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.project a {
+    text-decoration: none;
+    color: #0073e6;
+    font-weight: bold;
+}
+
+.project:hover {
+    transform: translateY(-5px);
+}
+
+/* Blog Posts Section */
 .blog-posts {
     margin-top: 40px;
 }
