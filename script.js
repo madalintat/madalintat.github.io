@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Projects Data
     const projects = [
         { title: ".worlds", description: "a site that generates lo-fi music vides", imgSrc: "project1.jpg", url: "#.worlds" },
-        { title: "detecting distracted drivers ", description: "a simple computer vision classiffier, imgSrc: "project2.jpg", url: "#distracted-drivers" },
+        { title: "detecting distracted drivers", description: "a simple computer vision classiffier", imgSrc: "project2.jpg", url: "#distracted-drivers" },
     ];
 
     // Render Blog Posts
