@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="cetusian - AI Engineer building worlds and pushing the boundaries of artificial intelligence">
+    <title>cetusian | AI Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        .tagline {
+            font-size: 1.1rem;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+        .social-links {
+            margin: 20px 0;
+        }
+        .social-links a {
+            margin: 0 10px;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .social-links a:hover {
+            color: #4a90e2;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: #1a1a1a;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .project {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        .project:hover {
+            transform: translateY(-5px);
+        }
+        .project h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        .project p {
+            color: #666666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        .project a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        #blog-list {
+            list-style-type: none;
+        }
+        #blog-list li {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eeeeee;
+        }
+        #blog-list li:last-child {
+            border-bottom: none;
+        }
+        #blog-list li a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        #blog-list li p {
+            color: #666666;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #666666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="cetusian-anime-pfp" alt="cetusian - AI Engineer" class="profile-photo">
+            <h1>cetusian</h1>
+            <p class="tagline">AI Engineer | Building worlds and pushing boundaries</p>
+            <div class="social-links">
+                <a href="https://github.com/madalintat" target="_blank">GitHub</a>
+                <a href="https://x/cetusian" target="_blank">Twitter</a>
+                <a href="#" target="_blank">LinkedIn</a>
+            </div>
+        </header>
+        
+        <section class="projects">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid" id="projects-grid">
+                <!-- Projects will be added dynamically via JavaScript -->
+            </div>
+        </section>
+        
+        <section class="blog-posts">
+            <h2 class="section-title">Latest Insights</h2>
+            <ul id="blog-list">
+                <!-- Blog posts will be added dynamically via JavaScript -->
+            </ul>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 cetusian. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Blog Posts Data
+            const blogPosts = [
+                { title: "Emergent Behaviors in Large Language Models", url: "#", excerpt: "Exploring unexpected patterns and capabilities in state-of-the-art AI systems." },
+                { title: "Ethical Considerations in AI Development", url: "#", excerpt: "Navigating the complex landscape of AI ethics and responsible innovation." },
+                { title: "The Future of Human-AI Collaboration", url: "#", excerpt: "Envisioning new paradigms for symbiotic relationships between humans and artificial intelligence." }
+            ];
+
+            // Projects Data
+            const projects = [
+                { title: ".worlds", description: "AI-powered immersive lo-fi music videos", url: "#.worlds" },
+                { title: "NeuralDrive", description: "CV system for detecting distracted drivers", url: "#neural-drive" },
+                { title: "EcoNet", description: "Self-organizing AI for smart city optimization", url: "#eco-net" }
+            ];
+
+            // Render Blog Posts
+            const blogList = document.getElementById('blog-list');
+            blogPosts.forEach(post => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = post.url;
+                link.textContent = post.title;
+                const excerpt = document.createElement('p');
+                excerpt.textContent = post.excerpt;
+                listItem.appendChild(link);
+                listItem.appendChild(excerpt);
+                blogList.appendChild(listItem);
+            });
+
+            // Render Projects
+            const projectsGrid = document.getElementById('projects-grid');
+            projects.forEach(project => {
+                const projectDiv = document.createElement('div');
+                projectDiv.classList.add('project');
+                
+                const title = document.createElement('h3');
+                title.textContent = project.title;
+                
+                const description = document.createElement('p');
+                description.textContent = project.description;
+                
+                const link = document.createElement('a');
+                link.href = project.url;
+                link.textContent = "Learn more";
+                
+                projectDiv.appendChild(title);
+                projectDiv.appendChild(description);
+                projectDiv.appendChild(link);
+                
+                projectsGrid.appendChild(projectDiv);
+            });
+        });
+    </script>
+</body>
+</html>
