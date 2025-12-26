@@ -1,8 +1,8 @@
 :root {
-  --bg-color: #0f0f0f;
-  --text-color: #f0f0f0;
-  --accent-color: #00ff00;
-  --secondary-color: #808080;
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --accent-color: #ffffff;
+  --secondary-color: #888888;
   --mono-font: "JetBrains Mono", "Courier New", monospace;
 }
 
@@ -32,7 +32,7 @@ header {
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--accent-color);
+  color: var(--text-color);
   font-family: var(--mono-font);
   text-decoration: none;
   transition: opacity 0.3s ease;
@@ -40,7 +40,7 @@ header {
 }
 
 .logo:hover {
-  opacity: 0.8;
+  opacity: 0.6;
 }
 
 nav ul {
@@ -53,14 +53,14 @@ nav ul li {
 }
 
 nav ul li a {
-  color: var(--text-color);
+  color: var(--secondary-color);
   text-decoration: none;
   text-transform: lowercase;
   transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-  color: var(--accent-color);
+  color: var(--text-color);
 }
 
 #canvas-container {
@@ -70,7 +70,7 @@ nav ul li a:hover {
   width: 100%;
   height: 100vh;
   z-index: 1;
-  opacity: 0.25;
+  opacity: 0.05;
   pointer-events: none;
 }
 
@@ -123,9 +123,9 @@ nav ul li a:hover {
   position: absolute;
   left: 0;
   bottom: -5px;
-  width: 50%;
-  height: 2px;
-  background-color: var(--accent-color);
+  width: 30px;
+  height: 1px;
+  background-color: var(--text-color);
 }
 
 .project-grid {
@@ -135,17 +135,15 @@ nav ul li a:hover {
 }
 
 .project-card {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: transparent;
   padding: 1.5rem;
-  border-radius: 4px;
-  transition:
-    transform 0.3s ease,
-    background-color 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  transition: border-color 0.3s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .project-card h3 {
@@ -159,7 +157,7 @@ nav ul li a:hover {
 }
 
 .project-card a:hover {
-  color: var(--accent-color);
+  opacity: 0.7;
 }
 
 .project-card p {
@@ -176,10 +174,11 @@ nav ul li a:hover {
 }
 
 .project-card .tag-item {
-  background-color: rgba(0, 255, 0, 0.1);
-  color: var(--accent-color);
+  background-color: transparent;
+  color: var(--secondary-color);
   padding: 0.25rem 0.5rem;
-  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0;
   font-size: 0.8rem;
 }
 
@@ -198,7 +197,7 @@ nav ul li a:hover {
 }
 
 .blog-card a:hover {
-  color: var(--accent-color);
+  opacity: 0.7;
 }
 
 .blog-card .date {
@@ -212,21 +211,22 @@ nav ul li a:hover {
 }
 
 .read-more {
-  color: var(--accent-color);
+  color: var(--text-color);
   text-decoration: none;
   font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
 }
 
 .read-more::after {
   content: "→";
   margin-left: 0.5rem;
-  transition: transform 0.3s ease;
 }
 
-.read-more:hover::after {
-  transform: translateX(5px);
+.read-more:hover {
+  opacity: 1;
 }
 
 .footer {
@@ -248,26 +248,15 @@ nav ul li a:hover {
 .social-links a {
   color: var(--text-color);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .social-links a:hover {
-  color: var(--accent-color);
+  opacity: 0.6;
 }
 
 .glow-cursor {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: var(--accent-color);
-  filter: blur(10px);
-  opacity: 0.5;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  z-index: 9999;
-  transition: transform 0.1s ease;
-  transform: translate(-50%, -50%);
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -323,9 +312,9 @@ nav ul li a:hover {
   position: absolute;
   left: 0;
   bottom: -5px;
-  width: 50%;
-  height: 2px;
-  background-color: var(--accent-color);
+  width: 30px;
+  height: 1px;
+  background-color: var(--text-color);
 }
 
 .post-content h3 {
@@ -354,9 +343,9 @@ nav ul li a:hover {
 .post-content blockquote {
   margin: 1.5rem 0;
   padding: 1rem 1.5rem;
-  background-color: rgba(255, 255, 255, 0.15);
-  border-left: 4px solid var(--accent-color);
-  color: #c0c0c0;
+  background-color: transparent;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  color: var(--secondary-color);
   font-style: italic;
 }
 
