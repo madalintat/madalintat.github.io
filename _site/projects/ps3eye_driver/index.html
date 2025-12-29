@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Building a camera driver from scratch - PS3 Eye Camera on Mac Silicon | cetusian</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <!-- Classic .ico favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+    <!-- PNG favicons for different sizes -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon_io/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon_io/favicon-32x32.png"
+    />
+    <!-- For Apple devices -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon_io/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="logo">cetusian</a>
+      <nav>
+        <ul>
+          <li><a href="/" >home</a></li>
+          <li><a href="/about/" >about</a></li>
+          <li><a href="/projects/" class="active">projects</a></li>
+          <li><a href="/blog/" >blog</a></li>
+          <li><a href="/contact/" >contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="content"><section class="section">
+  <h2>Building a camera driver from scratch - PS3 Eye Camera on Mac Silicon</h2>
+  <div class="project-content"><p>GitHub Repo: <a href="https://github.com/madalintat/PS3Eye-Driver-MacOS-Silicon/tree/main">PS3Eye Driver for Macbook Silicon</a></p>
+
+<p>Lately, I’ve been obsessed with building hardware, and after discovering this <a href="https://joshuabird.com/blog/post/mocap-drones">video</a>
+I got so excited I immediately started to get all I needed to build my own drones.</p>
+
+<p>All good until I bought 5 second hand PS3 Eye cameras.
+I connected one to my Macbook Air M3. Lights on, <em>‘Alright, nobody sold me broken cameras’</em> I thought.</p>
+
+<p>Camera nowhere to be found on the system. Searched and apparently this type of camera is not compatible with Macbook Silicon.
+What was more terrible was that the existing solutions like <a href="https://sourceforge.net/projects/webcam-osx/">Macam</a> and <a href="https://github.com/inspirit/PS3EYEDriver">PS3EYEDriver</a>
+were old and unmaintained. Now, what I am going to do with 5 PS3 cameras?</p>
+
+<p>I have two other laptops running Linux and Windows, but there’s no way I’ll use them. I bought a Macbook for all my projects,
+so I am going to use it no matter what. So that’s how I started the adventure of <strong>building a driver from scratch</strong>.</p>
+
+<p>I definitely have no experience with this, but luckily I’ve been studying
+low-level programming and hardware for the last few months, so my brain is warmed up for the challenge.</p>
+
+<p><img src="../../images/ps3eye_cameras.jpg" alt="3 out of the 5 PS3 Eye cameras" />
+<em>3 out of the 5 cameras + 3 esp32 wroom for the drones.</em></p>
+
+<hr />
+
+<blockquote>
+  <h4 id="goals">Goals</h4>
+
+  <ol>
+    <li>Detect and connect to a PS3 camera;</li>
+    <li>Display device information;</li>
+    <li>Initialize the camera’s <em>OV7720</em> sensor;</li>
+    <li>Test basic communication functionality.</li>
+  </ol>
+</blockquote>
+
+<p>Make sure you have <a href="https://libusb.info/">libusb</a> installed via Homebrew <code class="language-plaintext highlighter-rouge">(/opt/homebrew/Cellar/...)</code>.</p>
+
+<p>The way that the driver works is this:</p>
+
+<blockquote>
+  <h4 id="workflow-summary">Workflow Summary:</h4>
+
+  <ol>
+    <li>Start <code class="language-plaintext highlighter-rouge">main()</code>;</li>
+    <li>Initialize libusb → set debug level;</li>
+    <li>Open PS3 Eye Camera → print device info;</li>
+    <li>Check and detach kernel driver if needed;</li>
+    <li>Claim interface → initialize camera settings;</li>
+    <li>Release interface → reattach kernel driver if needed;</li>
+    <li>Clean up and exit.</li>
+  </ol>
+</blockquote>
+
+<p><img src="../../images/ps3eye_camera_2.jpeg" alt="PS3 Eye camera connected to the Macbook Air M3" />
+<em>PS3 Eye camera connected to the Macbook Air M3</em></p>
+
+<hr />
+
+<h4 id="headers-and-constants-libusb-installed-via-homebrew-on-macos-and-usb-vendor-id-and-product-id-specific-to-the-camera">Headers and Constants: libusb (installed via Homebrew on MacOS) and USB Vendor ID and Product ID specific to the camera.</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">"/opt/homebrew/Cellar/libusb/1.0.27/include/libusb-1.0/libusb.h"</span><span class="cp">
+#define PS3EYE_VID 0x1415  // Vendor ID for PS3 Eye
+#define PS3EYE_PID 0x2000  // Product ID for PS3 Eye
+</span></code></pre></div></div>
+
+<p>Find more details <a href="https://github.com/diwi/PS3Eye/issues/4">here</a>.</p>
+
+<h4 id="these-are-the-register-addresses-for-the-ov7720-camera-sensor">These are the register addresses for the OV7720 camera sensor.</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define OV_GAIN 0x00 // Gain control
+#define OV_BLUE 0x01 // Blue channel gain
+#define OV_RED 0x02 // Red channel gain
+#define OV_GREEN 0x03 // Green channel gain
+#define OV_EXPOSURE 0x04 // Exposure control
+#define OV_FREQ 0x05 // Clock frequency
+</span></code></pre></div></div>
+
+<h4 id="1-program-start">1. Program Start</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">libusb_context</span> <span class="o">*</span><span class="n">ctx</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">libusb_device_handle</span> <span class="o">*</span><span class="n">dev_handle</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h5 id="here-two-key-variables-are-declared">Here, two key variables are declared:</h5>
+
+<ul>
+  <li>
+    <p><strong>ctx</strong>: A pointer to a libusb context (initially NULL), used to manage the USB session.</p>
+  </li>
+  <li>
+    <p><strong>dev_handle</strong>: A pointer to a device handle (initially NULL), used to interact with the PS3 Eye.</p>
+  </li>
+  <li>
+    <p><strong>ret</strong>: An integer to store return values for error checking.</p>
+  </li>
+</ul>
+
+<h4 id="2-initialize-libusb-sets-up-the-library-to-communicate-with-usb-devices">2. Initialize libusb: Sets up the library to communicate with USB devices</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ret</span> <span class="o">=</span> <span class="n">libusb_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Failed to initialize libusb: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">libusb_error_name</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The libusb_init(&amp;ctx) function initializes the libusb library and creates a context (ctx) for USB operations.</p>
+
+<ul>
+  <li>
+    <p>If successful (ret == 0), the program <strong>continues</strong>.</p>
+  </li>
+  <li>
+    <p>If it fails (ret &lt; 0), it prints an error (e.g., <em>“Failed to initialize libusb: LIBUSB_ERROR_NO_MEM”</em>) and exits with return 1.</p>
+  </li>
+</ul>
+
+<h4 id="3-set-debug-level-helps-with-debugging-by-enabling-verbose-output-from-libusb">3. Set Debug Level: Helps with debugging by enabling verbose output from libusb</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">libusb_set_option</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">LIBUSB_OPTION_LOG_LEVEL</span><span class="p">,</span> <span class="n">LIBUSB_LOG_LEVEL_INFO</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>This optional call sets the libusb logging level to INFO, so you might see diagnostic messages in the terminal.</p>
+  </li>
+  <li>
+    <p>Always executes (no error check here) and continues to the next step.</p>
+  </li>
+</ul>
+
+<h4 id="4-open-ps3-eye-device-establishes-a-connection-to-the-ps3-eye-camera">4. Open PS3 Eye Device: Establishes a connection to the PS3 Eye camera</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dev_handle</span> <span class="o">=</span> <span class="n">libusb_open_device_with_vid_pid</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">PS3EYE_VID</span><span class="p">,</span> <span class="n">PS3EYE_PID</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">dev_handle</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Could not find/open PS3 Eye device. Check connection and permissions.</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">libusb_exit</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Searches for a USB device with Vendor ID 0x1415 and Product ID 0x2000 (PS3 Eye) and tries to open it.</p>
+  </li>
+  <li>
+    <p>If successful, dev_handle gets a valid handle, and the program continues.</p>
+  </li>
+  <li>
+    <p>If it fails (dev_handle == NULL), it prints an error (e.g., “Could not find/open PS3 Eye device…”) and exits after cleaning up with libusb_exit(ctx).</p>
+  </li>
+</ul>
+
+<h4 id="5-print-device-info-confirms-the-device-is-recognized-and-connected">5. Print Device Info: Confirms the device is recognized and connected</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">print_device_info</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">print_device_info</span><span class="p">(</span><span class="n">libusb_device_handle</span> <span class="o">*</span><span class="n">dev_handle</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">str_desc</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="n">libusb_get_string_descriptor_ascii</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">str_desc</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">str_desc</span><span class="p">));</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Manufacturer: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">str_desc</span><span class="p">);</span>
+    <span class="n">libusb_get_string_descriptor_ascii</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">str_desc</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">str_desc</span><span class="p">));</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Product: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">str_desc</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Connected to PS3 Eye camera successfully!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Retrieves and prints the manufacturer string (e.g., “Sony”).</p>
+  </li>
+  <li>
+    <p>Retrieves and prints the product string (e.g., “PS3 Eye”).</p>
+  </li>
+  <li>
+    <p>Prints a success message.</p>
+  </li>
+  <li>
+    <p>Executes fully and returns to main().</p>
+  </li>
+</ul>
+
+<h4 id="6-check-kernel-driver-ensures-libusb-has-exclusive-access-to-the-device">6. Check Kernel Driver: Ensures libusb has exclusive access to the device</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">libusb_kernel_driver_active</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Kernel driver active, detaching...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">libusb_detach_kernel_driver</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Failed to detach kernel driver: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">libusb_error_name</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+        <span class="n">libusb_close</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">);</span>
+        <span class="n">libusb_exit</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Checks if macOS has attached a default driver to the PS3 Eye (interface 0).</p>
+  </li>
+  <li>
+    <p>If no driver is active (libusb_kernel_driver_active returns 0), skips this block.</p>
+  </li>
+  <li>
+    <p>If a driver is active:</p>
+
+    <ul>
+      <li>Prints “Kernel driver active, detaching…”.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Attempts to detach it with libusb_detach_kernel_driver().</p>
+  </li>
+  <li>
+    <p>If detachment fails (ret &lt; 0), prints an error and exits after cleanup.</p>
+  </li>
+  <li>
+    <p>If successful, continues.</p>
+  </li>
+</ul>
+
+<h4 id="7-claim-interface-allows-the-program-to-send-commands-to-the-camera">7. Claim Interface: Allows the program to send commands to the camera</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ret</span> <span class="o">=</span> <span class="n">libusb_claim_interface</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Failed to claim interface: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">libusb_error_name</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+    <span class="n">libusb_close</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">);</span>
+    <span class="n">libusb_exit</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Claims interface 0 of the PS3 Eye for libusb control.</p>
+  </li>
+  <li>
+    <p>If successful (ret == 0), continues.</p>
+  </li>
+  <li>
+    <p>If it fails (ret &lt; 0), prints an error (e.g., “Failed to claim interface: LIBUSB_ERROR_ACCESS”) and exits after cleanup.</p>
+  </li>
+</ul>
+
+<h4 id="8-initialize-camera-configures-the-camera-sensor-with-basic-settings">8. Initialize Camera: Configures the camera sensor with basic settings</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ret</span> <span class="o">=</span> <span class="n">initialize_camera</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Failed to initialize camera: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">libusb_error_name</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Camera test successful!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">initialize_camera</span><span class="p">(</span><span class="n">libusb_device_handle</span> <span class="o">*</span><span class="n">dev_handle</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">send_ov_reg</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="n">OV_EXPOSURE</span><span class="p">,</span> <span class="mi">120</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">send_ov_reg</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="n">OV_GAIN</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">send_ov_reg</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="n">OV_RED</span><span class="p">,</span> <span class="mi">128</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">send_ov_reg</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="n">OV_GREEN</span><span class="p">,</span> <span class="mi">128</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">send_ov_reg</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="n">OV_BLUE</span><span class="p">,</span> <span class="mi">128</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Camera initialized with default settings</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Calls send_ov_reg() multiple times to set: Exposure to 120</p>
+  </li>
+  <li>
+    <p>Gain to 20: Red, Green, Blue gains to 128 (neutral values)</p>
+  </li>
+  <li>
+    <p>Each send_ov_reg() uses libusb_control_transfer() to send commands to the OV7720 sensor.</p>
+  </li>
+  <li>
+    <p>If any send_ov_reg() fails (ret &lt; 0), returns the error code immediately.</p>
+  </li>
+  <li>
+    <p>If all succeed, prints “Camera initialized with default settings” and returns 0.</p>
+  </li>
+  <li>
+    <p>Back in main():</p>
+
+    <ul>
+      <li>
+        <p>If ret &lt; 0, prints an error.</p>
+      </li>
+      <li>
+        <p>If ret == 0, prints “Camera test successful!”.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="9-release-interface-cleans-up-by-freeing-the-interface-for-other-processes">9. Release Interface: Cleans up by freeing the interface for other processes</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">libusb_release_interface</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Releases the claimed interface 0.</p>
+  </li>
+  <li>
+    <p>Executes and continues (no error check here, assumes success).</p>
+  </li>
+</ul>
+
+<h4 id="10-re-attach-kernel-driver-restores-the-device-to-its-original-state">10. Re-attach Kernel Driver: Restores the device to its original state</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">libusb_attach_kernel_driver</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Re-attaches the kernel driver if it was detached earlier.</p>
+  </li>
+  <li>
+    <p>Executes and continues (no error check here).</p>
+  </li>
+</ul>
+
+<h4 id="11-clean-up-and-exit-ensures-proper-cleanup-of-resources">11. Clean up and Exit: Ensures proper cleanup of resources</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">libusb_close</span><span class="p">(</span><span class="n">dev_handle</span><span class="p">);</span>
+<span class="n">libusb_exit</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>libusb_close(dev_handle): Closes the device handle.</p>
+  </li>
+  <li>
+    <p>libusb_exit(ctx): Frees the libusb context.</p>
+  </li>
+  <li>
+    <p>return 0: Exits the program successfully.</p>
+  </li>
+  <li>
+    <p>Always executes as the final step.</p>
+  </li>
+</ul>
+
+<h4 id="compile">Compile</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc <span class="nt">-o</span> ps3eye_test ps3eye_test.c <span class="nt">-I</span>/opt/homebrew/Cellar/libusb/1.0.27/include/libusb-1.0 <span class="nt">-L</span>/opt/homebrew/Cellar/libusb/1.0.27/lib <span class="nt">-lusb-1</span>.0
+</code></pre></div></div>
+
+<h4 id="run">Run</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ps3eye_test
+</code></pre></div></div>
+
+<p><img src="../../images/ps3eye_driver_1.jpeg" alt="Succesfully connected the PS3 Eye camera to Macbook Air M3" />
+<em>Succesfully connected the PS3 Eye camera to Macbook Air M3</em></p>
+
+<blockquote>
+  <h4 id="limitations">Limitations</h4>
+
+  <ul>
+    <li>Only tests basic connectivity and register values;</li>
+    <li>Doesn’t capture or display video;</li>
+    <li>Hardcoded settings may need adjustment;</li>
+    <li>Error handling is minimal.</li>
+  </ul>
+</blockquote>
+
+<hr />
+
+<h3 id="whats-next">What’s next?</h3>
+
+<p>This driver was created to prove I didn’t waste my money on those PS3 cameras, or my Macbook, for that matter. Mission accomplished! But that’s not all.</p>
+
+<p>Now, the main goal is getting these cameras to capture video directly on my Macbook. After that, it’s time to integrate them with OpenCV and everything run smoothly.</p>
+
+<p>Until next time!</p>
+
+<p><img src="../../images/wolly_the_whale.jpg" alt="Wolly the whale" />
+<em>This is Wolly, the Whale. He helped me in building the driver.</em></p>
+</div>
+  <div class="tags">
+    
+    <span class="tag-item">hardware</span>
+    
+    <span class="tag-item">low-level</span>
+    
+    <span class="tag-item">MacOS</span>
+    
+  </div>
+</section>
+</main>
+
+    <footer class="footer">
+      <p>© 2025 cetusian.</p>
+    </footer>
+
+    <script>
+      // Open links in .post-content (blog posts) in a new tab
+      document.addEventListener('DOMContentLoaded', function() {
+        const postLinks = document.querySelectorAll('.post-content a');
+        postLinks.forEach(link => {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer'); // Security and accessibility
+        });
+
+        // Optional: Open links in .project-content (projects) in a new tab
+        const projectLinks = document.querySelectorAll('.project-content a');
+        projectLinks.forEach(link => {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer'); // Security and accessibility
+        });
+      });
+    </script>
+  </body>
+</html>

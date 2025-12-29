@@ -1,0 +1,24 @@
+# Site settings
+title: cetusian
+description: edge ai • reinforcement learning • llms
+url: "https://madalintat.github.io"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+permalink: /blog/:title/
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /projects/:title/
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .gitignore
