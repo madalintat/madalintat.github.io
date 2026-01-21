@@ -1,9 +1,27 @@
 <!doctype html>
 <html lang="en">
   <head>
+    
+    
+    
+    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact | cetusian</title>
+    <title>cetusian</title>
+    <meta name="description" content="edge ai • reinforcement learning • llms" />
+    
+    <link rel="canonical" href="http://localhost:4000/contact/" />
+    <meta property="og:title" content="cetusian" />
+    <meta property="og:description" content="edge ai • reinforcement learning • llms" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://localhost:4000/contact/" />
+    <meta property="og:site_name" content="cetusian" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="cetusian" />
+    <meta name="twitter:description" content="edge ai • reinforcement learning • llms" />
+    
+    
     <link rel="stylesheet" href="/assets/css/styles.css" />
     <!-- Classic .ico favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
@@ -34,10 +52,7 @@
       <a href="/" class="logo">cetusian</a>
       <nav>
         <ul>
-          <li><a href="/" >home</a></li>
-          <li><a href="/about/" >about</a></li>
-          <li><a href="/projects/" >projects</a></li>
-          <li><a href="/blog/" >blog</a></li>
+          <li><a href="https://superbirdlabs.com/manifesto" target="_blank" rel="noopener">manifesto</a></li>
           <li><a href="/contact/" class="active">contact</a></li>
         </ul>
       </nav>
@@ -45,29 +60,28 @@
 
     <main class="content"><section class="section">
   <h2>contact</h2>
-  <p>get in touch about ai, research, or ideas.</p>
-
-  <div class="social-links" style="justify-content: flex-start; margin: 2rem 0">
-    <a href="https://x.com/cetusian" target="_blank" rel="noopener">> x</a>
-    <a href="https://github.com/cetusian" target="_blank" rel="noopener">> github</a>
-    <a href="https://huggingface.co/cetusian" target="_blank" rel="noopener">> huggingface</a>
+  <div class="contact-links">
+    <a class="contact-item" href="mailto:madalintat@gmail.com">
+      <span class="contact-tag">email</span>
+      <span class="contact-handle">madalintat@gmail.com</span>
+    </a>
+    <a class="contact-item" href="https://x.com/cetusian" target="_blank" rel="noopener">
+      <span class="contact-tag">x</span>
+      <span class="contact-handle">@cetusian</span>
+    </a>
+    <a class="contact-item" href="https://github.com/madalintat" target="_blank" rel="noopener">
+      <span class="contact-tag">github</span>
+      <span class="contact-handle">madalintat</span>
+    </a>
+    <a class="contact-item" href="https://huggingface.co/cetusian" target="_blank" rel="noopener">
+      <span class="contact-tag">huggingface</span>
+      <span class="contact-handle">cetusian</span>
+    </a>
+    <a class="contact-item" href="https://linkedin.com/in/madalin-tatarciuc" target="_blank" rel="noopener">
+      <span class="contact-tag">linkedin</span>
+      <span class="contact-handle">madalin-tatarciuc</span>
+    </a>
   </div>
-
-  <form
-    class="contact-form"
-    action="https://formspree.io/f/xanqrgvw"
-    method="POST"
-  >
-    <div class="form-group">
-      <label for="email">email</label>
-      <input type="email" id="email" name="email" required />
-    </div>
-    <div class="form-group">
-      <label for="message">message</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
-    </div>
-    <button type="submit" class="submit-btn">send</button>
-  </form>
 </section>
 </main>
 
@@ -78,6 +92,32 @@
     <script>
       // Open links in .post-content (blog posts) in a new tab
       document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('header');
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+
+        const updateHeader = () => {
+          const currentScrollY = window.scrollY;
+          const isScrollingDown = currentScrollY > lastScrollY;
+          const shouldHide = isScrollingDown && currentScrollY > 80;
+          if (header) {
+            if (currentScrollY <= 10) {
+              header.classList.remove('header-hidden');
+            } else {
+              header.classList.toggle('header-hidden', shouldHide);
+            }
+          }
+          lastScrollY = currentScrollY;
+          ticking = false;
+        };
+
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(updateHeader);
+            ticking = true;
+          }
+        });
+
         const postLinks = document.querySelectorAll('.post-content a');
         postLinks.forEach(link => {
           link.setAttribute('target', '_blank');
@@ -89,6 +129,70 @@
         projectLinks.forEach(link => {
           link.setAttribute('target', '_blank');
           link.setAttribute('rel', 'noopener noreferrer'); // Security and accessibility
+        });
+
+        const writingSections = document.querySelectorAll('[data-writing]');
+        writingSections.forEach(section => {
+          const sortButtons = section.querySelectorAll('[data-sort]');
+          const searchInput = section.querySelector('[data-search]');
+          const list = section.querySelector('.writing-list');
+          const items = Array.from(section.querySelectorAll('[data-item]'));
+          const emptyState = section.querySelector('[data-empty]');
+          if (!items.length || !list) {
+            return;
+          }
+
+          const activeButton = section.querySelector('.filter-btn.is-active');
+          let activeSort = activeButton ? activeButton.dataset.sort : 'newest';
+
+          const setActiveSort = nextSort => {
+            activeSort = nextSort;
+            sortButtons.forEach(button => {
+              const isActive = button.dataset.sort === activeSort;
+              button.classList.toggle('is-active', isActive);
+              button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+          };
+
+          const sortItems = () => {
+            const sorted = items.slice().sort((a, b) => {
+              const dateA = Number(a.dataset.date) || 0;
+              const dateB = Number(b.dataset.date) || 0;
+              return activeSort === 'oldest' ? dateA - dateB : dateB - dateA;
+            });
+            sorted.forEach(item => list.appendChild(item));
+          };
+
+          const applyFilters = () => {
+            const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+            let visibleCount = 0;
+            items.forEach(item => {
+              const haystack = `${item.dataset.title || ''} ${item.dataset.excerpt || ''} ${item.dataset.tags || ''}`;
+              const isVisible = !query || haystack.includes(query);
+              item.hidden = !isVisible;
+              if (isVisible) {
+                visibleCount += 1;
+              }
+            });
+            sortItems();
+            if (emptyState) {
+              emptyState.hidden = visibleCount !== 0;
+            }
+          };
+
+          sortButtons.forEach(button => {
+            button.addEventListener('click', () => {
+              setActiveSort(button.dataset.sort || 'newest');
+              applyFilters();
+            });
+          });
+
+          if (searchInput) {
+            searchInput.addEventListener('input', applyFilters);
+          }
+
+          setActiveSort(activeSort);
+          applyFilters();
         });
       });
     </script>

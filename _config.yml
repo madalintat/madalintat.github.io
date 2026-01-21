@@ -1,8 +1,14 @@
 # Site settings
 title: cetusian
-description: edge ai • reinforcement learning • llms
-url: "https://madalintat.github.io"
+description: Detection and embedded intelligence, AI engineering, and Superbird Labs.
+url: "https://cetusian.com"
 baseurl: ""
+keywords:
+  - detection
+  - embedded intelligence
+  - ai engineering
+  - edge ai
+  - superbird labs
 
 # Build settings
 markdown: kramdown

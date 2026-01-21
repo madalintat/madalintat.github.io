@@ -1,7 +1,13 @@
 title: cetusian
-description: AI Engineer & Low-Level Coder
+description: Detection and embedded intelligence, AI engineering, and Superbird Labs.
 baseurl: ""
 url: "https://cetusian.com"
+keywords:
+  - detection
+  - embedded intelligence
+  - ai engineering
+  - edge ai
+  - superbird labs
 collections:
   projects:
     output: true
@@ -10,4 +16,3 @@ markdown: kramdown
 kramdown:
   syntax_highlighter: rogue
 # Force rebuild
-

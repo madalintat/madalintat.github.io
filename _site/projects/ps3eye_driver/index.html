@@ -1,9 +1,37 @@
 <!doctype html>
 <html lang="en">
   <head>
+    
+    
+    
+    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Building a camera driver from scratch - PS3 Eye Camera on Mac Silicon | cetusian</title>
+    <title>cetusian</title>
+    <meta name="description" content="edge ai • reinforcement learning • llms" />
+    
+      <meta name="keywords" content="hardware, low-level, MacOS" />
+    
+    <link rel="canonical" href="http://localhost:4000/projects/ps3eye_driver/" />
+    <meta property="og:title" content="cetusian" />
+    <meta property="og:description" content="edge ai • reinforcement learning • llms" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://localhost:4000/projects/ps3eye_driver/" />
+    <meta property="og:site_name" content="cetusian" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="cetusian" />
+    <meta name="twitter:description" content="edge ai • reinforcement learning • llms" />
+    
+    
+      
+        <meta property="article:tag" content="hardware" />
+      
+        <meta property="article:tag" content="low-level" />
+      
+        <meta property="article:tag" content="MacOS" />
+      
+    
     <link rel="stylesheet" href="/assets/css/styles.css" />
     <!-- Classic .ico favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
@@ -34,10 +62,7 @@
       <a href="/" class="logo">cetusian</a>
       <nav>
         <ul>
-          <li><a href="/" >home</a></li>
-          <li><a href="/about/" >about</a></li>
-          <li><a href="/projects/" class="active">projects</a></li>
-          <li><a href="/blog/" >blog</a></li>
+          <li><a href="https://superbirdlabs.com/manifesto" target="_blank" rel="noopener">manifesto</a></li>
           <li><a href="/contact/" >contact</a></li>
         </ul>
       </nav>
@@ -456,6 +481,32 @@ low-level programming and hardware for the last few months, so my brain is warme
     <script>
       // Open links in .post-content (blog posts) in a new tab
       document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('header');
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+
+        const updateHeader = () => {
+          const currentScrollY = window.scrollY;
+          const isScrollingDown = currentScrollY > lastScrollY;
+          const shouldHide = isScrollingDown && currentScrollY > 80;
+          if (header) {
+            if (currentScrollY <= 10) {
+              header.classList.remove('header-hidden');
+            } else {
+              header.classList.toggle('header-hidden', shouldHide);
+            }
+          }
+          lastScrollY = currentScrollY;
+          ticking = false;
+        };
+
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(updateHeader);
+            ticking = true;
+          }
+        });
+
         const postLinks = document.querySelectorAll('.post-content a');
         postLinks.forEach(link => {
           link.setAttribute('target', '_blank');
@@ -467,6 +518,70 @@ low-level programming and hardware for the last few months, so my brain is warme
         projectLinks.forEach(link => {
           link.setAttribute('target', '_blank');
           link.setAttribute('rel', 'noopener noreferrer'); // Security and accessibility
+        });
+
+        const writingSections = document.querySelectorAll('[data-writing]');
+        writingSections.forEach(section => {
+          const sortButtons = section.querySelectorAll('[data-sort]');
+          const searchInput = section.querySelector('[data-search]');
+          const list = section.querySelector('.writing-list');
+          const items = Array.from(section.querySelectorAll('[data-item]'));
+          const emptyState = section.querySelector('[data-empty]');
+          if (!items.length || !list) {
+            return;
+          }
+
+          const activeButton = section.querySelector('.filter-btn.is-active');
+          let activeSort = activeButton ? activeButton.dataset.sort : 'newest';
+
+          const setActiveSort = nextSort => {
+            activeSort = nextSort;
+            sortButtons.forEach(button => {
+              const isActive = button.dataset.sort === activeSort;
+              button.classList.toggle('is-active', isActive);
+              button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+          };
+
+          const sortItems = () => {
+            const sorted = items.slice().sort((a, b) => {
+              const dateA = Number(a.dataset.date) || 0;
+              const dateB = Number(b.dataset.date) || 0;
+              return activeSort === 'oldest' ? dateA - dateB : dateB - dateA;
+            });
+            sorted.forEach(item => list.appendChild(item));
+          };
+
+          const applyFilters = () => {
+            const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+            let visibleCount = 0;
+            items.forEach(item => {
+              const haystack = `${item.dataset.title || ''} ${item.dataset.excerpt || ''} ${item.dataset.tags || ''}`;
+              const isVisible = !query || haystack.includes(query);
+              item.hidden = !isVisible;
+              if (isVisible) {
+                visibleCount += 1;
+              }
+            });
+            sortItems();
+            if (emptyState) {
+              emptyState.hidden = visibleCount !== 0;
+            }
+          };
+
+          sortButtons.forEach(button => {
+            button.addEventListener('click', () => {
+              setActiveSort(button.dataset.sort || 'newest');
+              applyFilters();
+            });
+          });
+
+          if (searchInput) {
+            searchInput.addEventListener('input', applyFilters);
+          }
+
+          setActiveSort(activeSort);
+          applyFilters();
         });
       });
     </script>

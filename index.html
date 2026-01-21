@@ -4,59 +4,48 @@ title: Home
 ---
 
 <section class="intro-section">
-  <p>on device large language models, reinforcement learning for airplanes, and related experiments.</p>
+  <p>i dream of a future where i travel around the galaxy with my rd-d2.</p>
 
-  <p>founder at <a href="https://superbirdlabs.com/" target="_blank" rel="noopener">superbird labs</a> — we're building embedded intelligence infrastructure.</p>
+  <p>building <a href="https://superbirdlabs.com/" target="_blank" rel="noopener">superbird labs.</a> making machines think.</p>
 </section>
 
-<section class="selected-works">
-  <h2>selected works</h2>
-
-  <div class="work-list">
-    {% for project in site.projects reversed %}
-    <div class="work-item">
-      <div class="work-header">
-        <h3><a href="{{ project.url }}">{{ project.title }}</a></h3>
-        <span class="work-date">{{ project.date | date: "%Y" }}</span>
+<section class="writing-section" data-writing>
+  <div class="writing-top">
+    <h2>writing</h2>
+    <div class="writing-controls">
+      <div class="writing-filters" role="tablist" aria-label="Sort writing">
+        <button class="filter-btn is-active" data-sort="newest" type="button" aria-pressed="true">newest</button>
+        <button class="filter-btn" data-sort="oldest" type="button" aria-pressed="false">oldest</button>
       </div>
-      <p class="work-description">{{ project.excerpt | strip_html | truncatewords: 30 }}</p>
-      <div class="work-links">
-        <a href="{{ project.url }}">details</a>
-        {% if project.github %}
-        <a href="{{ project.github }}" target="_blank" rel="noopener">github</a>
-        {% endif %}
-        {% if project.demo %}
-        <a href="{{ project.demo }}" target="_blank" rel="noopener">demo</a>
-        {% endif %}
+      <div class="writing-search">
+        <input type="search" placeholder="search..." aria-label="Search writing" data-search />
       </div>
     </div>
-    {% endfor %}
   </div>
-</section>
-
-<section class="writing-section">
-  <h2>writing</h2>
 
   <div class="writing-list">
-    {% for post in site.posts %}
-    <div class="writing-item">
-      <div class="writing-header">
-        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-        <span class="writing-date">{{ post.date | date: "%b %d, %Y" }}</span>
+    {% assign writing_items = site.posts | concat: site.projects | sort: "date" | reverse %}
+    {% for item in writing_items %}
+      {% assign item_title = item.title | strip_html | strip_newlines | escape | downcase %}
+      {% assign item_excerpt = item.excerpt | strip_html | strip_newlines | escape | downcase %}
+      {% assign item_tags = item.tags | join: ' ' | strip_newlines | escape | downcase %}
+    <article class="writing-item" data-item data-date="{{ item.date | date: "%s" }}" data-title="{{ item_title }}" data-excerpt="{{ item_excerpt }}" data-tags="{{ item_tags }}">
+      <div class="writing-meta">
+        <span class="writing-date">{{ item.date | date: "%b %d, %Y" }}</span>
       </div>
-      <p class="writing-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-    </div>
+      <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+      <p class="writing-excerpt">{{ item.excerpt | strip_html | truncatewords: 24 }}</p>
+    </article>
     {% endfor %}
   </div>
+  <p class="writing-empty" data-empty hidden>no matches yet.</p>
 </section>
 
 <section class="footer-links">
   <p>
-    <a href="https://github.com/cetusian" target="_blank" rel="noopener">github</a> •
+    <a href="https://github.com/madalintat" target="_blank" rel="noopener">github</a> •
     <a href="https://huggingface.co/cetusian" target="_blank" rel="noopener">huggingface</a> •
     <a href="https://x.com/cetusian" target="_blank" rel="noopener">x</a> •
-    <a href="https://linkedin.com/in/madalin-tatarciuc" target="_blank" rel="noopener">linkedin</a> •
-    <a href="/about/">about</a> •
-    <a href="/contact/">contact</a>
+    <a href="https://linkedin.com/in/madalin-tatarciuc" target="_blank" rel="noopener">linkedin</a>
   </p>
 </section>
