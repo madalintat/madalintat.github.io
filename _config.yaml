@@ -1,5 +1,5 @@
 title: cetusian
-description: Detection and embedded intelligence, AI engineering, and Superbird Labs.
+description: Detection and embedded intelligence, AI engineering, and native sentience.
 baseurl: ""
 url: "https://cetusian.com"
 keywords:
@@ -7,7 +7,7 @@ keywords:
   - embedded intelligence
   - ai engineering
   - edge ai
-  - superbird labs
+  - native sentience
 collections:
   projects:
     output: true

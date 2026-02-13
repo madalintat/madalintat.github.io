@@ -1,6 +1,6 @@
 # Site settings
 title: cetusian
-description: Detection and embedded intelligence, AI engineering, and Superbird Labs.
+description: Detection and embedded intelligence, AI engineering, and native sentience.
 url: "https://cetusian.com"
 baseurl: ""
 keywords:
@@ -8,7 +8,7 @@ keywords:
   - embedded intelligence
   - ai engineering
   - edge ai
-  - superbird labs
+  - native sentience
 
 # Build settings
 markdown: kramdown
