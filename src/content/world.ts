@@ -12,13 +12,6 @@ export type Scene = { id: SceneId; m: number; name: string; tag?: string; icon?:
 
 export const EMAIL = "madalintat@gmail.com";
 
-// notebook headings in ~/kendo_world/platform/research/tracking/notebook.md, 2026-11-24
-export const EXPERIMENTS = [
-  ...Array.from({ length: 66 }, (_, i) => i + 1),
-  68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 81, 82, 84, 85, 86, 87, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
-  100, 101, 102, 105,
-];
-
 export const SCENES: Scene[] = [
   {
     id: "sky", m: 3000, name: "sky",

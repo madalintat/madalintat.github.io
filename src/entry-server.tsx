@@ -1,10 +1,10 @@
+import { CONTACT } from "./content/cv";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 import { App } from "./App";
 import { work } from "./content/work";
 import { notes } from "./content/notes";
 import { SCENES, EMAIL } from "./content/world";
-export { SCENES };
 
 export const SITE = "https://cetusian.com";
 type Meta = { title: string; description: string };
@@ -20,9 +20,9 @@ export function routes(): Record<string, Meta> {
   return r;
 }
 
-const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-const SAME = ["https://github.com/madalintat", "https://huggingface.co/cetusian", "https://www.linkedin.com/in/madalin-tatarciuc", "https://x.com/cetusian"];
+const SAME = [CONTACT.github, CONTACT.hf, CONTACT.linkedin, CONTACT.x].map((h) => `https://${h}`);
 // who this is and what he made, for search engines and ai answer engines: one graph, on every page
 function graph() {
   const me = { "@type": "Person", "@id": `${SITE}/#me`, name: "Mădălin Tatarciuc", alternateName: "Madalin Tatarciuc", url: SITE, email: `mailto:${EMAIL}`,
@@ -84,9 +84,8 @@ export function render(url: string) {
   return renderToString(<StaticRouter location={url}><App /></StaticRouter>);
 }
 
-const xml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 /** The notes as rss 2.0: published posts only, newest first. An empty channel is a valid feed to subscribe to early. */
 export function rss() {
-  const items = notes.map((n) => `  <item>\n    <title>${xml(n.title)}</title>\n    <link>${SITE}/notes/${n.slug}/</link>\n    <guid>${SITE}/notes/${n.slug}/</guid>\n    <pubDate>${new Date(n.date + "T12:00:00Z").toUTCString()}</pubDate>\n    <description>${xml(n.summary)}</description>\n  </item>`);
+  const items = notes.map((n) => `  <item>\n    <title>${esc(n.title)}</title>\n    <link>${SITE}/notes/${n.slug}/</link>\n    <guid>${SITE}/notes/${n.slug}/</guid>\n    <pubDate>${new Date(n.date + "T12:00:00Z").toUTCString()}</pubDate>\n    <description>${esc(n.summary)}</description>\n  </item>`);
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>\n  <title>notes from the lab · mădălin tatarciuc</title>\n  <link>${SITE}/notes/</link>\n  <atom:link href="${SITE}/notes/rss.xml" rel="self" type="application/rss+xml" />\n  <description>long-form notes on small models, kendo video and romanian speech.</description>\n  <language>en</language>\n${items.join("\n")}${items.length ? "\n" : ""}</channel>\n</rss>\n`;
 }

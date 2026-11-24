@@ -1,7 +1,7 @@
 // The two model-by-model stories. Every number here is in sources.ts (ipporu-engine, the speech cards) and in the
 // labels note; the stories only say them shorter. lowercase, the cetusian voice.
 
-export type Beat = { id: string; title: string; line: string; num?: string; of?: string; link?: { label: string; href: string };
+export type Beat = { id: string; title: string; line: string; num?: string; of?: string;
   /** the model's own name, and where it lives when it is public */
   model?: string; href?: string };
 /** One model of the engine: its clip on the same match, and three plain lines on what it is, how it learned, how good it is.

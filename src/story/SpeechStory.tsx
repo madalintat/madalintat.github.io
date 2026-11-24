@@ -60,7 +60,6 @@ export function SpeechStory() {
               <h3>{b.title}</h3>
               <p>{b.line}</p>
               {b.num && <p className="st-num"><b data-num data-at={i + 0.02} data-to={i + 0.22}>{b.num}</b> {b.of}</p>}
-              {b.link && <a href={b.link.href}>{b.link.label}</a>}
             </li>
           ))}
         </ol>

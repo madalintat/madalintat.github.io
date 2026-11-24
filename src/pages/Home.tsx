@@ -18,19 +18,19 @@ const S = Object.fromEntries(SCENES.map((s) => [s.id, s])) as Record<SceneId, Sc
 const metres = (m: number) => `${m > 0 ? "+" : m < 0 ? "−" : ""}${Math.abs(m).toLocaleString("en").replace(",", " ")} m`;
 
 /** A painted plate behind a scene: its own upright picture on a phone, never a crop. Loaded as its scene nears. */
-export function Plate({ name, phone, alt = "" }: { name: string; phone?: string; alt?: string }) {
+function Plate({ name, phone }: { name: string; phone?: string }) {
   return (
     <picture className="plate">
       {phone && <source media="(max-width: 720px)" srcSet={`/sea/${phone}.webp`} />}
-      <img src={`/sea/${name}.webp`} alt={alt} width="2064" height="1152" decoding="async" loading="lazy" />
+      <img src={`/sea/${name}.webp`} alt="" width="2064" height="1152" decoding="async" loading="lazy" />
     </picture>
   );
 }
 
 /** A full-bleed scene: a plate, what lives on it, and its words, pinned for `beats` screens of scroll. */
-function SeaScene({ s, plate, phone, pose, className = "", children, words }: { s: Scene; plate: string; phone?: string; pose?: string; className?: string; children?: ReactNode; words: ReactNode }) {
+function SeaScene({ s, plate, phone, pose, children, words }: { s: Scene; plate: string; phone?: string; pose?: string; children?: ReactNode; words: ReactNode }) {
   return (
-    <section id={s.id} data-scene data-m={s.m} data-name={s.name} data-pose={pose} className={`st sea-scene sea-${s.id} ${className}`}>
+    <section id={s.id} data-scene data-m={s.m} data-name={s.name} data-pose={pose} className={`st sea-scene sea-${s.id}`}>
       <div className="st-stage">
         <Plate name={plate} phone={phone} />
         {children}
@@ -139,7 +139,11 @@ export function Home() {
     tick();
     addEventListener("scroll", ask, { passive: true });
     addEventListener("resize", ask);
-    return () => { stopStories(); stopFlock(); stopGulls(); comp?.stop(); cancelAnimationFrame(raf); removeEventListener("scroll", ask); removeEventListener("resize", ask); };
+    // a scene can change its beat a frame after the scroll that caused it (the engine wakes it as it comes into
+    // view): read the pose again whenever a beat changes, not only on scroll
+    const beats = new MutationObserver(ask);
+    for (const e of posed) beats.observe(e, { attributes: true, attributeFilter: ["data-cur"] });
+    return () => { stopStories(); stopFlock(); stopGulls(); comp?.stop(); cancelAnimationFrame(raf); beats.disconnect(); removeEventListener("scroll", ask); removeEventListener("resize", ask); };
   }, []);
 
   return (
@@ -205,7 +209,7 @@ export function Home() {
       <div className="sea-fade to-day" data-pose="me-boat-cap" aria-hidden="true" />
 
       {/* the seaside: rowing out past the fleet, then in */}
-      <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat-cap,me-boat-ready" className="sea-ships"
+      <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat-cap,me-boat-ready"
         words={<>
           <li data-beat={0}><Card s={S.ships} /></li>
           <li data-beat={1}><p className="sea-tag"><b>0 m</b> the surface</p><h2>and then, in.</h2></li>
@@ -228,7 +232,7 @@ export function Home() {
       </section>
 
       {/* the whales: romanian speech; me with them, diving */}
-      <SeaScene s={S.whales} plate="deep-water" phone="deep-water-phone" pose="me-scuba" className="sea-whales"
+      <SeaScene s={S.whales} plate="deep-water" phone="deep-water-phone" pose="me-scuba"
         words={<><li data-beat={0}><Card s={S.whales} /></li><li data-beat={1}><Card s={S.bench} at={1} /></li></>}>
         <div className="pod">
           {["doina", "tudor", "radu"].map((w) => <div key={w} className={`swim swim-${w}`}><Sprite name={`whale-${w}`} /></div>)}
@@ -242,7 +246,7 @@ export function Home() {
       <div className="sea-fade to-lab" data-pose="hidden" aria-hidden="true" />
 
       {/* the lab: superstarling, its agents at work and talking, me among them; the sea outside the window; then the notebook */}
-      <SeaScene s={S.lab} plate="lab-v3" phone="lab-v3-phone" pose="hidden" className="sea-lab"
+      <SeaScene s={S.lab} plate="lab-v3" phone="lab-v3-phone" pose="hidden"
         words={<>
           <li data-beat={0}><Card s={S.lab} /></li>
           <li data-beat={1}><Card s={S.notebook} at={1} />
@@ -260,7 +264,7 @@ export function Home() {
       </SeaScene>
 
       {/* the garden that glows: me in a hammock, and the way to write */}
-      <SeaScene s={S.garden} plate="orchard" phone="orchard-phone" pose="hidden" className="sea-garden" words={<li data-beat={0}><Card s={S.garden} startOpen /></li>}>
+      <SeaScene s={S.garden} plate="orchard" phone="orchard-phone" pose="hidden" words={<li data-beat={0}><Card s={S.garden} startOpen /></li>}>
         {/* the hammock is slung between the two apple trees of the painting itself, so it is placed on the painting */}
         <div className="frame"><div className="hammock"><Sprite name="me-hammock-orchard" /></div></div>
         <div className="flies" aria-hidden="true">

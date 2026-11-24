@@ -2,7 +2,7 @@
 // One page in the given task space (EGO_SPACE, default 8), reused, closed at the end. Every route at four widths: no sideways scroll, buttons at least 44 px on a phone.
 const BASE = "http://localhost:4179";
 const OUT = "/Users/madalintat/madalintat-site/docs/sweep/";
-const ROUTES = ["/", "/work/ipporu/", "/work/romanian-speech/", "/work/superstarling/", "/work/surogates/", "/notes/", "/notes/when-my-labels-fooled-me/", "/notes/ps3-eye-driver-on-apple-silicon/", "/cv/"];
+const ROUTES = ["/", "/work/ipporu/", "/work/romanian-speech/", "/work/superstarling/", "/work/surogates/", "/notes/", "/cv/"];
 const WIDTHS = [390, 820, 1280, 1600];
 const task = await taskSpace(Number(process.env.EGO_SPACE ?? 8));
 const page = await task.newPage();

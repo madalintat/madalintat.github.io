@@ -3,13 +3,6 @@ import { Link } from "react-router-dom";
 import { EMAIL } from "../content/world";
 import "./shell.css";
 
-export const PROFILES = [
-  { label: "github", href: "https://github.com/madalintat" },
-  { label: "hugging face", href: "https://huggingface.co/cetusian" },
-  { label: "x", href: "https://x.com/cetusian" },
-  { label: "linkedin", href: "https://www.linkedin.com/in/madalin-tatarciuc" },
-];
-
 /** On the home page the name is already the hero, so the bar is only the links, on one solid chip. */
 export function TopBar({ home = false }: { home?: boolean }) {
   return (

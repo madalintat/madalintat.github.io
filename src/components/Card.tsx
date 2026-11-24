@@ -8,7 +8,7 @@ import type { Icon, Scene, Shot } from "../content/world";
 
 const brand = (path: string) => <svg viewBox="0 0 24 24" aria-hidden="true" className="ico"><path d={path} fill="currentColor" /></svg>;
 const mark = (src: string) => <img src={src} alt="" aria-hidden="true" className="ico" width={18} height={18} />;
-const lu = { size: 16, strokeWidth: 1.8, "aria-hidden": true, className: "ico" } as const;
+export const lu = { size: 16, strokeWidth: 1.8, "aria-hidden": true, className: "ico" } as const;
 
 export function IconFor({ i }: { i: Icon }): ReactNode {
   switch (i) {

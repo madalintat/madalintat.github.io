@@ -30,43 +30,43 @@
   "me-boat-cap": {
     "src": "/sea/me-boat-cap.webp",
     "n": 40,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 10
   },
   "me-boat-cap-to-me-boat-ready": {
     "src": "/sea/me-boat-cap-to-me-boat-ready.webp",
     "n": 60,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 14
   },
   "me-boat-ready": {
     "src": "/sea/me-boat-ready.webp",
     "n": 40,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 10
   },
   "me-boat-ready-to-me-dive": {
     "src": "/sea/me-boat-ready-to-me-dive.webp",
     "n": 40,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 10
   },
   "me-dive": {
     "src": "/sea/me-dive.webp",
     "n": 40,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 10
   },
   "me-dive-to-me-scuba": {
     "src": "/sea/me-dive-to-me-scuba.webp",
     "n": 60,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 14
   },
   "me-float": {
@@ -93,29 +93,29 @@
   "me-record": {
     "src": "/sea/me-record.webp",
     "n": 40,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 10
   },
   "me-record-to-me-boat-cap": {
     "src": "/sea/me-record-to-me-boat-cap.webp",
     "n": 80,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 14
   },
   "me-scuba": {
     "src": "/sea/me-scuba.webp",
     "n": 40,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 10
   },
   "me-scuba-wave": {
     "src": "/sea/me-scuba-wave.webp",
     "n": 40,
-    "w": 718,
-    "h": 400,
+    "w": 539,
+    "h": 300,
     "fps": 10
   },
   "me-with-agents": {
@@ -128,43 +128,43 @@
   "whale-doina": {
     "src": "/sea/whale-doina.webp",
     "n": 40,
-    "w": 928,
-    "h": 420,
+    "w": 663,
+    "h": 300,
     "fps": 10
   },
   "whale-radu": {
     "src": "/sea/whale-radu.webp",
     "n": 40,
-    "w": 936,
-    "h": 420,
+    "w": 669,
+    "h": 300,
     "fps": 10
   },
   "whale-tudor": {
     "src": "/sea/whale-tudor.webp",
     "n": 40,
-    "w": 866,
-    "h": 420,
+    "w": 619,
+    "h": 300,
     "fps": 10
   },
   "kendo-pair-loop": {
     "src": "/sea/kendo-pair-loop.webp",
     "n": 40,
-    "w": 678,
-    "h": 560,
+    "w": 557,
+    "h": 460,
     "fps": 10
   },
   "kendo-pair-men": {
     "src": "/sea/kendo-pair-men.webp",
     "n": 60,
-    "w": 678,
-    "h": 560,
+    "w": 557,
+    "h": 460,
     "fps": 10
   },
   "kendo-pair-kote": {
     "src": "/sea/kendo-pair-kote.webp",
     "n": 40,
-    "w": 678,
-    "h": 560,
+    "w": 557,
+    "h": 460,
     "fps": 10
   }
 }

@@ -1,15 +1,13 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Rss } from "lucide-react";
-import { siX } from "simple-icons";
 import { Shell } from "../layout/Shell";
 import { notes, getNote, type Note } from "../content/notes";
 import { NotFound } from "./NotFound";
+import { IconFor, lu as ic } from "../components/Card";
 import "./notes.css";
 
 // what the notes are about, said once at the top so a reader knows what to expect before the first post
 const TOPICS = ["small models", "speech", "video", "kendo", "agents", "evaluation", "shipping"];
-const ic = { size: 16, strokeWidth: 1.8, "aria-hidden": true } as const;
-const xIcon = <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d={siX.path} fill="currentColor" /></svg>;
 
 const when = (d: string) => new Date(d + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }).toLowerCase();
 
@@ -48,7 +46,7 @@ export function NotesPage() {
           <p className="blog-empty-line">the experiments are in the notebook; the write-ups come next. follow along and the first one reaches you the day it is out.</p>
           <p className="blog-follow">
             <a className="btn main" href="/notes/rss.xml"><Rss {...ic} />rss feed</a>
-            <a className="btn" href="https://x.com/cetusian">{xIcon}@cetusian</a>
+            <a className="btn" href="https://x.com/cetusian"><IconFor i="x" />@cetusian</a>
           </p>
         </section>
       )}

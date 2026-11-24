@@ -19,9 +19,11 @@ export function cellAt(f: number, cols = COLS): [number, number] {
 }
 
 type Live = { el: HTMLElement; loop: Sheet; cur: Sheet; t0: number; once: boolean; f: number; seen: boolean; then?: () => void };
-const live = new Set<Live>();
+const live = new Map<Element, Live>();
 let raf = 0;
-const reduce = () => typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+// asked once; .matches follows the setting live
+const motion = typeof matchMedia !== "undefined" ? matchMedia("(prefers-reduced-motion: reduce)") : null;
+const reduce = () => !!motion?.matches;
 
 function show(s: Live, sheet: Sheet, f: number) {
   const rows = Math.ceil(sheet.n / COLS), [c, r] = cellAt(f);
@@ -37,7 +39,7 @@ function tick(now: number) {
   raf = 0;
   let any = false;
   const still = reduce();
-  for (const s of live) {
+  for (const s of live.values()) {
     if (!s.seen) continue;
     if (still) { if (s.f !== 0) { s.f = 0; show(s, s.cur, 0); } continue; } // less motion: the first frame, once in sight
     any = true;
@@ -55,7 +57,16 @@ function tick(now: number) {
 const wake = () => { if (!raf) raf = requestAnimationFrame(tick); };
 
 const io = typeof IntersectionObserver !== "undefined"
-  ? new IntersectionObserver((es) => { for (const e of es) for (const s of live) if (s.el === e.target) s.seen = e.isIntersecting; wake(); }, { rootMargin: "200px" })
+  ? new IntersectionObserver((es) => {
+      for (const e of es) {
+        const s = live.get(e.target);
+        if (!s) continue;
+        s.seen = e.isIntersecting;
+        // off screen, the sheet is let go so its decoded frames leave memory; show() puts it back on the way in
+        if (!s.seen) { s.el.style.backgroundImage = ""; delete s.el.dataset.src; s.f = -1; }
+      }
+      wake();
+    }, { rootMargin: "200px" })
   : null;
 if (typeof document !== "undefined") document.addEventListener("visibilitychange", wake);
 
@@ -67,12 +78,12 @@ export function sprite(el: HTMLElement, loop: Sheet): Sprite {
   el.style.backgroundRepeat = "no-repeat";
   // the sheet is attached only once the element comes near the screen, so a scene's life loads as it is reached
   const s: Live = { el, loop, cur: loop, t0: performance.now(), once: false, f: -1, seen: !io };
-  live.add(s); io?.observe(el); wake();
+  live.set(el, s); io?.observe(el); wake();
   return {
     el,
     react(sheet, then) { const prev = s.then; s.then = undefined; prev?.(); if (reduce()) { then?.(); return; } s.cur = sheet; s.once = true; s.t0 = performance.now(); s.then = then; wake(); },
     swap(sheet) { const prev = s.then; s.then = undefined; s.loop = sheet; s.cur = sheet; s.once = false; s.t0 = performance.now(); el.style.aspectRatio = `${sheet.w} / ${sheet.h}`; s.f = -1; wake(); prev?.(); },
-    stop() { live.delete(s); io?.unobserve(el); },
+    stop() { live.delete(el); io?.unobserve(el); },
   };
 }
 

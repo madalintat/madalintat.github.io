@@ -16,6 +16,7 @@ export const CONTACT = {
   github: "github.com/madalintat",
   hf: "huggingface.co/cetusian",
   linkedin: "linkedin.com/in/madalin-tatarciuc",
+  x: "x.com/cetusian",
 };
 
 const INVERGENT = { org: "Invergent", role: "Applied AI Researcher", note: "surogate.ai", when: "Mar 2026 – Present" };

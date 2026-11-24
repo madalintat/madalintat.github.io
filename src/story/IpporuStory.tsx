@@ -31,7 +31,6 @@ function ModelCaption({ b, n }: { b: ModelBeat; n: number }) {
         <div><dt>how good</dt><dd>{b.score}</dd></div>
       </dl>
       <Gate g={b.gate} />
-      {b.link && <a href={b.link.href}>{b.link.label}</a>}
     </>
   );
 }
@@ -62,9 +61,10 @@ export function IpporuStory() {
     if (!el) return;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let near = false;
+    const vids = [...el.querySelectorAll<HTMLVideoElement>(".ip-clips video")];
     const sync = () => {
       const cur = Number(el.dataset.cur ?? 0);
-      el.querySelectorAll<HTMLVideoElement>(".ip-clips video").forEach((v, i) => {
+      vids.forEach((v, i) => {
         if (near && i === cur && !reduce) { if (v.preload !== "auto") v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
       });
     };

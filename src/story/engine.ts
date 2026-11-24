@@ -10,6 +10,7 @@
      .st         pinned: the scroll is the clock, one screen of scroll a beat; [data-beat] captions change with it
      .st-play    played on the clock once half of it is on screen, data-beats long, held at its end
    With less motion asked for, every story is drawn at its end. One loop, only while a story is on screen. */
+import { sceneProgress } from "../world/progress";
 
 const clamp = (x: number, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 
@@ -61,7 +62,7 @@ export function startStories(): () => void {
   });
   const paint = (s: (typeof pinned)[number], force = false) => {
     let u = s.beats;
-    if (!reduce) { const r = s.root.getBoundingClientRect(); u = clamp(-r.top / Math.max(1, r.height - innerHeight)) * s.beats; }
+    if (!reduce) { const r = s.root.getBoundingClientRect(); u = sceneProgress(r.top + scrollY, r.height, innerHeight, scrollY) * s.beats; }
     if (!force && Math.abs(u - s.u) < 0.0005) return;
     s.u = u;
     draw(s.list, u);
