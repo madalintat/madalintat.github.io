@@ -57,7 +57,7 @@ const CLOUDS = [
 // is one screen of scroll from the story's top)
 const INDEX: { to: string; beat?: number; icon: Icon; name: string; what: string }[] = [
   { to: "sky", beat: 2, icon: "ipporu", name: "ipporu", what: "the home of kendo, and the models that watch it" },
-  { to: "ships", icon: "github", name: "surogates", what: "open source ai agents that take calls and chats" },
+  { to: "ships", icon: "github", name: "surogate", what: "open source ai agents, from the gpu to the phone call" },
   { to: "whales", icon: "hf", name: "speech models", what: "romanian speech that runs on a laptop" },
   { to: "lab", icon: "superstarling", name: "superstarling", what: "an ai team for your business and your life" },
 ];
@@ -159,8 +159,7 @@ export function Home() {
       const phone = innerWidth <= 720;
       let at: HTMLElement | undefined;
       for (const e of posed) { const r = e.getBoundingClientRect(); if (r.top <= innerHeight / 2 && r.bottom > innerHeight / 2) at = e; }
-      // a part may pose me differently on a phone (data-pose-phone), where there is no room for what a desktop shows
-      if (at && comp) { const list = ((phone && at.dataset.posePhone) || at.dataset.pose!).split(","); comp.set(list[Math.min(list.length - 1, Number(at.dataset.cur ?? 0))]); }
+      if (at && comp) { const list = at.dataset.pose!.split(","); comp.set(list[Math.min(list.length - 1, Number(at.dataset.cur ?? 0))]); }
       if (me.current) placeMe(me.current, phone);
     };
     const ask = () => { if (!raf) raf = requestAnimationFrame(tick); };
@@ -228,13 +227,14 @@ export function Home() {
         </div>
       </section>
 
-      {/* ipporu, model by model: me at the side of the court, filming the match the models read */}
-      <div className="sea-under" data-name="the dojo" data-pose="me-record" style={{ "--plate": `url(${PLATE("harbour")})` } as CSSProperties}>
+      {/* ipporu, model by model: I come off the court in armour, take it off piece by piece, and film the match the
+          models read */}
+      <div className="sea-under" data-name="the dojo" data-pose="me-kendo>me-record" style={{ "--plate": `url(${PLATE("harbour")})` } as CSSProperties}>
         <IpporuStory />
       </div>
 
-      {/* night into the morning sea: I put the kendo gear away and get into the boat */}
-      <div className="sea-fade to-day" data-pose="me-boat-cap" data-pose-phone="hidden" aria-hidden="true" />
+      {/* night into the morning sea: the do and the tare come off, I change, leave the gear and step into the boat */}
+      <div className="sea-fade to-day" data-pose="me-boat-cap" aria-hidden="true" />
 
       {/* the seaside: rowing out past the fleet, then in */}
       <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat-cap,me-boat-ready"

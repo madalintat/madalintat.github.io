@@ -113,3 +113,15 @@ Every image generated for the site, in order, rejects included. Model: `google/g
 | kendo-pair-kote.mp4 | kendo-pair, google/veo-3.1-lite, 4s | $0.1200 | review |
 | kendo-pair-loop.mp4 | kendo-pair, google/veo-3.1-lite, 4s | $0.1200 | review |
 | kendo-pair-men.mp4 | kendo-pair, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-kendo-rest-1.png | me-sheet-1.png, me.jpg, me-kendo-1.png, me-record-1.png | $0.0452 | review |
+| me-kendo-men-off-1.png | me-sheet-1.png, me.jpg, me-kendo-rest-1.png, me-record-1.png | $0.0455 | review |
+| me-record-5.png | me-sheet-1.png, me.jpg, me-kendo-men-off-1.png, me-record-1.png | $0.0457 | review |
+| me-kendo-unarmoured-1.png | me-sheet-1.png, me.jpg, me-kendo-men-off-1.png, me-record-1.png | $0.0458 | review |
+| me-dressed-1.png | me-sheet-1.png, me.jpg, me-kendo-unarmoured-1.png, me-boat-cap-1.png, surogate-logo.png | $0.0479 | review |
+| me-kendo-to-me-kendo-rest.mp4 | me-kendo → me-kendo-rest, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-kendo-men-off-to-me-record.mp4 | me-kendo-men-off → me-record, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-record-to-me-kendo-unarmoured.mp4 | me-record → me-kendo-unarmoured, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-record.mp4 | me-record, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-kendo-rest-to-me-kendo-men-off.mp4 | me-kendo-rest → me-kendo-men-off, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-kendo-unarmoured-to-me-dressed.mp4 | me-kendo-unarmoured → me-dressed, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-dressed-to-me-boat-cap.mp4 | me-dressed → me-boat-cap, google/veo-3.1-lite, 6s | $0.1800 | review |

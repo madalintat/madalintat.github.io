@@ -58,7 +58,8 @@ export const cv: Record<CvVersion, Cv> = {
             ["Speech recognition", "built jackrabbit-110m-ro alone, Romanian ASR at 5.69% WER on FLEURS: ahead of Whisper large-v3 at a fourteenth of its size, with a streaming variant for live calls."],
             ["Text-to-speech", "built amami-357m-ro alone, three Romanian voices in one model, running natively on CPU, CUDA and Metal."],
             ["Data and evaluation", "collected and cleaned the Romanian speech corpus, with one normaliser so every run stays comparable."],
-            ["Agents", "built the parts of Surogates where an agent meets a customer: phone calls over SIP, Discord, Teams and website chat, and simulated channels to test an agent before it goes live."],
+            ["Training", "built the terminal dashboard to launch, monitor and compare training runs (including GRPO with an LLM judge) on cloud GPUs."],
+            ["Agents", "built the parts of Surogates where an agent meets a customer: phone calls over SIP on my own speech models, Discord, Teams, WhatsApp and website chat, and a simulator where an AI plays the customer before an agent goes live."],
           ] },
           ...EARLIER,
         ],
@@ -111,7 +112,7 @@ export const cv: Record<CvVersion, Cv> = {
         items: [
           { ...INVERGENT, bullets: [
             ["Speech", "built Surogate's Romanian models alone: jackrabbit-110m-ro (5.69% WER on FLEURS, ahead of Whisper large-v3) and amami-357m-ro, three voices in one model."],
-            ["Agents", "built the parts of Surogates where an agent meets a customer: phone calls, Discord, Teams and website chat, and simulated channels for testing."],
+            ["Agents", "built the parts of Surogates where an agent meets a customer: phone calls, Discord, Teams, WhatsApp and website chat, a simulator for testing, and the Studio pages that set them up."],
           ] },
           ...EARLIER,
         ],

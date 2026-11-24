@@ -27,6 +27,27 @@
     "h": 200,
     "fps": 10
   },
+  "kendo-pair-kote": {
+    "src": "/sea/kendo-pair-kote.webp",
+    "n": 40,
+    "w": 557,
+    "h": 460,
+    "fps": 10
+  },
+  "kendo-pair-loop": {
+    "src": "/sea/kendo-pair-loop.webp",
+    "n": 40,
+    "w": 557,
+    "h": 460,
+    "fps": 10
+  },
+  "kendo-pair-men": {
+    "src": "/sea/kendo-pair-men.webp",
+    "n": 60,
+    "w": 557,
+    "h": 460,
+    "fps": 10
+  },
   "me-boat-cap": {
     "src": "/sea/me-boat-cap.webp",
     "n": 40,
@@ -69,6 +90,13 @@
     "h": 300,
     "fps": 14
   },
+  "me-dressed-to-me-boat-cap": {
+    "src": "/sea/me-dressed-to-me-boat-cap.webp",
+    "n": 60,
+    "w": 539,
+    "h": 300,
+    "fps": 10
+  },
   "me-float": {
     "src": "/sea/me-float.webp",
     "n": 40,
@@ -90,6 +118,41 @@
     "h": 240,
     "fps": 10
   },
+  "me-kendo": {
+    "src": "/sea/me-kendo.webp",
+    "n": 40,
+    "w": 539,
+    "h": 300,
+    "fps": 10
+  },
+  "me-kendo-men-off-to-me-record": {
+    "src": "/sea/me-kendo-men-off-to-me-record.webp",
+    "n": 60,
+    "w": 539,
+    "h": 300,
+    "fps": 10
+  },
+  "me-kendo-rest-to-me-kendo-men-off": {
+    "src": "/sea/me-kendo-rest-to-me-kendo-men-off.webp",
+    "n": 60,
+    "w": 539,
+    "h": 300,
+    "fps": 10
+  },
+  "me-kendo-to-me-kendo-rest": {
+    "src": "/sea/me-kendo-to-me-kendo-rest.webp",
+    "n": 60,
+    "w": 539,
+    "h": 300,
+    "fps": 10
+  },
+  "me-kendo-unarmoured-to-me-dressed": {
+    "src": "/sea/me-kendo-unarmoured-to-me-dressed.webp",
+    "n": 80,
+    "w": 539,
+    "h": 300,
+    "fps": 10
+  },
   "me-record": {
     "src": "/sea/me-record.webp",
     "n": 40,
@@ -97,12 +160,12 @@
     "h": 300,
     "fps": 10
   },
-  "me-record-to-me-boat-cap": {
-    "src": "/sea/me-record-to-me-boat-cap.webp",
+  "me-record-to-me-kendo-unarmoured": {
+    "src": "/sea/me-record-to-me-kendo-unarmoured.webp",
     "n": 80,
     "w": 539,
     "h": 300,
-    "fps": 14
+    "fps": 10
   },
   "me-scuba": {
     "src": "/sea/me-scuba.webp",
@@ -144,27 +207,6 @@
     "n": 40,
     "w": 619,
     "h": 300,
-    "fps": 10
-  },
-  "kendo-pair-loop": {
-    "src": "/sea/kendo-pair-loop.webp",
-    "n": 40,
-    "w": 557,
-    "h": 460,
-    "fps": 10
-  },
-  "kendo-pair-men": {
-    "src": "/sea/kendo-pair-men.webp",
-    "n": 60,
-    "w": 557,
-    "h": 460,
-    "fps": 10
-  },
-  "kendo-pair-kote": {
-    "src": "/sea/kendo-pair-kote.webp",
-    "n": 40,
-    "w": 557,
-    "h": 460,
     "fps": 10
   }
 }

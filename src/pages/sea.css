@@ -99,7 +99,7 @@
 .me[data-pose="me-float"]   { --mx: 74; --my: 46; --mw: 11vw; }
 /* from filming to scuba every pose and every move between them is the full video frame (one shared crop), so each
    move ends exactly where the next pose begins; the widths are the frame's, the figure fills about half of it */
-.me[data-pose="me-record"]  { --mx: 75; --my: 71; --mw: 18vw; }
+.me:is([data-pose="me-kendo"], [data-pose="me-record"]) { --mx: 75; --my: 71; --mw: 18vw; }
 .me[data-pose="me-boat-cap"], .me[data-pose="me-boat-ready"] { --mx: 34; --my: 55; --mw: 28vw; }
 .me[data-pose="me-dive"]    { --mx: 30; --my: 28; --mw: 30vw; }
 .me[data-pose="me-scuba"]   { --mx: 63; --my: 66; --mw: 19vw; }
@@ -293,10 +293,9 @@
 .hammock { position: absolute; left: 61.4%; top: 56.8%; width: 16.6%; }
 @media (max-width: 720px) {
   .hammock { left: 23%; top: 66%; width: 46%; }
-  /* filming at the foot of the clips; then the boat, the dive and the scuba share one size, as their moves share one
-     frame, so each move ends exactly where the next pose begins */
-  .me[data-pose="me-record"] { --pw: 60vw; }
-  .me:is([data-pose="me-boat-cap"], [data-pose="me-boat-ready"], [data-pose="me-dive"], [data-pose="me-scuba"]) { --pw: 78vw; }
+  /* from the armour to the scuba every pose shares one size, as their moves share one frame, so each move ends exactly
+     where the next pose begins: filming at the foot of the clips, then the boat, the dive, the scuba */
+  .me:is([data-pose="me-kendo"], [data-pose="me-record"], [data-pose="me-boat-cap"], [data-pose="me-boat-ready"], [data-pose="me-dive"], [data-pose="me-scuba"]) { --pw: 78vw; }
 }
 
 @media (max-width: 720px) {
