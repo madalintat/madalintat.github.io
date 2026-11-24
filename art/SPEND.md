@@ -1,6 +1,6 @@
 # spend on the sea
 
-Every image generated for the site, in order, rejects included. Model: `google/gemini-nano-banana-2.1` on OpenRouter. Budget $10.
+Every image generated for the site, in order, rejects included. Model: `google/gemini-nano-banana-2.1` on OpenRouter. Budget $10, raised to $25 by the owner on 2026-11-24 for the v3 chapters (dojo, kendoka, transitions, agent lab, orchard, moving plates).
 
 | request | refs | cost | kept or rejected |
 |---|---|---|---|
@@ -64,3 +64,40 @@ Every image generated for the site, in order, rejects included. Model: `google/g
 | jelly.mp4 | jelly, google/veo-3.1-lite, 4s | $0.1200 | review |
 | person5.mp4 | person5, google/veo-3.1-lite, 4s | $0.1200 | review |
 | me-boat-to-me-dive.mp4 | me-boat → me-dive, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-ready-sky-1.png | me-sheet-1.png, me.jpg | $0.0412 | review |
+| agents-talk-1-1.png | starling.png, sloane.png | $0.0421 | review |
+| dojo-inside-1.png | harbour-1.png, lab-1.png | $0.0435 | review |
+| agents-talk-2-1.png | hale.png, reyes.png, mercer.png | $0.0434 | review |
+| dojo-inside-phone-1.png | harbour-1.png | $0.0422 | review |
+| agents-talk-3-1.png | vance.png, cross.png, steele.png | $0.0446 | review |
+| kendoka-aka-1.png | kendo-opponent-1.png | $0.0421 | review |
+| me-boat-ready-1.png | me-sheet-1.png, me.jpg, me-boat-1.png | $0.0404 | review |
+| kendoka-shiro-1.png | kendo-opponent-1.png | $0.0427 | review |
+| me-boat-calm-1.png | me-sheet-1.png, me.jpg, me-boat-1.png | $0.0439 | review |
+| orchard-1.png | garden-1.png, harbour-1.png | $0.0433 | review |
+| orchard-phone-1.png | garden-1.png | $0.0411 | review |
+| me-hammock-orchard-1.png | me-sheet-1.png, me.jpg | $0.0425 | review |
+| lab-v3-1.png | lab-1.png | $0.0429 | review |
+| me-with-agents-1.png | me-sheet-1.png, me.jpg, quinn.png, nash.png | $0.0459 | review |
+| me-with-agents-2.png | me-sheet-1.png, me.jpg, quinn.png, nash.png | $0.0454 | review |
+| kendoka-shiro-2.png | kendoka-shiro-1.png | $0.0422 | review |
+| kendoka-aka-2.png | kendoka-aka-1.png | $0.0423 | review |
+| kendoka-shiro-3.png | none | $0.0398 | review |
+| kendoka-aka-3.png | none | $0.0412 | review |
+| lab-v3-phone-1.png | lab-v3-1.png | $0.0421 | review |
+| agents-talk-1.mp4 | agents-talk-1, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-ready-sky.mp4 | me-ready-sky, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendoka-aka.mp4 | kendoka-aka, google/veo-3.1-lite, 4s | $0.1200 | review |
+| agents-talk-2.mp4 | agents-talk-2, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendoka-aka-strike.mp4 | kendoka-aka, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-boat.mp4 | me-boat-calm, google/veo-3.1-lite, 4s | $0.1200 | review |
+| agents-talk-3.mp4 | agents-talk-3, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-boat-ready.mp4 | me-boat-ready, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendoka-shiro.mp4 | kendoka-shiro, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-with-agents.mp4 | me-with-agents, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-hammock-orchard.mp4 | me-hammock-orchard, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendoka-shiro-strike.mp4 | kendoka-shiro, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendoka-shiro.mp4 | kendoka-shiro, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendoka-aka.mp4 | kendoka-aka, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendoka-shiro-strike.mp4 | kendoka-shiro, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendoka-aka-strike.mp4 | kendoka-aka, google/veo-3.1-lite, 4s | $0.1200 | review |

@@ -4,6 +4,7 @@ import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
 const D = new URL("../dist/", import.meta.url).pathname;
+const SITE = "https://cetusian.com";
 const BOT_WALLS = ["linkedin.com", "x.com"];
 
 function* html(dir) {
@@ -17,8 +18,11 @@ function* html(dir) {
 const internal = new Map(), external = new Set();
 for (const f of html(D)) for (const [, href] of readFileSync(f, "utf8").matchAll(/(?:href|src|poster)="([^"#]+)/g)) {
   if (href.startsWith("mailto:")) continue;
-  if (/^https?:/.test(href)) { if (!href.startsWith("https://madalintat.github.io")) external.add(href); continue; }
-  if (!internal.has(href)) internal.set(href, f.replace(D, ""));
+  // the site's own absolute urls (canonical, og, sitemap) are checked against dist/ like any internal link
+  const own = href.startsWith(SITE) ? href.slice(SITE.length) || "/" : null;
+  if (/^https?:/.test(href) && own == null) { external.add(href); continue; }
+  const local = own ?? href;
+  if (!internal.has(local)) internal.set(local, f.replace(D, ""));
 }
 
 let bad = 0;

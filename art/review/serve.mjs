@@ -7,7 +7,7 @@ import { join, normalize, extname } from "node:path";
 
 const ROOT = new URL("../..", import.meta.url).pathname;
 const ANSWERS = join(ROOT, "art/review/answers.json");
-const OPEN = ["art/review/", "art/scratch/", "public/sea/"];
+const OPEN = ["art/review/", "art/scratch/", "public/sea/", "art/model-clips/"];
 const TYPE = { ".html": "text/html; charset=utf-8", ".png": "image/png", ".webp": "image/webp", ".mp4": "video/mp4", ".json": "application/json", ".js": "text/javascript" };
 
 createServer((req, res) => {

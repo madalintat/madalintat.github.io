@@ -6,7 +6,7 @@ import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const FPS = 10;
 // how tall a frame is kept, by what it is: enough for a 2x phone at the size the page shows it, no more
-const height = (n) => n.startsWith("me-") ? 300 : n.startsWith("whale") ? 240 : n.startsWith("person") ? 240 : n.startsWith("kendo") ? 300 : 200;
+const height = (n) => n.startsWith("me-") ? 300 : n.startsWith("whale") ? 240 : n.startsWith("person") ? 240 : n.startsWith("kendo") ? 300 : n.startsWith("agents") ? 320 : 200;
 const OUT = "src/content/sprites.json";
 const all = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};
 const want = process.argv.slice(2);

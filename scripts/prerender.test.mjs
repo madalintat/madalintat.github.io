@@ -21,8 +21,18 @@ describe.skipIf(!has)("the prerendered site", () => {
       expect(html, r).toMatch(new RegExp(`<h1[^>]*>${h1}</h1>`));
     }
   });
-  test("the ipporu page and the home carry the demo's event list without js", () => {
-    for (const r of ["work/ipporu/", ""]) expect((read(r + "index.html").match(/<li class="ev /g) ?? []).length, r).toBe(8);
+  test("the ipporu page carries the demo's event list without js", () => {
+    expect((read("work/ipporu/index.html").match(/<li class="ev /g) ?? []).length).toBe(8);
+  });
+  test("search and ai engines get who this is: json-ld, llms.txt, and a yes for ai crawlers", () => {
+    const ld = JSON.parse(read("index.html").match(/<script type="application\/ld\+json">(.+?)<\/script>/)[1]);
+    const me = ld["@graph"].find((n) => n["@type"] === "Person");
+    expect(me.name).toBe("Mădălin Tatarciuc");
+    expect(me.sameAs).toContain("https://huggingface.co/cetusian");
+    expect(ld["@graph"].some((n) => n.name?.startsWith("ipporu"))).toBe(true);
+    const txt = read("llms.txt");
+    for (const w of ["# Mădălin Tatarciuc", "ipporu", "superstarling", "5.69%", "how it is built"]) expect(txt).toContain(w);
+    for (const b of ["GPTBot", "ClaudeBot", "PerplexityBot"]) expect(read("robots.txt")).toContain(`User-agent: ${b}\nAllow: /`);
   });
   test("titles are unique and every page has description and og tags", () => {
     const titles = Object.keys(ROUTES).map((r) => read(r + "index.html").match(/<title>([^<]+)<\/title>/)?.[1]);
@@ -32,6 +42,6 @@ describe.skipIf(!has)("the prerendered site", () => {
   test("a 404 page and a sitemap with every route", () => {
     expect(read("404.html")).toContain("not here");
     const map = read("sitemap.xml");
-    for (const r of Object.keys(ROUTES)) expect(map).toContain(`https://madalintat.github.io/${r}<`);
+    for (const r of Object.keys(ROUTES)) expect(map).toContain(`https://cetusian.com/${r}<`);
   });
 });

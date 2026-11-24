@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { siGithub, siHuggingface, siX } from "simple-icons";
-import { ArrowUpRight, ChevronUp, FileText, Globe, Link2, Mail, Play } from "lucide-react";
+import { ArrowUpRight, ChevronUp, FileText, Globe, Link2, Mail, Play, Wrench } from "lucide-react";
 import type { Icon, Scene } from "../content/world";
 
 const brand = (path: string) => <svg viewBox="0 0 24 24" aria-hidden="true" className="ico"><path d={path} fill="currentColor" /></svg>;
@@ -33,6 +33,9 @@ function Go({ href, className, children }: { href: string; className?: string; c
     On a phone the card is a bottom sheet: the name and one line, and a tap or a swipe up opens the numbers and links. */
 export function Card({ s, at = 0, startOpen = false }: { s: Scene; at?: number; startOpen?: boolean }) {
   const [open, setOpenState] = useState(startOpen);
+  // startOpen holds on a desktop; on a phone even the contact card starts as a sheet, so the painting stays in view
+  // (closed after hydration, so the prerendered page and the first client render agree)
+  useEffect(() => { if (startOpen && matchMedia("(max-width: 720px)").matches) setOpenState(false); }, [startOpen]);
   // a sheet the reader opened covers the bottom of the screen: the page steps the character out of its way
   const setOpen = (v: boolean) => { setOpenState(v); document.documentElement.classList.toggle("sheet-open", v); };
   const y0 = useRef<number | null>(null), me = useRef<HTMLDivElement>(null);
@@ -46,7 +49,7 @@ export function Card({ s, at = 0, startOpen = false }: { s: Scene; at?: number; 
     addEventListener("scroll", check, { passive: true });
     return () => { removeEventListener("scroll", check); document.documentElement.classList.remove("sheet-open"); };
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
-  const more = s.facts.length > 0 || s.links.length > 0;
+  const more = s.facts.length > 0 || s.links.length > 0 || !!s.built;
   return (
     <div ref={me} className={`card${open ? " open" : ""}`}
       onPointerDown={(e) => { y0.current = e.clientY; }}
@@ -68,6 +71,16 @@ export function Card({ s, at = 0, startOpen = false }: { s: Scene; at?: number; 
               {s.facts.map((f, i) => <div key={f.text} data-at={(at + 0.15 + i * 0.1).toFixed(2)}><dt>{f.k}</dt><dd>{f.text}</dd></div>)}
             </dl>
           )}
+          {s.shots && s.shots.length > 0 && (
+            <p className="card-shots">
+              {s.shots.map((x) => (
+                <a key={x.src} href={x.src} target="_blank" rel="noopener" title={x.alt}>
+                  <img src={x.src} alt={x.alt} loading="lazy" decoding="async" width={1000} height={580} />
+                </a>
+              ))}
+            </p>
+          )}
+          {s.built && <p className="card-built"><Wrench {...lu} size={14} /><span>{s.built}</span></p>}
           {s.links.length > 0 && (
             <p className="card-links">
               {s.links.map((l, i) => (

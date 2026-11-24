@@ -10,10 +10,11 @@ export const PROFILES = [
   { label: "linkedin", href: "https://www.linkedin.com/in/madalin-tatarciuc" },
 ];
 
-export function TopBar() {
+/** On the home page the name is already the hero, so the bar is only the links, on one solid chip. */
+export function TopBar({ home = false }: { home?: boolean }) {
   return (
-    <header className="bar">
-      <Link className="who" to="/">mădălin tatarciuc</Link>
+    <header className={home ? "bar bar-home" : "bar"}>
+      {!home && <Link className="who" to="/">mădălin tatarciuc</Link>}
       <nav>
         <Link to="/#flock">work</Link>
         <Link to="/notes">notes</Link>

@@ -63,6 +63,33 @@
 const S = "/art/scratch/", P = "/public/sea/";
 const TABS = [
   { id: "plan", name: "plan" },
+  { id: "models", name: "models", lede: "Each ipporu model on the same All Japan 2024 match, its real output drawn over the video. These go into the ipporu chapter, one per model, with the fact line under each. who struck is honest about being weak.", items: [
+    ["model-tracker", "/art/model-clips/tracker.mp4", "Tracker", "SAM 2.1 masks with DAM4SAM memory + CLIP ViT-L/14 gallery re-ID (track2.py, E92-E97); nothing trained · trained: Nothing trained by ipporu: SAM 2.1 (Apache-2.0) and CLIP (MIT) weights as published. A seed rule (pose, both hands on a shinai, CLIP's 'kendoka' look) starts each shot; galleries of each kendoka's own crops, and of everyone else on court, are built from the match itself while it tracks, and a lost kendoka ", 0],
+    ["model-sides", "/art/model-clips/sides.mp4", "Aka / shiro (tasuki)", "A rule on the tracker's boxes (track2.aka_fix, E72): every 0.5 s, red and white pixels in thin upright pieces on each kendoka's upper body; per stretch, evidence = red - 0.3 x white, called past 1.0; no training · trained: Nothing trained. Cut-offs set by eye on marked clips (the dark-surround rule and the 0.3 white weight came from two failure cases). · 0 wrong colour of about 45 called stretches, checked by eye on ", 0],
+    ["model-shinai-sound", "/art/model-clips/shinai-sound.mp4", "Shinai sound (crack detector)", "A causal rule on the audio (contact.py, E33): a jump in the 2-8 kHz band over the hall's median that reaches 5-8 kHz at least as hard as 2-4 kHz, a broadband click rather than a kiai or a stamp; no weights · trained: No training. Thresholds tuned on marked clips: 30 tournament-hall clips from 30 videos and one dojo video, marked from spectrograms beside every frame (Claude vision, no listening); tuned on half the cli", 0],
+    ["model-flag-reader", "/art/model-clips/flag-reader.mp4", "Flag reader", "ResNet-18 (ImageNet init) fine-tuned, 4 classes (red, white, yellow, none) on 112 px crops past a raised hand; RTMPose-s (rtmlib) finds the raised arms · trained: 1,603 raised-hand crops from about 200 YouTube match videos, labelled by eye on 10x10 grids in three batches (random crops from 4 matches, crops from -1 to +4 s around mined ippon, and crops the earlier probe called white); unsure crops left out. End to end", 0],
+    ["model-strike", "/art/model-clips/strike.mp4", "Strike or not", "Standardise -> PCA 64 -> logistic regression on 16 sound and pose features + 1,536 DINOv2-base clip features, about 400 KB of numpy (E69) · trained: 2,066 cracks from 8 whole matches, every in-reach crack marked strike or not by eye, plus 195 marked system strikes and not-strikes from 12 more matches at weight 3. · One whole match held out at a time over 20 matches: 152 of 182 sure strikes found; 107 of 331 strike ca", 0],
+    ["model-ippon", "/art/model-clips/ippon.mp4", "Ippon", "A rule with no weights of its own (ippon.py, E73/E75): the flag call's colour, the last strike just before the flags, and the tasuki for which tracked kendoka that colour is · trained: Nothing trained. It combines the flag reader, the strike model and the tasuki rule. · 68 of 94 flag ippon get their strike. On 177 matches the engine agrees with the official record in count and side (ENGINE_STATE_2026-11-20.md).", 0],
+    ["model-who-struck", "/art/model-clips/who-struck.mp4", "Who struck", "Linear head (PCA 32 + logistic, antisymmetric, no intercept) on frozen V-JEPA 2 ViT-L features of each kendoka's own crop (E81); research only, not in the engine · trained: 196 who-struck labels over 43 matches: 70 marked by eye on strips, the sure system strikes on 12 matches marked by two agents and re-marked, and 33 flag ippon (flags + tasuki). The released head is fitted on all 196. · Card: 144 of 196 (73%), one ", 0],
+    ["model-shinai-keypoints", "/art/model-clips/shinai-keypoints.mp4", "Shinai keypoints", "Shinai student s2: ResNet-34 SimpleBaseline with soft-argmax, one frame plus the kendoka's own and the opponent's SAM 2.1 mask as two extra channels; grip, tsuba and kensen (tip) points with a kensen confidence (E38, E40) · trained: 7,916 automatic labels from 415 videos (5,127 AJKF, 2,789 from other channels), made by a teacher (OWLv2 + SAM 2.1) under strict filters, no test match included; 40 epochs with motion-blu", 0],
+  ]},
+  { id: "v3", name: "v3: new", lede: "The new art for your 14 notes. Keep or redo each; a redo note says what to change. Nothing is animated until you keep it. Spend so far $5.43 of $25.", items: [
+    ["v3-dojo", S + "dojo-inside-1.png", "inside the dojo", "the scroll zooms from the harbour into the dojo's open door, then this takes over. the fighters stand on the empty floor", 0],
+    ["v3-dojo-phone", S + "dojo-inside-phone-1.png", "inside the dojo, phone", "", 0],
+    ["v3-aka", S + "kendoka-aka-3.png", "aka (red tasuki)", "right foot forward, narrow upright stance, left heel up. chudan, tip at the throat", 0],
+    ["v3-shiro", S + "kendoka-shiro-3.png", "shiro (white tasuki)", "right foot forward. still a bit of a walking stride: redo if it reads wrong to you", 0],
+    ["v3-ready-sky", S + "me-ready-sky-1.png", "sky: getting ready", "you crouch on the cloud before the dive into the harbour", 0],
+    ["v3-boat-calm", S + "me-boat-calm-1.png", "the boat, whole", "drawn down to the keel with no water, so it sits in the painted sea (no more blue cut)", 0],
+    ["v3-boat-ready", S + "me-boat-ready-1.png", "the boat: getting ready", "you stand up, one foot on the edge, before the dive", 0],
+    ["v3-lab", S + "lab-v3-1.png", "the lab, bigger", "a mezzanine, spiral stair, whiteboard, sofa corner; the floor is left free for the people", 0],
+    ["v3-agents-1", S + "agents-talk-1-1.png", "starling and sloane", "superstarling's lead and writer, talking over a tablet", 0],
+    ["v3-agents-2", S + "agents-talk-2-1.png", "hale, reyes, mercer", "planner, visuals, researcher: reyes shows a sketch", 0],
+    ["v3-agents-3", S + "agents-talk-3-1.png", "vance, cross, steele", "sales tells a story, the publisher with a coffee, the bookkeeper grins", 0],
+    ["v3-me-agents", S + "me-with-agents-2.png", "you with quinn and nash", "you stand, laptop in one arm, showing them something. no desk, no chair", 0],
+    ["v3-orchard", S + "orchard-1.png", "the orchard", "transylvania at dusk: apple trees, river, village, carpathians. the hammock hangs between the two trees", 0],
+    ["v3-orchard-phone", S + "orchard-phone-1.png", "the orchard, phone", "", 0],
+    ["v3-hammock", S + "me-hammock-orchard-1.png", "you in the hammock", "reading, laptop on your chest; the ropes run off to the two trees", 0],
+  ]},
   { id: "you", name: "you", lede: "You as the character, drawn from your three photos. The sheet fixes how you look; every pose is drawn from it. Pick the hammock you like (1 or 2) by keeping one.", items: [
     ["me-sheet", S + "me-sheet-1.png", "the sheet", "front, side, back. every pose is drawn from this", 1],
     ["me-float", S + "me-float-1.png", "sky: floating", "drifts down with the camera from the clouds", 1],
@@ -137,7 +164,7 @@ const PLAN = `
   </div>
 </div>`;
 
-let answers = {}, tab = location.hash.slice(1) || "plan";
+let answers = {}, tab = location.hash.slice(1) || "models";
 const all = TABS.flatMap((t) => t.items ?? []).map((i) => i[0]).concat(["plan-order", "plan-character", "plan-hosting"]);
 const save = (id, verdict, note) => {
   answers[id] = { ...(answers[id] ?? {}), verdict, note };

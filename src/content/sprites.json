@@ -1,4 +1,25 @@
 {
+  "agents-talk-1": {
+    "src": "/sea/agents-talk-1.webp",
+    "n": 40,
+    "w": 240,
+    "h": 320,
+    "fps": 10
+  },
+  "agents-talk-2": {
+    "src": "/sea/agents-talk-2.webp",
+    "n": 40,
+    "w": 392,
+    "h": 320,
+    "fps": 10
+  },
+  "agents-talk-3": {
+    "src": "/sea/agents-talk-3.webp",
+    "n": 40,
+    "w": 382,
+    "h": 320,
+    "fps": 10
+  },
   "jelly": {
     "src": "/sea/jelly.webp",
     "n": 40,
@@ -20,10 +41,45 @@
     "h": 300,
     "fps": 10
   },
+  "kendoka-aka": {
+    "src": "/sea/kendoka-aka.webp",
+    "n": 40,
+    "w": 207,
+    "h": 300,
+    "fps": 10
+  },
+  "kendoka-aka-strike": {
+    "src": "/sea/kendoka-aka-strike.webp",
+    "n": 40,
+    "w": 207,
+    "h": 300,
+    "fps": 10
+  },
+  "kendoka-shiro": {
+    "src": "/sea/kendoka-shiro.webp",
+    "n": 40,
+    "w": 269,
+    "h": 300,
+    "fps": 10
+  },
+  "kendoka-shiro-strike": {
+    "src": "/sea/kendoka-shiro-strike.webp",
+    "n": 40,
+    "w": 269,
+    "h": 300,
+    "fps": 10
+  },
   "me-boat": {
     "src": "/sea/me-boat.webp",
     "n": 40,
-    "w": 517,
+    "w": 581,
+    "h": 300,
+    "fps": 10
+  },
+  "me-boat-ready": {
+    "src": "/sea/me-boat-ready.webp",
+    "n": 40,
+    "w": 490,
     "h": 300,
     "fps": 10
   },
@@ -69,6 +125,13 @@
     "h": 300,
     "fps": 10
   },
+  "me-hammock-orchard": {
+    "src": "/sea/me-hammock-orchard.webp",
+    "n": 40,
+    "w": 568,
+    "h": 220,
+    "fps": 10
+  },
   "me-hammock-wave": {
     "src": "/sea/me-hammock-wave.webp",
     "n": 40,
@@ -104,6 +167,13 @@
     "h": 300,
     "fps": 10
   },
+  "me-ready-sky": {
+    "src": "/sea/me-ready-sky.webp",
+    "n": 40,
+    "w": 254,
+    "h": 300,
+    "fps": 10
+  },
   "me-record": {
     "src": "/sea/me-record.webp",
     "n": 40,
@@ -122,6 +192,13 @@
     "src": "/sea/me-scuba-wave.webp",
     "n": 40,
     "w": 511,
+    "h": 300,
+    "fps": 10
+  },
+  "me-with-agents": {
+    "src": "/sea/me-with-agents.webp",
+    "n": 40,
+    "w": 309,
     "h": 300,
     "fps": 10
   },

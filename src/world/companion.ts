@@ -19,6 +19,8 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
   if (sheets[pose]) sp = sprite(el, sheets[pose]);
 
   const set = (next: string) => {
+    // "hidden": the scene draws me itself (the lab, with the agents), so the companion steps out
+    if (next === "hidden") { if (pose !== next) { pose = next; root.dataset.pose = next; } return; }
     if (next === pose || !sheets[next]) return;
     const from = pose; pose = next;
     preload(sheets[next], ...(REACT[next] && sheets[REACT[next]] ? [sheets[REACT[next]]] : []));

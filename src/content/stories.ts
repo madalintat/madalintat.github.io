@@ -20,5 +20,4 @@ export const SPEECH: Beat[] = [
   { id: "asr", title: "hearing", line: "jackrabbit turns romanian speech into text, small enough for a cpu.", num: "5.69%", of: "wer on fleurs. whisper large-v3: 8.42%" },
   { id: "stream", title: "while you speak", line: "the streaming one writes as you talk, in 32 ms packets, then reads the whole sentence again when you pause.", num: "0.72", of: "s from your last word to the final text" },
   { id: "voices", title: "three voices", line: "amami speaks romanian in three voices from one model. tap a whale.", num: "2.02%", of: "wer when whisper reads them back" },
-  { id: "loop", title: "together", line: "hear, think, speak. it is the loop the phone agents in surogates run on.", link: { label: "the models on hugging face", href: "https://huggingface.co/surogate/jackrabbit-110m-ro" } },
 ];

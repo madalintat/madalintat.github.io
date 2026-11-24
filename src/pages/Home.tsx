@@ -1,8 +1,8 @@
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { TopBar } from "../layout/Shell";
-import { Card } from "../components/Card";
-import { SCENES, EXPERIMENTS, type Scene, type SceneId } from "../content/world";
+import { Card, IconFor } from "../components/Card";
+import { SCENES, type Icon, type Scene, type SceneId } from "../content/world";
 import { depthAt } from "../world/progress";
 import { startFlock } from "../world/flock";
 import { sprite, type Sheet } from "../world/sprite";
@@ -12,7 +12,6 @@ import SHEETS from "../content/sprites.json";
 import { startStories } from "../story/engine";
 import { IpporuStory, type StoryData } from "../story/IpporuStory";
 import { SpeechStory } from "../story/SpeechStory";
-import { IpporuDemo, type DemoData } from "../demo/IpporuDemo";
 import demo from "../../public/demo/all-japan-2024.json";
 import "./sea.css";
 
@@ -53,13 +52,31 @@ const CLOUDS = [
   { n: 1, x: 4, y: 20, w: 34, k: 40 }, { n: 2, x: 62, y: 12, w: 30, k: 25 }, { n: 4, x: 78, y: 46, w: 12, k: 60 },
   { n: 3, x: 26, y: 64, w: 40, k: 80 }, { n: 5, x: 6, y: 50, w: 8, k: 55 },
 ];
-// the people in the lab: who, where they start on the floor (frame %), how far they walk. A round there and back
-// takes as long as their stride says: about 6 % of the room a second, a stroll.
-const STROLL = 6;
-const PEOPLE = [
-  { n: 1, x: 6, span: 52, delay: -3 }, { n: 2, x: 40, span: 44, delay: -6 }, { n: 3, x: 64, span: 26, delay: -1 },
-  { n: 4, x: 22, span: 60, delay: -9 }, { n: 5, x: 50, span: 36, delay: -4 }, { n: 1, x: 74, span: 18, delay: -2 }, { n: 3, x: 12, span: 34, delay: -7 },
-].map((p) => ({ ...p, dur: +((2 * p.span) / STROLL).toFixed(1) }));
+// what is on this page, in one glance under the name: each line jumps to its chapter (a beat inside a pinned story
+// is one screen of scroll from the story's top)
+const INDEX: { to: string; beat?: number; icon: Icon; name: string; what: string }[] = [
+  { to: "sky", beat: 2, icon: "ipporu", name: "ipporu", what: "an ai that reads kendo, and the home of the sport" },
+  { to: "ships", icon: "github", name: "surogates", what: "ai agents that talk to people, open source" },
+  { to: "whales", icon: "hf", name: "speech models", what: "romanian speech that runs on a laptop" },
+  { to: "lab", icon: "superstarling", name: "superstarling", what: "an ai team that runs your business" },
+];
+function go(id: string, beat = 0) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  scrollTo({ top: el.getBoundingClientRect().top + scrollY + beat * innerHeight + 2, behavior: reduce ? "auto" : "smooth" });
+}
+
+// fireflies over the orchard: where (% of the scene), when they start, how slow they drift. Fixed, not random, so the
+// prerendered page and the live one agree.
+const FLIES = Array.from({ length: 26 }, (_, i) => ({ x: (i * 37 + 11) % 97, y: 30 + ((i * 53) % 60), d: -((i * 7) % 13), s: 9 + ((i * 5) % 8) }));
+
+// the lab's people are superstarling's own agents, in small groups, talking; I stand with Quinn and Nash, showing them
+// my laptop. x and w in % of the frame; the groups are drawn feet on the floor line.
+const GROUPS = [
+  { name: "agents-talk-1", x: 39, w: 12 }, { name: "me-with-agents", x: 52, w: 16 },
+  { name: "agents-talk-2", x: 68, w: 16 }, { name: "agents-talk-3", x: 84, w: 15 },
+];
 const SH = SHEETS as Record<string, Sheet>;
 
 /** A sheet's room in the layout before it loads: its frame's ratio (the frames come in as the thing is reached). */
@@ -76,7 +93,9 @@ function Sprite({ name, className = "", every }: { name: string; className?: str
   }, [s, every]);
   return s ? <div ref={ref} className={`sprite ${className}`} aria-hidden="true" style={firstFrame(s)} /> : null;
 }
-const OPP_STRIKE: [string, number] = ["kendo-opponent-strike", 9000];
+// the pair in the dojo take turns: aka strikes, then shiro answers a few seconds later
+const AKA_STRIKE: [string, number] = ["kendoka-aka-strike", 7000];
+const SHIRO_STRIKE: [string, number] = ["kendoka-shiro-strike", 10500];
 
 /** The water over a plate: rippling under its horizon (surface), or light from above (caustics). */
 function Water({ mode, horizon = [0.707, 0.735] }: { mode: "surface" | "caustics"; horizon?: [number, number] }) {
@@ -125,7 +144,7 @@ export function Home() {
 
   return (
     <div className="sea">
-      <TopBar />
+      <TopBar home />
       <div className="gauge" aria-hidden="true">
         <span className="val" ref={alt}>+3 000 m</span>
         <span className="rail" ref={rail}><i /></span>
@@ -138,7 +157,7 @@ export function Home() {
       </div>
 
       {/* the sky: the name alone up high, then the camera comes down onto the dojo by the sea */}
-      <section id="sky" data-scene data-m={S.sky.m} data-name="sky" data-pose="me-float,me-kendo" className="st sea-scene sea-sky">
+      <section id="sky" data-scene data-m={S.sky.m} data-name="sky" data-pose="me-float,me-ready-sky,me-record" className="st sea-scene sea-sky">
         <div className="st-stage">
           <div className="cam" data-at="0.1" data-to="1">
             <div className="high">
@@ -146,9 +165,18 @@ export function Home() {
               <canvas ref={flock} className="flock" aria-hidden="true" />
             </div>
             <div className="low">
-              <Plate name="harbour" phone="harbour-phone" />
-              <Water mode="surface" horizon={[0.8, 0.78]} />
-              <Sprite name="kendo-opponent" className="opponent" every={OPP_STRIKE} />
+              {/* the harbour, then through the dojo's open doors: the scroll zooms in on them and the inside takes over */}
+              <div className="zoom" data-at="1.2" data-to="2">
+                <Plate name="harbour" phone="harbour-phone" />
+                <Water mode="surface" horizon={[0.8, 0.78]} />
+              </div>
+              <div className="inside" data-at="1.72" data-to="1.98">
+                <Plate name="dojo-inside" phone="dojo-inside-phone" />
+                <div className="court">
+                  <Sprite name="kendoka-aka" className="kendoka aka" every={AKA_STRIKE} />
+                  <Sprite name="kendoka-shiro" className="kendoka shiro" every={SHIRO_STRIKE} />
+                </div>
+              </div>
             </div>
           </div>
           <ol className="st-caps sea-caps">
@@ -156,9 +184,17 @@ export function Home() {
               <p className="hero-kind">{S.sky.tag}</p>
               <h1>{S.sky.title}</h1>
               <p className="sea-line">{S.sky.line}</p>
-              <p className="down" aria-hidden="true"><span className="mouse"><i /></span><span className="desk-only">scroll to dive</span><span className="phone-only">swipe to dive</span></p>
+              <nav className="hero-index" aria-label="what is on this page">
+                {INDEX.map((x) => (
+                  <a key={x.to} href={`#${x.to}`} onClick={(e) => { e.preventDefault(); go(x.to, x.beat); }}>
+                    <IconFor i={x.icon} /><b>{x.name}</b><span>{x.what}</span>
+                  </a>
+                ))}
+              </nav>
+              <i className="cue" aria-hidden="true" />
             </li>
-            <li data-beat={1}><Card s={S.harbour} at={1} /></li>
+            <li data-beat={1} className="quiet" aria-hidden="true" />
+            <li data-beat={2}><Card s={S.harbour} at={2} /></li>
           </ol>
         </div>
       </section>
@@ -166,15 +202,10 @@ export function Home() {
       {/* ipporu, model by model, then all of it on one match: me on the side, filming */}
       <div className="sea-under" data-pose="me-record" style={{ "--plate": "url(/sea/harbour.webp)" } as CSSProperties}>
         <IpporuStory data={demo as unknown as StoryData} />
-        <section className="together" aria-label="the ipporu engine, all together">
-          <p className="st-step">all together</p>
-          <h2>every model, on the same match</h2>
-          <IpporuDemo src="/demo/all-japan-2024.mp4" poster="/demo/all-japan-2024.jpg" data={demo as DemoData} />
-        </section>
       </div>
 
       {/* the seaside: rowing out past the fleet, then in */}
-      <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat,me-dive" className="sea-ships"
+      <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat,me-boat-ready" className="sea-ships"
         words={<>
           <li data-beat={0}><Card s={S.ships} /></li>
           <li data-beat={1}><p className="sea-tag"><b>0 m</b> the surface</p><h2>and then, in.</h2></li>
@@ -207,16 +238,11 @@ export function Home() {
         <SpeechStory />
       </div>
 
-      {/* the lab: superstarling, people at work, the sea outside the window; then the notebook; me at my laptop */}
-      <SeaScene s={S.lab} plate="lab" phone="lab-phone" pose="me-laptop" className="sea-lab"
+      {/* the lab: superstarling, its agents at work and talking, me among them; the sea outside the window; then the notebook */}
+      <SeaScene s={S.lab} plate="lab-v3" phone="lab-v3-phone" pose="hidden" className="sea-lab"
         words={<>
           <li data-beat={0}><Card s={S.lab} /></li>
           <li data-beat={1}><Card s={S.notebook} at={1} />
-            <ol className="strata" aria-label={`${EXPERIMENTS.length} notebook entries, e1 to e105`}>
-              {Array.from({ length: 105 }, (_, i) => i + 1).map((n) => (
-                <li key={n} className={`${EXPERIMENTS.includes(n) ? "on" : ""}${n === 101 ? " hit" : ""}`} title={`e${n}`} />
-              ))}
-            </ol>
           </li>
         </>}>
         <div className="frame">
@@ -225,21 +251,16 @@ export function Home() {
             <div className="far far-jelly"><Sprite name="jelly" /></div>
             <img className="far far-lantern" src="/sea/lantern.webp" alt="" />
           </div>
-          {PEOPLE.map((p, i) => (
-            <span key={i} className="person" style={{ left: `${p.x}%`, "--span": p.span, animationDuration: `${p.dur}s`, animationDelay: `${p.delay}s` } as CSSProperties}>
-              <Sprite name={`person${p.n}`} />
-            </span>
+          {GROUPS.map((g) => (
+            <div key={g.name} className={`group ${g.name}`} style={{ left: `${g.x}%`, width: `${g.w}%` }}><Sprite name={g.name} /></div>
           ))}
         </div>
       </SeaScene>
 
       {/* the garden that glows: me in a hammock, and the way to write */}
-      <SeaScene s={S.garden} plate="garden" phone="garden-phone" pose="me-hammock" className="sea-garden" words={<li data-beat={0}><Card s={S.garden} startOpen /></li>}>
-        <div className="glow" aria-hidden="true">
-          <div className="drift d1"><Sprite name="jelly" /></div>
-          <div className="drift d2"><Sprite name="jelly" /></div>
-          <div className="drift d3"><Sprite name="jelly" /></div>
-          <div className="drift d4"><Sprite name="jelly" /></div>
+      <SeaScene s={S.garden} plate="orchard" phone="orchard-phone" pose="me-hammock-orchard" className="sea-garden" words={<li data-beat={0}><Card s={S.garden} startOpen /></li>}>
+        <div className="flies" aria-hidden="true">
+          {FLIES.map((f, i) => <i key={i} style={{ left: `${f.x}%`, top: `${f.y}%`, animationDelay: `${f.d}s, ${f.d / 2}s`, animationDuration: `${f.s}s, ${f.s / 3}s` }} />)}
         </div>
       </SeaScene>
     </div>

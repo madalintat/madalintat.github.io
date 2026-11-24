@@ -10,3 +10,12 @@
 .bar .mail:hover { border-color: var(--accent); }
 .page { max-width: 1080px; margin: 0 auto; padding: 96px var(--gutter) 64px; }
 @media (max-width: 720px) { .bar { gap: 14px; } .bar nav { gap: 14px; } .bar .mail { padding: 6px 12px; } }
+/* home: no fade over the paintings; the links on one solid chip at the right */
+.bar-home { background: none; justify-content: flex-end; pointer-events: none; }
+.bar-home nav, .bar-home .mail { pointer-events: auto; }
+.bar-home nav { background: #f7f5f0; border: 1px solid rgba(17, 19, 24, 0.12); border-radius: 8px; padding: 0 6px; gap: 2px; box-shadow: 0 6px 18px rgba(7, 12, 18, 0.18); }
+.bar-home nav a { color: #2b3140; padding: 8px 10px; font-weight: 500; }
+.bar-home nav a:hover { color: #111318; }
+.bar-home .mail { background: #111318; color: #f7f5f0; border: 1px solid #111318; border-radius: 8px; padding: 8px 14px; font-weight: 500; box-shadow: 0 6px 18px rgba(7, 12, 18, 0.18); }
+.bar-home .mail:hover { background: #2b3140; border-color: #2b3140; }
+@media (max-width: 720px) { .bar-home { gap: 8px; } .bar-home nav { gap: 0; } .bar-home nav a { padding: 8px 8px; } }

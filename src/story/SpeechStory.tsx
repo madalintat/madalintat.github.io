@@ -54,7 +54,7 @@ export function SpeechStory() {
         <ol className="st-caps">
           {SPEECH.map((b, i) => (
             <li key={b.id} data-beat={i}>
-              <p className="st-step">{b.id === "loop" ? "all together" : `model ${i + 1}`}</p>
+              <p className="st-step">{`model ${i + 1}`}</p>
               <h3>{b.title}</h3>
               <p>{b.line}</p>
               {b.num && <p className="st-num"><b data-num data-at={i + 0.15} data-to={i + 0.7}>{b.num}</b> {b.of}</p>}
@@ -87,12 +87,6 @@ export function SpeechStory() {
           <div className="sp-panel sp-voices" data-at={beat("voices") + 0.05}>
             {VOICES.map((v, i) => <Voice key={v.name} name={v.name} wer={v.wer} at={beat("voices") + 0.1 + i * 0.12} />)}
           </div>
-          {/* together: hear, think, speak */}
-          <ol className="sp-panel sp-loop" data-at={beat("loop") + 0.05}>
-            {["you speak", "jackrabbit hears", "an agent answers", "amami speaks"].map((s, i) => (
-              <li key={s} data-at={(beat("loop") + 0.1 + i * 0.15).toFixed(2)}>{s}</li>
-            ))}
-          </ol>
         </div>
       </div>
     </section>

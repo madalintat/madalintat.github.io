@@ -100,14 +100,11 @@
 .sea-sky .sea-caps .hero { --ink: #111318; --body: #2b3140; --soft: #454c5c; place-self: center; text-align: center; max-width: 880px; padding: 0 20px; margin-top: -6svh; }
 .sea-sky .sea-caps .hero h1 { max-width: none; font-size: clamp(46px, 7.6vw, 118px); margin-top: 10px; }
 .sea-sky .sea-caps .hero .sea-line { margin: 14px auto 0; max-width: 30ch; font-size: clamp(17px, 1.6vw, 22px); }
-.down { margin-top: 38px; display: inline-flex; align-items: center; gap: 12px; padding: 8px 16px 8px 10px; border: 1px solid rgba(17, 19, 24, 0.16); border-radius: 6px; background: #f7f5f0; font: 500 13px var(--font-sans); color: #2b3140; }
-.down .mouse { width: 18px; height: 27px; border: 1.5px solid #2b3140; border-radius: 9px; position: relative; flex: none; }
-.down .mouse i { position: absolute; left: 50%; top: 5px; width: 3px; height: 6px; margin-left: -1.5px; border-radius: 2px; background: var(--aka, #e0563a); animation: dot 1.8s cubic-bezier(.6, 0, .3, 1) infinite; }
-.down .phone-only { display: none; }
-@keyframes dot { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 70% { transform: translateY(9px); opacity: 0; } 100% { opacity: 0; } }
-@media (max-width: 720px) { .down .desk-only { display: none; } .down .phone-only { display: inline; } }
-.sea-sky .sea-caps li[data-beat="1"] { align-self: start; justify-self: start; margin: clamp(92px, 16svh, 170px) 0 0 clamp(20px, 7vw, 120px); max-width: 560px; text-shadow: 0 1px 14px rgba(7, 12, 18, 0.85); }
-.opponent { position: absolute; z-index: 2; left: 60%; bottom: 4%; width: 15vw; min-width: 120px; }
+/* the scroll hint: a hairline with a drop sliding down it */
+.cue { position: relative; display: block; width: 1px; height: 64px; margin: 40px auto 0; background: rgba(17, 19, 24, 0.18); overflow: hidden; }
+.cue::after { content: ""; position: absolute; left: -1px; top: -12px; width: 3px; height: 12px; border-radius: 2px; background: #e0563a; animation: cue 2.2s cubic-bezier(.6, 0, .3, 1) infinite; }
+@keyframes cue { to { transform: translateY(88px); } }
+.sea-sky .sea-caps li[data-beat="2"] { align-self: start; justify-self: start; margin: clamp(92px, 16svh, 170px) 0 0 clamp(20px, 7vw, 120px); max-width: 560px; text-shadow: 0 1px 14px rgba(7, 12, 18, 0.85); }
 
 /* ---------- the water ---------- */
 .water { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 0.8s; }
@@ -127,12 +124,15 @@
 /* where I am in each scene: left, top, how wide */
 .me[data-pose="me-float"]   { --mx: 74; --my: 46; --mw: 11vw; }
 .me[data-pose="me-kendo"]   { --mx: 40; --my: 56; --mw: 13vw; }
-.me[data-pose="me-record"]  { --mx: 2;  --my: 70; --mw: 10vw; }
-.me[data-pose="me-boat"]    { --mx: 36; --my: 66; --mw: 16vw; }
+.me[data-pose="me-record"]  { --mx: 87; --my: 66; --mw: 9vw; }
+.me[data-pose="me-boat"]    { --mx: 52; --my: 66; --mw: 16vw; }
 .me[data-pose="me-dive"]    { --mx: 42; --my: 40; --mw: 15vw; }
 .me[data-pose="me-scuba"]   { --mx: 56; --my: 62; --mw: 16vw; }
 .me[data-pose="me-laptop"]  { --mx: 72; --my: 58; --mw: 7vw; }
 .me[data-pose="me-hammock"] { --mx: 56; --my: 58; --mw: 20vw; }
+.me[data-pose="me-ready-sky"] { --mx: 82; --my: 12; --mw: 8vw; }
+.me[data-pose="me-boat-ready"] { --mx: 52; --my: 62; --mw: 16vw; }
+.me[data-pose="me-hammock-orchard"] { --mx: 54; --my: 50; --mw: 28vw; }
 
 /* ---------- the whales, swimming through ---------- */
 .pod { z-index: 2; }
@@ -170,8 +170,8 @@
   .me[data-pose="me-float"] { --pw: 34vw; } .me[data-pose="me-kendo"] { --pw: 32vw; } .me[data-pose="me-record"] { --pw: 28vw; }
   .me[data-pose="me-boat"] { --pw: 44vw; } .me[data-pose="me-dive"] { --pw: 42vw; } .me[data-pose="me-scuba"] { --pw: 46vw; }
   .me[data-pose="me-laptop"] { --pw: 32vw; } .me[data-pose="me-hammock"] { --pw: 54vw; }
+  .me[data-pose="me-ready-sky"] { --pw: 34vw; } .me[data-pose="me-boat-ready"] { --pw: 44vw; } 
   .sea-under .me, .me[data-pose="me-record"] { opacity: 0.95; }
-  .opponent { width: 34vw; left: 4%; }
   .swim-doina { width: 120%; } .swim-tudor { width: 80%; } .swim-radu { width: 66%; }
   .person { width: 17%; }
   .sea-sky .sea-caps .hero { margin-top: -18svh; }
@@ -183,7 +183,7 @@
 .sea-ships .sea-caps li { --ink: #111318; --body: #2b3140; --soft: #454c5c; --line: rgba(17, 19, 24, 0.16); }
 .sea-scene.sea-ships .sea-caps .sea-tag { color: #454c5c; }
 /* the lab's words sit on the window glass, not the white wall */
-.sea-lab .sea-caps { left: max(18%, 20px); }
+.sea-lab .sea-caps { left: max(4%, 20px); }
 @media (max-width: 720px) { .sea-lab .sea-caps { left: 20px; } }
 
 /* more life: the ships drift on the swell, gulls over the seaside, the garden's jellies */
@@ -197,7 +197,7 @@
 
 /* ---------- the cards: a scene's words on a solid surface, readable over any painting ---------- */
 .sea-hero-kind, .hero-kind { font: 500 15px var(--font-sans); color: #454c5c; }
-.card { width: min(440px, calc(100vw - 32px)); background: #f7f5f0; color: #111318; border: 1px solid rgba(17, 19, 24, 0.1); border-radius: 8px; padding: 22px 22px 20px; box-shadow: 0 18px 40px rgba(7, 12, 18, 0.28); text-shadow: none; }
+.card { width: min(480px, calc(100vw - 32px)); max-height: calc(100svh - 112px); overflow-y: auto; scrollbar-width: none; background: #f7f5f0; color: #111318; border: 1px solid rgba(17, 19, 24, 0.1); border-radius: 8px; padding: 22px 22px 20px; box-shadow: 0 18px 40px rgba(7, 12, 18, 0.28); text-shadow: none; }
 .card-kind { display: flex; align-items: center; gap: 8px; font: 500 13px var(--font-sans); color: #454c5c; }
 .card .ico { width: 18px; height: 18px; flex: none; }
 .card h2 { margin-top: 12px; font: 600 clamp(26px, 2.4vw, 34px)/1.08 var(--font-sans); letter-spacing: -0.02em; color: #111318; max-width: none; }
@@ -207,6 +207,14 @@
 .card-stats dt { font: 600 22px/1.05 var(--font-sans); letter-spacing: -0.01em; color: #111318; }
 .card-stats dd { margin-top: 5px; font: 400 13px/1.35 var(--font-sans); color: #454c5c; }
 .card-links { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+/* real screens from the product, two side by side; a click opens one full size */
+.card-shots { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.card-shots a { display: block; border-radius: 6px; overflow: hidden; border: 1px solid rgba(17, 19, 24, 0.12); background: #111318; aspect-ratio: 16 / 10; }
+.card-shots img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; transition: opacity 0.15s; }
+.card-shots a:hover img { opacity: 0.88; }
+/* how it is built: one quiet line in mono, the engineer's footnote */
+.card-built { margin-top: 14px; display: flex; gap: 8px; align-items: flex-start; font: 400 12.5px/1.5 var(--font-mono, ui-monospace, monospace); color: #454c5c; }
+.card-built .ico { width: 14px; height: 14px; margin-top: 2px; }
 .card .btn { margin: 0; display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 12px; border-radius: 6px; border: 1px solid rgba(17, 19, 24, 0.16); background: #fff; color: #111318; font: 500 14px var(--font-sans); text-decoration: none; transition: background 0.15s, border-color 0.15s; }
 .card .btn:hover { background: #ece8e0; border-color: rgba(17, 19, 24, 0.3); }
 .card .btn.main { background: #111318; color: #f7f5f0; border-color: #111318; }
@@ -216,11 +224,11 @@
 @media (max-width: 720px) {
   /* the bottom sheet: the scene gets the screen, the words wait at the bottom until asked for */
   .sea-scene .sea-caps:has(.card), .sea-scene.sea-sky .sea-caps:has(.card), .sea-scene.sea-lab .sea-caps:has(.card) { inset: auto 0 0 0; left: 0; width: auto; }
-  .sea-scene .sea-caps li:has(.card), .sea-sky .sea-caps li[data-beat="1"]:has(.card) { align-self: end; justify-self: stretch; margin: 0; max-width: none; }
+  .sea-scene .sea-caps li:has(.card), .sea-sky .sea-caps li[data-beat="2"]:has(.card) { align-self: end; justify-self: stretch; margin: 0; max-width: none; }
   .card { user-select: none; -webkit-user-select: none; }
   .card-head { cursor: pointer; }
   html.sheet-open .me { opacity: 0; transition: opacity 0.2s; }
-  .me[data-pose="me-hammock"] { top: 84px; bottom: auto; }
+  .me[data-pose="me-hammock"], .me[data-pose="me-hammock-orchard"] { top: 84px; bottom: auto; }
   .card { width: 100%; border-radius: 16px 16px 0 0; border-width: 1px 0 0; padding: 10px 18px calc(16px + env(safe-area-inset-bottom)); box-shadow: 0 -12px 32px rgba(7, 12, 18, 0.3); touch-action: pan-x; }
   .card::before { content: ""; display: block; width: 36px; height: 4px; margin: 0 auto 10px; border-radius: 2px; background: rgba(17, 19, 24, 0.18); }
   .card h2 { font-size: 22px; margin-top: 6px; }
@@ -239,3 +247,60 @@
 .card.open .card-toggle { transform: rotate(180deg); }
 @media (max-width: 720px) { .card-toggle { display: inline-flex; } }
 @media (scripting: none) { .card-more { display: block !important; } .card-toggle { display: none !important; } }
+
+/* ---------- the dojo: the harbour zooms in on the dojo's doors, then the inside takes over ---------- */
+.low .zoom { position: absolute; inset: 0; transform-origin: 69% 79%; transform: scale(calc(1 + var(--t, 0) * var(--t, 0) * 3.5)); will-change: transform; }
+.low .inside { position: absolute; inset: 0; opacity: calc((var(--t, 0) - 0.05) * 1.25); }
+.low .inside:not(.on) { visibility: hidden; }
+/* the court sits right of the card, the two fighters face each other a few steps apart */
+.court { position: absolute; left: 38%; bottom: 9%; width: 46%; height: 58%; }
+.kendoka { position: absolute; bottom: 0; width: 26%; }
+.kendoka.aka { left: 8%; }
+.kendoka.shiro { right: 8%; }
+.sea-caps li.quiet { display: none; }
+@media (max-width: 720px) {
+  .low .zoom { transform-origin: 70% 76%; }
+  .court { left: 0; width: 100%; height: 44%; bottom: 22%; }
+  .kendoka { width: 46%; }
+  .kendoka.aka { left: 2%; } .kendoka.shiro { right: 2%; }
+}
+
+.me[data-pose="hidden"] .me-sprite { opacity: 0; transform: translateY(24px) scale(0.94); pointer-events: none; }
+
+/* the lab's groups: feet on the floor line, the group's own loop (talking, gesturing) */
+.group { position: absolute; bottom: 7%; z-index: 2; }
+@media (max-width: 720px) { .group { bottom: 9%; } .group.agents-talk-1, .group.agents-talk-3 { display: none; } .group.agents-talk-2 { left: 0 !important; width: 50% !important; } .group.me-with-agents { left: 48% !important; width: 52% !important; } }
+
+/* the orchard: fireflies drifting and blinking */
+.flies { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+/* deslop-ignore-next-line 19: fireflies are points of light, round on purpose */
+.flies i { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #ffd7a8; box-shadow: 0 0 8px 2px rgba(255, 215, 168, 0.55); animation-name: fly, blink; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; }
+@keyframes fly { to { transform: translate(3vw, -5vh); } }
+@keyframes blink { 0%, 60% { opacity: 0.15; } 100% { opacity: 1; } }
+
+/* paintings, clouds, sprites and the character are scenery: a double click must never select or drag them */
+.plate, .plate img, .cloud, .sprite, .me, .flock, .flies, .cue, .group, .court, .window, .zoom, .inside, canvas { user-select: none; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: transparent; }
+::selection { background: #111318; color: #f7f5f0; }
+
+/* the index under the name: four plain lines, what each thing is, each one a jump to its chapter */
+.hero-index { margin: 28px auto 0; display: grid; gap: 6px; width: min(560px, 100%); text-align: left; }
+.hero-index a { display: grid; grid-template-columns: 18px 128px 1fr; align-items: center; gap: 10px; padding: 9px 14px; border-radius: 8px; background: #f7f5f0; border: 1px solid rgba(17, 19, 24, 0.1); color: #111318; text-decoration: none; font: 400 14.5px/1.35 var(--font-sans); box-shadow: 0 4px 14px rgba(7, 12, 18, 0.08); transition: border-color 0.15s, background 0.15s; }
+.hero-index a:hover { border-color: rgba(17, 19, 24, 0.32); background: #fff; }
+.hero-index .ico { width: 18px; height: 18px; }
+.hero-index b { font-weight: 600; }
+.hero-index span { color: #454c5c; }
+@media (max-width: 720px) {
+  .hero-index { margin-top: 18px; gap: 5px; }
+  .hero-index a { grid-template-columns: 16px 1fr; padding: 8px 12px; font-size: 13.5px; row-gap: 1px; }
+  .hero-index span { grid-column: 2; }
+}
+
+/* phones: I keep out of the words and the fighters: high up in the sky and the dojo, the hammock between the trees */
+@media (max-width: 720px) {
+  .me[data-pose="me-float"], .me[data-pose="me-ready-sky"], .me[data-pose="me-record"] { top: 62px; bottom: auto; }
+  .me[data-pose="me-float"] { --pw: 24vw; } .me[data-pose="me-ready-sky"] { --pw: 20vw; } .me[data-pose="me-record"] { --pw: 22vw; }
+  /* the phone orchard: trunks at a quarter and seven tenths of the width, the hammock slung between them */
+  .me[data-pose="me-hammock"], .me[data-pose="me-hammock-orchard"] { top: 60svh; bottom: auto; right: 14vw; --pw: 66vw; }
+  .group { bottom: 34% !important; }
+  .sea-ships .sea-caps li[data-beat="1"] { margin-bottom: 56svh; padding: 0 20px; }
+}
