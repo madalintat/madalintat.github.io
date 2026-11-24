@@ -13,6 +13,8 @@
 .work .links a { color: var(--accent); }
 .work-head.solo { grid-template-columns: 1fr; }
 .work-head .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* two numbers to a row beside the hero: a value never breaks, and it shrinks to its column instead */
+.work-head .numbers dt { white-space: nowrap; font-size: clamp(30px, 3.4vw, var(--size-display)); }
 .hero-image { display: block; width: 100%; border-radius: var(--radius); border: 1px solid var(--line); }
 
 .numbers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 40px; }
@@ -26,7 +28,7 @@
 .limits li::before { content: "–"; position: absolute; left: 0; }
 
 .work-foot { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); }
-.next { color: var(--accent); }
+.next { color: var(--accent); display: inline-flex; align-items: center; min-height: 44px; }
 .sources { margin-top: 24px; padding-left: 20px; color: var(--soft); font-size: var(--size-small); }
 .sources a { /* deslop-ignore 09: an underline on a real link */ text-decoration: underline; text-decoration-color: var(--line); }
 

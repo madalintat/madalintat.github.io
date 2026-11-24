@@ -85,12 +85,17 @@ function Sprite({ name, className = "", every }: { name: string; className?: str
   const ref = useRef<HTMLDivElement>(null), s = SH[name];
   useEffect(() => {
     if (!ref.current || !s) return;
-    const sp = sprite(ref.current, s);
+    const el = ref.current, sp = sprite(el, s);
     const rs = (every?.[0] ?? []).map((n) => SH[n]).filter(Boolean);
-    preload(...rs);
-    let i = 0;
-    const id = rs.length ? window.setInterval(() => sp.react(rs[i++ % rs.length]), every![1]) : 0;
-    return () => { sp.stop(); clearInterval(id); };
+    if (!rs.length) return () => sp.stop();
+    // the reactions load and play only while the sprite is near the screen
+    let i = 0, id = 0;
+    const io = new IntersectionObserver(([e]) => {
+      clearInterval(id);
+      if (e.isIntersecting) { preload(...rs); id = window.setInterval(() => sp.react(rs[i++ % rs.length]), every![1]); }
+    }, { rootMargin: "50%" });
+    io.observe(el);
+    return () => { sp.stop(); io.disconnect(); clearInterval(id); };
   }, [s, every]);
   return s ? <div ref={ref} className={`sprite ${className}`} aria-hidden="true" style={firstFrame(s)} /> : null;
 }

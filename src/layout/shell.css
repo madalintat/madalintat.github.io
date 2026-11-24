@@ -9,7 +9,12 @@
 .bar .mail { color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
 .bar .mail:hover { border-color: var(--accent); }
 .page { max-width: 1080px; margin: 0 auto; padding: 96px var(--gutter) 64px; }
-@media (max-width: 720px) { .bar { gap: 14px; } .bar nav { gap: 14px; } .bar .mail { padding: 6px 12px; } }
+/* phones: every link in the bar is a 44px tap, the look unchanged */
+@media (max-width: 720px) {
+  .bar { gap: 6px; } .bar nav { gap: 0; } .bar .mail { padding: 6px 12px; }
+  .bar .who, .bar nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 7px; }
+  .bar .who { padding-left: 0; }
+}
 /* home: no fade over the paintings; the links on one solid chip at the right */
 .bar-home { background: none; justify-content: flex-end; pointer-events: none; }
 .bar-home nav, .bar-home .mail { pointer-events: auto; }

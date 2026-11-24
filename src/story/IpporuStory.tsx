@@ -69,7 +69,12 @@ export function IpporuStory() {
       });
     };
     // nothing loads or plays until the story is on screen, and everything stops once it is passed
-    const io = new IntersectionObserver(([e]) => { near = e.isIntersecting; sync(); });
+    // the other clips' posters load as the story comes near, not with the page
+    const io = new IntersectionObserver(([e]) => {
+      near = e.isIntersecting;
+      if (near) for (const v of vids) if (!v.getAttribute("poster")) v.poster = v.dataset.poster!;
+      sync();
+    }, { rootMargin: "100%" });
     io.observe(el);
     const mo = new MutationObserver(sync);
     mo.observe(el, { attributes: true, attributeFilter: ["data-cur"] });
@@ -88,7 +93,7 @@ export function IpporuStory() {
         <div className="st-screen ip-clips">
           {STEPS.map((s, i) => (
             <figure key={s.id} className="ip-clip" data-i={i}>
-              <video muted loop playsInline preload="none" poster={`/models/${clipOf(s)}.jpg`} width={1128} height={520}
+              <video muted loop playsInline preload="none" poster={i === 0 ? `/models/${clipOf(s)}.jpg` : undefined} data-poster={`/models/${clipOf(s)}.jpg`} width={1128} height={520}
                 aria-label={"clip" in s ? `${s.title}, its output on the match` : "the shinai ribbon on an 8-dan ippon"}>
                 <source src={`/models/${clipOf(s)}.webm`} type="video/webm" />
                 <source src={`/models/${clipOf(s)}.mp4`} type="video/mp4" />

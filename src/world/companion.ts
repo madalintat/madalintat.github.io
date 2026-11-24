@@ -21,12 +21,14 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
     // "hidden": the scene draws me itself (the lab, with the agents), so the companion steps out
     if (next === "hidden") { if (pose !== next) { settle(); pose = next; root.dataset.pose = next; } return; }
     if (next === pose || !sheets[next]) return;
+    // a pose the reader could not see (the phone hides the filming one) has no move out of it worth playing
+    const unseen = getComputedStyle(root).opacity === "0";
     const from = pose; pose = next;
     preload(sheets[next], ...(REACT[next] && sheets[REACT[next]] ? [sheets[REACT[next]]] : []));
     root.dataset.pose = next;
     settle();
     if (reduce || !sp) { sp?.swap(sheets[next]); return; }
-    const move = sheets[`${from}-to-${next}`];
+    const move = unseen ? undefined : sheets[`${from}-to-${next}`];
     if (move) { sp.swap(sheets[next]); sp.react(move); return; } // the move itself is the change
     root.classList.add("out");
     timer = window.setTimeout(() => {
