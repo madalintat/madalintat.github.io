@@ -17,7 +17,7 @@ function* html(dir) {
 
 const internal = new Map(), external = new Set();
 for (const f of html(D)) for (const [, href] of readFileSync(f, "utf8").matchAll(/(?:href|src|poster)="([^"#]+)/g)) {
-  if (href.startsWith("mailto:")) continue;
+  if (href.startsWith("mailto:") || href.startsWith("tel:")) continue;
   // the site's own absolute urls (canonical, og, sitemap) are checked against dist/ like any internal link
   const own = href.startsWith(SITE) ? href.slice(SITE.length) || "/" : null;
   if (/^https?:/.test(href) && own == null) { external.add(href); continue; }
