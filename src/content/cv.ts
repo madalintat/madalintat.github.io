@@ -11,6 +11,7 @@ export type Cv = { contact: typeof CONTACT; role: string; profile: string; secti
 export const CONTACT = {
   name: "Mădălin Tatarciuc",
   email: "madalintat@gmail.com",
+  phone: "+40 754 461 974",
   site: "cetusian.com",
   place: "Bucharest, Romania · EU citizen, remote",
   github: "github.com/madalintat",

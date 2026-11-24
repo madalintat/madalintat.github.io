@@ -18,7 +18,7 @@ export function CvPage() {
         <h1>{c.contact.name}</h1>
         <p className="role">{c.role}</p>
         <p className="contact">
-          <a href={`mailto:${c.contact.email}`}>{c.contact.email}</a><i>|</i><a href={`https://${c.contact.site}`}>{c.contact.site}</a><i>|</i><span>{c.contact.place}</span>
+          <a href={`mailto:${c.contact.email}`}>{c.contact.email}</a><i>|</i><a href={`tel:${c.contact.phone.replace(/ /g, "")}`}>{c.contact.phone}</a><i>|</i><a href={`https://${c.contact.site}`}>{c.contact.site}</a><i>|</i><span>{c.contact.place}</span>
         </p>
         <p className="contact">
           <a href={`https://${c.contact.linkedin}`}>{c.contact.linkedin}</a><i>|</i><a href={`https://${c.contact.github}`}>{c.contact.github}</a><i>|</i><a href={`https://${c.contact.hf}`}>{c.contact.hf}</a>
