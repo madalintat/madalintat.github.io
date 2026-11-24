@@ -109,7 +109,7 @@ export const SCENES: Scene[] = [
   {
     id: "garden", m: 380, name: "the orchard",
     title: "write to me",
-    line: "about anything: a remote role in applied ai, a model, kendo, chess, or a good river to fish.",
+    line: "for a remote role in applied ai, or just to talk models, kendo, chess or a good river to fish.",
     facts: [],
     links: [
       { label: EMAIL, href: `mailto:${EMAIL}`, icon: "mail" },

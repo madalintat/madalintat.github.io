@@ -21,7 +21,7 @@ export function NotesPage() {
     <Shell>
       <header className="blog-head">
         <p className="tag">notes</p>
-        <h1 className="page-title">notes, about anything</h1>
+        <h1 className="page-title">notes</h1>
         <p className="blog-lede">what i'm building and training, and everything around it: kendo, chess, fishing in transylvania, old hardware brought back to life, and life itself. written when there's something worth saying.</p>
         <p className="blog-topics" aria-label="what the notes cover">{TOPICS.map((t) => <span key={t}>{t}</span>)}</p>
       </header>

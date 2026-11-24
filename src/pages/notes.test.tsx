@@ -13,7 +13,7 @@ const at = (url: string) => renderToString(
 test("with no published post, the blog shows its head, what it covers and how to follow", () => {
   expect(notes).toHaveLength(0);
   const html = at("/notes");
-  expect(html).toContain("notes, about anything");
+  expect(html).toContain(">notes</h1>");
   expect(html).toContain("first notes on their way");
   expect(html).toContain('href="/notes/rss.xml"');
 });
