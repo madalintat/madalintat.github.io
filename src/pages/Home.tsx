@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { TopBar } from "../layout/Shell";
-import { LAYERS, CHAIN, EXPERIMENTS, type Layer } from "../content/world";
+import { LAYERS, EXPERIMENTS, type Layer } from "../content/world";
 import { sceneProgress, depthAt } from "../world/progress";
 import { startWorld } from "../world/canvas";
+import { startStories } from "../story/engine";
+import { IpporuStory, type StoryData } from "../story/IpporuStory";
+import { SpeechStory } from "../story/SpeechStory";
 import { IpporuDemo, type DemoData } from "../demo/IpporuDemo";
 import demo from "../../public/demo/all-japan-2024.json";
 import { PlayIcon, PauseIcon } from "../components/icons";
@@ -91,6 +94,7 @@ export function Home() {
     let stopWorld = () => {};
     const go = () => { if (canvas.current) stopWorld = startWorld(canvas.current); };
     const idle = "requestIdleCallback" in window ? requestIdleCallback(go, { timeout: 1500 }) : (setTimeout(go, 300) as unknown as number);
+    const stopStories = startStories();
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const scenes = [...document.querySelectorAll<HTMLElement>("[data-scene]")];
     const forms = [...document.querySelectorAll<HTMLElement>("[data-form]")];
@@ -112,7 +116,7 @@ export function Home() {
     tick();
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", onScroll);
-    return () => { if ("cancelIdleCallback" in window) cancelIdleCallback(idle); else clearTimeout(idle); stopWorld(); removeEventListener("scroll", onScroll); removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
+    return () => { stopStories(); if ("cancelIdleCallback" in window) cancelIdleCallback(idle); else clearTimeout(idle); stopWorld(); removeEventListener("scroll", onScroll); removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
   }, []);
 
   return (
@@ -156,6 +160,8 @@ export function Home() {
         </div>
       </Scene>
 
+      <SpeechStory />
+
       <Scene l={L.city}>
         <p className="tag caption">{L.city.title}</p>
       </Scene>
@@ -164,16 +170,10 @@ export function Home() {
         <Head l={L.street} /><Facts l={L.street} /><Links l={L.street} />
       </Scene>
 
-      <section className="under" data-form aria-label="the ipporu engine">
-        <p className="tag">under the dojo floor</p>
-        <h2>the engine, link by link</h2>
-        <ol className="links-chain">
-          {CHAIN.map((c, i) => (
-            <li key={c.name} className={`f${c.ships ? " ships" : ""}`} style={at(i / CHAIN.length)}>
-              <b>{c.name}</b><span>{c.note}</span>
-            </li>
-          ))}
-        </ol>
+      <IpporuStory data={demo as unknown as StoryData} />
+      <section className="under" data-form aria-label="the ipporu engine, all together">
+        <p className="tag">all together</p>
+        <h2>every model, on the same match</h2>
         <IpporuDemo src="/demo/all-japan-2024.mp4" poster="/demo/all-japan-2024.jpg" data={demo as DemoData} />
       </section>
 

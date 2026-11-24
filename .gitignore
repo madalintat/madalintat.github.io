@@ -6,3 +6,7 @@ dist-ssr/
 _site/
 *.tsbuildinfo
 docs/sweep/*.png
+
+.env
+.env.*
+art/scratch/

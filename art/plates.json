@@ -1,0 +1,14 @@
+{
+  "sky-ships": {
+    "aspect": "16:9",
+    "brief": "Dusk over the open sea, seen from a high cliff. The upper two thirds are sky in four flat bands from stone at the top through warm haze to a low red sun (--aka) sitting on the horizon on the right. A murmuration of starlings, several hundred small dark birds, swirls in one soft cloud shape in the upper right sky. On the horizon line, a small fleet of six sailing and steam ships at different distances, flat slate and street silhouettes, the nearest one with one lit lamp window. The sea in the lower third is flat bands of sea and mid tones with thin stone glints of reflected sun. The upper left third is calm, empty sky."
+  },
+  "whales": {
+    "aspect": "16:9",
+    "brief": "Underwater, about a thousand metres down where the last surface light fades. Flat shafts of pale light slant down from the upper left through mid and deep water. Three humpback whales swim in a loose line from left to right at different distances: the nearest large in the lower middle, two smaller behind, each with its own pale markings on the flippers so they are told apart. Real whale anatomy simplified to flat shapes in street and slate with stone undersides. A few tiny specks of drifting particles. The upper left third is calm open water."
+  },
+  "deep": {
+    "aspect": "16:9",
+    "brief": "The deep sea, near the floor of a trench, almost black (--deep and --print). The only light is bioluminescence in --glow: a few jellyfish, a siphonophore chain, small lantern fish, scattered points. On the right, a tall wall of rock shows layered sediment bands, many thin horizontal strata in floor and slate tones, and one single band glows faintly in --aka. On the sea floor at the bottom centre stands a small beacon on a tripod with one warm --lamp light. The upper left third is calm dark water."
+  }
+}
