@@ -10,3 +10,4 @@ docs/sweep/*.png
 .env
 .env.*
 art/scratch/
+art/me/

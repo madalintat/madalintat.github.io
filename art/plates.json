@@ -11,7 +11,6 @@
     "aspect": "16:9",
     "brief": "The deep sea, near the floor of a trench, almost black (--deep and --print). The only light is bioluminescence in --glow: a few jellyfish, a siphonophore chain, small lantern fish, scattered points. On the right, a tall wall of rock shows layered sediment bands, many thin horizontal strata in floor and slate tones, and one single band glows faintly in --aka. On the sea floor at the bottom centre stands a small beacon on a tripod with one warm --lamp light. The upper left third is calm dark water."
   },
-
   "sky": {
     "aspect": "16:9",
     "brief": "Background plate, nothing moving in it. Dusk over the open sea seen from high above a rocky coast. Sky in five flat bands from stone at the top through warm haze to --aka near the horizon, with two long thin flat clouds lit warm underneath. A low red sun (--aka) half sunk into the horizon on the right, its reflection a column of short flat stone and lamp dashes on the water. On the far left, a dark headland with layered rock faces, a few windswept pine silhouettes and a small white lighthouse with one --lamp light at its top. The sea fills the lower third in flat bands of sea and mid, with many thin stone glints. NO birds, NO ships: they are added later. Richly detailed like a mid-century travel poster, yet calm. The upper left half of the sky is open for a headline."
@@ -67,5 +66,69 @@
   "trench": {
     "aspect": "16:9",
     "brief": "Background plate: the floor of a deep ocean trench, almost black (deep and print). A tall cliff of layered sediment fills the right half: many thin horizontal strata in floor, slate and street tones, crisp and flat, with one single thin band glowing faintly --aka about two thirds up. The sea floor runs along the bottom, flat and dark, with a few pale rocks. On the floor in the centre stands a small beacon on a tripod with one warm --lamp light and a soft flat circle of light on the ground. A few faint --glow specks drift. The left half is calm dark water."
+  },
+  "clouds": {
+    "aspect": "16:9",
+    "brief": "Cut-outs on flat chroma green (#00FF00), evenly lit, nothing else on the green: five separate flat stylised clouds spread apart with wide green space between them, none touching. Long, low, horizontal mid-century poster clouds with soft scalloped tops and flat bottoms, each in two tones: a warm stone top (#E3DED6) and a pale warm shadow underneath (#CFC8BC), with a thin lamp-coloured rim of dusk light on the lower edge. Different sizes, from one very long one to a small puff. No sky, no shadow on the green."
+  },
+  "lab": {
+    "aspect": "16:9",
+    "brief": "Background plate, the inside of an underwater research laboratory deep in the sea, seen straight on. The whole back wall is ONE huge single-pane rectangular window, no bars or frames across it, filling the upper middle two thirds of the image: through it the open deep sea in flat mid and deep blue bands with soft light shafts from above, a coral slope far away. NOTHING stands in front of the window. In the room: a warm wooden floor along the bottom fifth, long work benches on the left and right with dark blank screens and small lamps glowing lamp colour, many plants everywhere: hanging ivy from the ceiling at the edges, ferns and monsteras in pots on the floor, a row of hydroponic shelves with green leaves glowing under small grow lights on the right. A spiral stair at the far left. Warm, calm, inhabited but with NO people. Flat screen print style, lamp and sea tones, the upper left corner calm."
+  },
+  "lab-phone": {
+    "aspect": "9:16",
+    "brief": "Background plate composed upright for a phone: the inside of an underwater research laboratory deep in the sea. The middle of the back wall is ONE huge single-pane window, no bars across it, from a third down to two thirds down: through it the open deep sea in flat blue bands with light shafts and a far coral slope. Nothing in front of the window. A warm wooden floor along the bottom fifth, a work bench with a dark blank screen and a lamp, many plants: hanging ivy at the top edges, ferns and monsteras in pots on the floor. NO people. Flat screen print style, the top third calm."
+  },
+  "people": {
+    "aspect": "16:9",
+    "brief": "Cut-outs on flat chroma green (#00FF00), evenly lit, nothing else on the green: five researchers seen fully from the side, all FACING RIGHT, whole body head to feet, spread apart in one row with wide green space between them, none touching, all standing on the same baseline, same scale. Flat mid-century screen print figures, simple faces with no features. 1) a woman in a white lab coat walking, holding a tablet, 2) a man in a dark sweater walking, carrying a potted fern, 3) a woman in overalls walking with a small watering can, 4) a man in a lab coat walking, reading a sheet of paper, 5) a short-haired person in a slate jacket walking with a mug. Clothes in stone, slate, street and one aka accent. No shadow on the green."
+  },
+  "garden": {
+    "aspect": "16:9",
+    "brief": "Background plate: the deepest sea floor transformed into a glowing garden at night. Almost black water (deep and print) above. Across the floor, a garden of bioluminescent life in glow and soft lamp tones: tall sea pens, fan corals, tube worms, soft round anemones, glowing sea grass, small glowing jellies drifting just above. A narrow path of pale sand runs from the bottom centre into the garden, and at its end stands a small beacon on a tripod with one warm lamp light. Calm, magical, rich in detail at the bottom third, the upper half calm dark water for words."
+  },
+  "garden-phone": {
+    "aspect": "9:16",
+    "brief": "Background plate composed upright for a phone: the deepest sea floor as a glowing garden at night. Almost black water fills the top half. The bottom half is a garden of bioluminescent life in glow and soft lamp tones: tall sea pens, fan corals, tube worms, anemones, glowing sea grass, small glowing jellies above. A pale sand path leads to a small beacon on a tripod with one warm lamp light. The top half calm dark water."
+  },
+  "me-sheet": {
+    "aspect": "16:9",
+    "brief": "Character sheet of the same young man as in the reference photos: slim, early twenties, long wavy dark brown hair falling to his shoulders with a centre parting, calm thoughtful face, light skin. Drawn as a character in the flat mid-century screen print style of the illustration references (flat shapes, two tones per colour, no outlines, a warm rim light from the upper left), friendlier and a little stylised but clearly him. Three full-body views side by side in one row, same scale, standing relaxed: front, side facing right, back. He wears a dark navy sweater, dark trousers, simple dark shoes. Each view whole and apart.  on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow on the green."
+  },
+  "me-float": {
+    "aspect": "16:9",
+    "brief": "the same young man as in the reference photos: slim, early twenties, long wavy dark brown hair falling to his shoulders with a centre parting, calm thoughtful face, light skin. Drawn as a character in the flat mid-century screen print style of the illustration references (flat shapes, two tones per colour, no outlines, a warm rim light from the upper left), friendlier and a little stylised but clearly him. He floats through the sky as if weightless, body tilted, arms open wide, one knee bent, hair and sweater lifting in the wind, looking down with a small smile. Dark navy sweater, dark trousers. Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow on the green."
+  },
+  "me-kendo": {
+    "aspect": "16:9",
+    "brief": "the same young man as in the reference photos: slim, early twenties, long wavy dark brown hair falling to his shoulders with a centre parting, calm thoughtful face, light skin. Drawn as a character in the flat mid-century screen print style of the illustration references (flat shapes, two tones per colour, no outlines, a warm rim light from the upper left), friendlier and a little stylised but clearly him. He is a kendoka in full kendo armour (bogu): navy men helmet with metal grille hiding the face, a white tenugui edge showing, black do breastplate, navy kote gloves, navy hakama, barefoot. Seen from the side facing right, in chudan no kamae: the bamboo shinai held in both hands pointing forward at throat height, feet apart, ready. Real kendo equipment, accurate. Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow on the green."
+  },
+  "me-record": {
+    "aspect": "16:9",
+    "brief": "the same young man as in the reference photos: slim, early twenties, long wavy dark brown hair falling to his shoulders with a centre parting, calm thoughtful face, light skin. Drawn as a character in the flat mid-century screen print style of the illustration references (flat shapes, two tones per colour, no outlines, a warm rim light from the upper left), friendlier and a little stylised but clearly him. He kneels on one knee at the side of a kendo court, face visible, his men helmet set on the floor beside him, still wearing navy hakama, black do and a navy keikogi top. He holds up a phone sideways in both hands, filming the match, intent. Facing right. Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow on the green."
+  },
+  "me-boat": {
+    "aspect": "16:9",
+    "brief": "the same young man as in the reference photos: slim, early twenties, long wavy dark brown hair falling to his shoulders with a centre parting, calm thoughtful face, light skin. Drawn as a character in the flat mid-century screen print style of the illustration references (flat shapes, two tones per colour, no outlines, a warm rim light from the upper left), friendlier and a little stylised but clearly him. He sits in a small wooden rowing boat seen from the side facing right, one oar resting, hair moving in the sea wind, looking out to the horizon. A short calm band of flat sea blue under the boat only. Dark navy sweater. Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow on the green."
+  },
+  "me-dive": {
+    "aspect": "16:9",
+    "brief": "the same young man as in the reference photos: slim, early twenties, long wavy dark brown hair falling to his shoulders with a centre parting, calm thoughtful face, light skin. Drawn as a character in the flat mid-century screen print style of the illustration references (flat shapes, two tones per colour, no outlines, a warm rim light from the upper left), friendlier and a little stylised but clearly him. He leaps into the sea: a clean dive mid-air, body stretched in an arc head down towards the lower right, arms together over his head, legs together, hair streaming. He wears dark swim shorts, bare chest, slim. Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow on the green."
+  },
+  "me-scuba": {
+    "aspect": "16:9",
+    "brief": "the same young man as in the reference photos: slim, early twenties, long wavy dark brown hair falling to his shoulders with a centre parting, calm thoughtful face, light skin. Drawn as a character in the flat mid-century screen print style of the illustration references (flat shapes, two tones per colour, no outlines, a warm rim light from the upper left), friendlier and a little stylised but clearly him. He swims underwater with scuba gear, seen from the side, body horizontal, moving to the right: black wetsuit, a yellow-grey air tank on his back, a dive mask, regulator in his mouth, long fins, his long hair floating up, a few small bubbles rising. One arm reaching forward, calm and curious. Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow on the green."
+  },
+  "me-laptop": {
+    "aspect": "16:9",
+    "brief": "the same young man as in the reference photos: slim, early twenties, long wavy dark brown hair falling to his shoulders with a centre parting, calm thoughtful face, light skin. Drawn as a character in the flat mid-century screen print style of the illustration references (flat shapes, two tones per colour, no outlines, a warm rim light from the upper left), friendlier and a little stylised but clearly him. He sits on a tall wooden lab stool, one foot on its rung, working on an open laptop resting on his knee, the screen a dark blank shape facing him, seen from the side facing right, focused, a mug on the stool's ledge. Dark navy sweater, dark trousers. The stool is included. Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow on the green."
+  },
+  "me-hammock": {
+    "aspect": "16:9",
+    "brief": "the same young man as in the reference photos: slim, early twenties, long wavy dark brown hair falling to his shoulders with a centre parting, calm thoughtful face, light skin. Drawn as a character in the flat mid-century screen print style of the illustration references (flat shapes, two tones per colour, no outlines, a warm rim light from the upper left), friendlier and a little stylised but clearly him. He lies relaxed in a woven hammock strung between two tall glowing sea fans (bioluminescent, in glow #8FE3D2 tones) that stand on small rocks, one arm behind his head, reading a small book, bare feet, dark sweater, a few glowing specks around. The hammock, the two sea fans and their rocks are all included and whole. Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow on the green."
+  },
+  "kendo-opponent": {
+    "aspect": "16:9",
+    "brief": "Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow. A kendoka in full kendo armour seen from the side FACING LEFT, in chudan no kamae, shinai pointing forward at throat height: white keikogi and white hakama, black do, navy men helmet with metal grille hiding the face, navy kote, a white tasuki ribbon tied on his back. Real kendo equipment, accurate. Same flat mid-century screen print style as the references, two tones per colour, warm rim light from the upper left, no outlines."
   }
 }

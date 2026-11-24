@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sea review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f7f5f0; --card: #ffffff; --ink: #111318; --body: #454c5c; --soft: #6e7483; --line: #e3ded6; --aka: #e0563a; --ok: #2e5e6e; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); font: 14px/1.45 Inter, system-ui, sans-serif; display: grid; grid-template-rows: auto 1fr; overflow: hidden; }
+  header { display: flex; align-items: center; gap: 24px; padding: 14px 22px; border-bottom: 1px solid var(--line); background: var(--paper); }
+  header h1 { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  nav { display: flex; gap: 2px; }
+  nav button { font: 500 13px Inter, sans-serif; color: var(--soft); background: none; border: 0; padding: 7px 12px; border-radius: 6px; cursor: pointer; display: flex; gap: 7px; align-items: center; }
+  nav button:hover { color: var(--ink); background: #efece6; }
+  nav button.on { color: var(--ink); background: #e9e5dd; }
+  nav button i { font: 500 11px "JetBrains Mono", monospace; color: var(--soft); font-style: normal; }
+  .tally { margin-left: auto; font: 12px "JetBrains Mono", monospace; color: var(--soft); }
+  main { overflow: auto; padding: 18px 22px 28px; }
+  .lede { max-width: 760px; color: var(--body); margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+  .card.keep { border-color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok); }
+  .card.redo { border-color: var(--aka); box-shadow: inset 0 0 0 1px var(--aka); }
+  .pic { aspect-ratio: 16 / 9; background: #2b3140; display: grid; place-items: center; cursor: zoom-in; overflow: hidden; }
+  .pic.tall { aspect-ratio: 16 / 9; }
+  .pic.check { background: repeating-conic-gradient(#cfd3da 0 25%, #e7e9ed 0 50%) 0 0 / 16px 16px; }
+  .pic img, .pic video { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .meta { padding: 10px 12px 12px; display: grid; gap: 6px; }
+  .meta b { font-weight: 600; font-size: 13.5px; }
+  .meta p { color: var(--body); font-size: 12.5px; }
+  .row { display: flex; gap: 6px; }
+  .row button { flex: 1; font: 500 12.5px Inter, sans-serif; padding: 6px 0; border-radius: 6px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); cursor: pointer; }
+  .row button:hover { border-color: var(--soft); }
+  .keep .row .k { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .redo .row .r { background: var(--aka); border-color: var(--aka); color: #fff; }
+  textarea { width: 100%; resize: vertical; min-height: 32px; font: 12.5px Inter, sans-serif; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink); }
+  .plan { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; max-width: 1200px; }
+  .plan .card { padding: 16px 18px; gap: 10px; }
+  .plan h2 { font-size: 14px; font-weight: 600; }
+  .plan ol { padding-left: 18px; display: grid; gap: 6px; color: var(--body); }
+  .plan li b { color: var(--ink); font-weight: 600; }
+  .plan .meta { padding: 0; }
+  .mono { font: 12px "JetBrains Mono", monospace; color: var(--soft); }
+  .zoom { position: fixed; inset: 0; background: rgba(17, 19, 24, 0.9); display: none; place-items: center; z-index: 5; cursor: zoom-out; padding: 30px; }
+  .zoom.on { display: grid; }
+  .zoom img, .zoom video { max-width: 100%; max-height: 100%; border-radius: 6px; }
+  @media (max-width: 760px) { header { flex-wrap: wrap; gap: 10px; } .tally { margin-left: 0; } .plan { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>the sea · review</h1>
+  <nav id="tabs"></nav>
+  <span class="tally" id="tally"></span>
+</header>
+<main id="main"></main>
+<div class="zoom" id="zoom"></div>
+<script>
+const S = "/art/scratch/", P = "/public/sea/";
+const TABS = [
+  { id: "plan", name: "plan" },
+  { id: "you", name: "you", lede: "You as the character, drawn from your three photos. The sheet fixes how you look; every pose is drawn from it. Pick the hammock you like (1 or 2) by keeping one.", items: [
+    ["me-sheet", S + "me-sheet-1.png", "the sheet", "front, side, back. every pose is drawn from this", 1],
+    ["me-float", S + "me-float-1.png", "sky: floating", "drifts down with the camera from the clouds", 1],
+    ["me-kendo", S + "me-kendo-1.png", "dojo: kendoka", "chudan no kamae, full bogu. on hover: a men strike", 1],
+    ["me-record", S + "me-record-1.png", "dojo: on the side, filming", "the ipporu story: recording matches to train on", 1],
+    ["me-boat", S + "me-boat-1.png", "seaside: in the boat", "rowing out past the fleet", 1],
+    ["me-dive", S + "me-dive-1.png", "seaside: the jump", "scrolling throws you off the boat into the sea", 1],
+    ["me-scuba", S + "me-scuba-1.png", "whales: scuba", "swimming with the three whales", 1],
+    ["me-laptop", S + "me-laptop-1.png", "lab: laptop", "at work on a stool among the plants and people", 1],
+    ["me-hammock-1", S + "me-hammock-1.png", "garden: hammock, take 1", "the end: reading between two glowing sea fans", 1],
+    ["me-hammock-2", S + "me-hammock-2.png", "garden: hammock, take 2", "same idea, second drawing", 1],
+  ]},
+  { id: "motion", name: "motion", lede: "The test of how you come alive: the scuba pose turned into a 4-second loop (veo 3.1 lite, $0.12), then cut into 48 frames, keyed and played as a sprite. If this is the right feel, every pose gets its own loop, plus a short reaction when the mouse touches you.", items: [
+    ["anim-scuba-sprite", S + "me-scuba-preview.webp", "the scuba loop, as the site will play it", "keyed, 12 frames a second, over the deep water", 0],
+    ["anim-scuba-raw", S + "me-scuba.mp4", "the raw clip", "what the video model returned, on green", 0],
+  ]},
+  { id: "scenes", name: "scenes", lede: "The painted backgrounds, in the order you scroll them. Phones get their own upright picture.", items: [
+    ["sky", P + "sky.webp", "sky (seaside at dusk)", "the hero lands here; the fleet sails on it", 0],
+    ["harbour", P + "harbour.webp", "the dojo by the sea", "ipporu: the camera comes down from the sky onto this", 0],
+    ["surface", P + "surface.webp", "under the surface", "the moment you hit the water", 0],
+    ["deep-water", P + "deep-water.webp", "open water", "the whales swim over it; the speech story plays on it", 0],
+    ["lab", S + "lab-1.png", "the lab", "superstarling: people walk, the sea moves past the window", 0],
+    ["garden", S + "garden-1.png", "the glowing garden", "the end: write to me", 0],
+    ["sky-phone", P + "sky-phone.webp", "sky, phone", "", 0],
+    ["harbour-phone", P + "harbour-phone.webp", "dojo, phone", "", 0],
+    ["deep-water-phone", P + "deep-water-phone.webp", "open water, phone", "", 0],
+    ["lab-phone", S + "lab-phone-1.png", "lab, phone", "", 0],
+    ["garden-phone", S + "garden-phone-1.png", "garden, phone", "", 0],
+  ]},
+  { id: "cutouts", name: "cut-outs", lede: "Everything that moves on its own layer, keyed out of green.", items: [
+    ["ships", S + "ships-1.png", "the fleet", "four ships, one per part of surogates", 1],
+    ["whale-doina", P + "whale-doina.webp", "doina", "pale flippers, spots near the tail", 1],
+    ["whale-tudor", P + "whale-tudor.webp", "tudor", "darker, a long scar", 1],
+    ["whale-radu", P + "whale-radu.webp", "radu", "younger, white patch on the fluke", 1],
+    ["people", S + "people-1.png", "the lab's people", "they walk back and forth across the lab floor", 1],
+    ["clouds", S + "clouds-1.png", "clouds", "they rise past as the camera comes down", 1],
+    ["creatures", S + "creatures-1.png", "deep creatures", "jellies, angler, lantern fish: outside the lab window", 1],
+    ["bathysphere", P + "bathysphere.webp", "the bathysphere", "from the last version. not in the new plan: keep only if you want it back", 1],
+  ]},
+];
+const PLAN = `
+<div class="plan">
+  <div class="card">
+    <h2>the dive, scene by scene</h2>
+    <ol>
+      <li><b>sky.</b> only your name and one line, centred. clouds, the live flock. you float down with the camera.</li>
+      <li><b>the dojo by the sea.</b> the camera lands on the harbour. you as a kendoka. ipporu in one line.</li>
+      <li><b>the ipporu story.</b> each model, then all together on the real match. you on the side, filming.</li>
+      <li><b>the seaside.</b> you row out past the fleet: surogates, one ship per part you built.</li>
+      <li><b>the jump.</b> scrolling throws you off the boat. through the surface.</li>
+      <li><b>the whales.</b> you scuba dive with doina, tudor and radu. the speech story, voices you can play.</li>
+      <li><b>the lab.</b> you on a laptop. people walking, plants, whales and jellies passing the window. superstarling, then the notebook.</li>
+      <li><b>the garden.</b> you in a hammock, reading. write to me.</li>
+    </ol>
+    <div class="meta" data-id="plan-order"></div>
+  </div>
+  <div style="display:grid; gap:18px; align-content:start">
+    <div class="card">
+      <h2>how you come alive</h2>
+      <p>each pose becomes a short looping animation (see <b>motion</b>). one layer follows you down the page: when the scene changes, the pose you're in floats away and the next drops in. the mouse near you tilts you towards it in a little 3d, and a touch plays a reaction: a wave, a men strike, a bubble ring.</p>
+      <div class="meta" data-id="plan-character"></div>
+    </div>
+    <div class="card">
+      <h2>hosting: cetusian.com</h2>
+      <p>cloudflare, where the domain already is: the site is static files, served free from cloudflare's edge, no server to run. fly runs servers, which this doesn't need. wrangler is logged in to your account. nothing goes live until you say go.</p>
+      <div class="meta" data-id="plan-hosting"></div>
+    </div>
+    <div class="card">
+      <h2>spend</h2>
+      <p class="mono">$1.54 of the $10 you approved. the rest: about 8 loops and 6 reactions at $0.12 each, about $1.70.</p>
+    </div>
+  </div>
+</div>`;
+
+let answers = {}, tab = location.hash.slice(1) || "plan";
+const all = TABS.flatMap((t) => t.items ?? []).map((i) => i[0]).concat(["plan-order", "plan-character", "plan-hosting"]);
+const save = (id, verdict, note) => {
+  answers[id] = { ...(answers[id] ?? {}), verdict, note };
+  fetch("/answers", { method: "POST", body: JSON.stringify({ id, verdict, note }) });
+  tally();
+};
+const tally = () => {
+  const k = all.filter((i) => answers[i]?.verdict === "keep").length, r = all.filter((i) => answers[i]?.verdict === "redo").length;
+  document.getElementById("tally").textContent = `${k} kept · ${r} redo · ${all.length - k - r} to go`;
+  document.getElementById("tabs").innerHTML = [{ id: "plan", name: "plan" }, ...TABS.slice(1)].map((t) => {
+    const ids = t.id === "plan" ? ["plan-order", "plan-character", "plan-hosting"] : t.items.map((i) => i[0]);
+    const left = ids.filter((i) => !answers[i]?.verdict).length;
+    return `<button class="${t.id === tab ? "on" : ""}" data-tab="${t.id}">${t.name}<i>${left || "✓"}</i></button>`;
+  }).join("");
+};
+const controls = (id) => {
+  const a = answers[id] ?? {};
+  return `<div class="row"><button class="k" data-v="keep">keep</button><button class="r" data-v="redo">redo</button></div>
+    <textarea placeholder="a note (what to change)">${a.note ?? ""}</textarea>`;
+};
+const media = (src, cut) => /\.mp4$/.test(src)
+  ? `<video src="${src}" autoplay loop muted playsinline></video>`
+  : `<img src="${src}" alt="" loading="lazy">`;
+function render() {
+  const main = document.getElementById("main");
+  if (tab === "plan") main.innerHTML = PLAN;
+  else {
+    const t = TABS.find((x) => x.id === tab);
+    main.innerHTML = `<p class="lede">${t.lede}</p><div class="grid">${t.items.map(([id, src, name, note, cut]) =>
+      `<div class="card" data-card="${id}"><div class="pic${cut && /public/.test(src) ? " check" : ""}" data-src="${src}">${media(src)}</div>
+        <div class="meta" data-id="${id}"><b>${name}</b>${note ? `<p>${note}</p>` : ""}</div></div>`).join("")}</div>`;
+  }
+  main.querySelectorAll(".meta[data-id]").forEach((m) => {
+    const id = m.dataset.id;
+    m.insertAdjacentHTML("beforeend", controls(id));
+    const card = m.closest(".card"), mark = () => { card.classList.toggle("keep", answers[id]?.verdict === "keep"); card.classList.toggle("redo", answers[id]?.verdict === "redo"); };
+    mark();
+    m.querySelectorAll("button").forEach((b) => b.onclick = () => { save(id, b.dataset.v, m.querySelector("textarea").value); mark(); });
+    m.querySelector("textarea").onchange = (e) => save(id, answers[id]?.verdict ?? null, e.target.value);
+  });
+  main.querySelectorAll(".pic").forEach((p) => p.onclick = () => {
+    const z = document.getElementById("zoom"); z.innerHTML = media(p.dataset.src); z.classList.add("on");
+  });
+  tally();
+}
+document.getElementById("zoom").onclick = (e) => { e.currentTarget.classList.remove("on"); e.currentTarget.innerHTML = ""; };
+document.getElementById("tabs").onclick = (e) => { const b = e.target.closest("button"); if (b) { tab = b.dataset.tab; location.hash = tab; render(); } };
+fetch("/answers").then((r) => r.json()).then((a) => { answers = a; render(); });
+</script>
+</body>
+</html>

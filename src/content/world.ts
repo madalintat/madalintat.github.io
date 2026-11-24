@@ -1,9 +1,9 @@
-// The home page: one dive from the sky to the sea floor. Every number has a source in sources.ts, the model cards or
+// The home page: one dive from the sky to the sea floor, one idea a scene. Every number has a source in sources.ts, the model cards or
 // the agent reports of 2026-11-24 (superworkspace, kendo_world, surogate cards, invergent-ai/surogates).
 // Few words a scene: the detail lives in the two stories (stories.ts), the project pages and the cv.
 export type Fact = { k?: string; text: string };
 export type Link = { label: string; href: string };
-export type SceneId = "sky" | "ships" | "harbour" | "surface" | "whales" | "deep" | "trench" | "floor";
+export type SceneId = "sky" | "ships" | "harbour" | "surface" | "whales" | "lab" | "notebook" | "garden";
 export type Scene = { id: SceneId; m: number; name: string; tag?: string; title: string; line?: string; facts: Fact[]; links: Link[] };
 
 export const EMAIL = "madalintat@gmail.com";
@@ -18,49 +18,42 @@ export const EXPERIMENTS = [
 export const SCENES: Scene[] = [
   {
     id: "sky", m: 3000, name: "sky",
-    tag: "applied ai researcher at invergent · bucharest · remote",
+    tag: "applied ai researcher · invergent · bucharest · remote",
     title: "mădălin tatarciuc",
-    line: "i train models and build the product around them. speech, video, agents.",
-    facts: [
-      { k: "5.69%", text: "wer, romanian, on a cpu" },
-      { k: "3 voices", text: "one checkpoint" },
-      { k: "152 of 182", text: "kendo strikes found" },
-      { k: "e1 to e105", text: "one notebook" },
-    ],
-    links: [], // the top bar carries cv and email
-  },
-  {
-    id: "ships", m: 40, name: "the fleet",
-    tag: "surogates · invergent's open agent runtime · the parts i built",
-    title: "a fleet of agents",
-    line: "each ship carries one part i built into surogates.",
-    facts: [
-      { k: "calls", text: "phone calls to agents, on my romanian speech" },
-      { k: "simulate", text: "fake whatsapp, slack, teams and phone to test an agent before it talks to anyone" },
-      { k: "channels", text: "discord, teams, a website widget, any agent as an openai endpoint" },
-      { k: "follow-ups", text: "an agent walks a person through a protocol and calls in the team" },
-    ],
-    links: [{ label: "invergent-ai/surogates", href: "https://github.com/invergent-ai/surogates" }],
+    line: "i train models and build the product around them.",
+    facts: [], links: [],
   },
   {
     id: "harbour", m: 0, name: "the harbour",
     tag: "ipporu · mine, alone, live",
     title: "ipporu",
-    line: "the home of kendo. a record of every match, and video models that read a match the way a referee does.",
+    line: "the home of kendo, and video models that read a match the way a referee does.",
     facts: [
       { k: "139k", text: "kendoka in the record, 186k matches" },
-      { k: "2,000", text: "times the draw is simulated for scouting" },
       { k: "7", text: "languages the coach agent speaks" },
     ],
     links: [{ label: "ipporu.com", href: "https://ipporu.com" }, { label: "the project", href: "/work/ipporu" }],
   },
-  { id: "surface", m: -50, name: "under", title: "going under", line: "the models that do the work live down here.", facts: [], links: [] },
+  {
+    id: "ships", m: 0, name: "the fleet",
+    tag: "surogates · invergent's open agent runtime",
+    title: "a fleet of agents",
+    line: "each ship is a part i built.",
+    facts: [
+      { k: "calls", text: "phone calls to agents, on my romanian speech" },
+      { k: "simulate", text: "a fake whatsapp, slack and phone to test an agent first" },
+      { k: "channels", text: "discord, teams, a website widget, an openai endpoint" },
+      { k: "follow-ups", text: "an agent walks a person through a protocol" },
+    ],
+    links: [{ label: "invergent-ai/surogates", href: "https://github.com/invergent-ai/surogates" }],
+  },
+  { id: "surface", m: -50, name: "under", title: "under the surface", facts: [], links: [] },
   {
     id: "whales", m: -1000, name: "the whales",
-    tag: "romanian speech · invergent · public on hugging face",
+    tag: "romanian speech · invergent · on hugging face",
     title: "the whales sing in romanian",
     line: "recognition and three voices i trained. no graphics card needed.",
-    facts: [{ k: "615", text: "downloads of the voices last month" }],
+    facts: [],
     links: [
       { label: "jackrabbit-110m-ro", href: "https://huggingface.co/surogate/jackrabbit-110m-ro" },
       { label: "streaming", href: "https://huggingface.co/surogate/jackrabbit-110m-ro-streaming" },
@@ -68,30 +61,27 @@ export const SCENES: Scene[] = [
     ],
   },
   {
-    id: "deep", m: -4000, name: "the deep",
+    id: "lab", m: -4000, name: "the lab",
     tag: "superstarling · mine, from an empty repo",
-    title: "a crew that works in the dark",
-    line: "a workspace where ten agents do the work while you sleep, and nothing goes out until you say yes.",
+    title: "a lab that runs itself",
+    line: "a workspace where ten agents do the work, and nothing goes out until you say yes.",
     facts: [
       { k: "10", text: "agents, led by starling" },
       { k: "31", text: "block types in the pages" },
-      { k: "1,200+", text: "server tests. node and sqlite, no framework" },
+      { k: "1,200+", text: "server tests" },
     ],
     links: [{ label: "the project", href: "/work/superstarling" }],
   },
   {
-    id: "trench", m: -8000, name: "the trench",
+    id: "notebook", m: -4000, name: "the lab",
     tag: "the notebook",
     title: "e1 to e105",
-    line: "every experiment has a gate. one layer glows: the week my labels fooled me.",
+    line: "every experiment in one notebook, each with a gate it has to pass.",
     facts: [{ k: "76% → 57%", text: "who struck, once the labels came from the flags. i took the 76% back" }],
-    links: [
-      { label: "when my labels fooled me", href: "/notes/when-my-labels-fooled-me/" },
-      { label: "all notes", href: "/notes/" },
-    ],
+    links: [{ label: "when my labels fooled me", href: "/notes/when-my-labels-fooled-me/" }, { label: "all notes", href: "/notes/" }],
   },
   {
-    id: "floor", m: -10994, name: "the floor",
+    id: "garden", m: -10994, name: "the floor",
     title: "write to me",
     line: "open to remote work in applied ai: speech, video, agents.",
     facts: [],

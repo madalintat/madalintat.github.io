@@ -1,0 +1,20 @@
+// node art/sprites.mjs [name…]
+// Every clip in art/scratch → a sheet in public/sea (art/sprite.sh) and its line in src/content/sprites.json, which
+// the page imports: { name: { src, n, w, h, fps } }. With names, only those are (re)built.
+import { execFileSync } from "node:child_process";
+import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+
+const FPS = 10;
+// how tall a frame is kept, by what it is: enough for a 2x phone at the size the page shows it, no more
+const height = (n) => n.startsWith("me-") ? 300 : n.startsWith("whale") ? 240 : n.startsWith("person") ? 240 : n.startsWith("kendo") ? 300 : 200;
+const OUT = "src/content/sprites.json";
+const all = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};
+const want = process.argv.slice(2);
+const clips = readdirSync("art/scratch").filter((f) => f.endsWith(".mp4")).map((f) => f.slice(0, -4)).filter((n) => !want.length || want.includes(n));
+for (const name of clips) {
+  const line = execFileSync("./art/sprite.sh", [`art/scratch/${name}.mp4`, name, String(height(name)), String(FPS)], { encoding: "utf8" }).trim();
+  const [n, w, h, , kb] = line.split(/\s+/);
+  all[name] = { src: `/sea/${name}.webp`, n: Number(n), w: Number(w), h: Number(h), fps: FPS };
+  console.log(`${name.padEnd(24)} ${n} frames ${w}x${h} ${kb}`);
+}
+writeFileSync(OUT, JSON.stringify(Object.fromEntries(Object.entries(all).sort()), null, 2) + "\n");

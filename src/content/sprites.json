@@ -1,0 +1,184 @@
+{
+  "jelly": {
+    "src": "/sea/jelly.webp",
+    "n": 40,
+    "w": 117,
+    "h": 200,
+    "fps": 10
+  },
+  "kendo-opponent": {
+    "src": "/sea/kendo-opponent.webp",
+    "n": 40,
+    "w": 322,
+    "h": 300,
+    "fps": 10
+  },
+  "kendo-opponent-strike": {
+    "src": "/sea/kendo-opponent-strike.webp",
+    "n": 40,
+    "w": 306,
+    "h": 300,
+    "fps": 10
+  },
+  "me-boat": {
+    "src": "/sea/me-boat.webp",
+    "n": 40,
+    "w": 517,
+    "h": 300,
+    "fps": 10
+  },
+  "me-boat-to-me-dive": {
+    "src": "/sea/me-boat-to-me-dive.webp",
+    "n": 40,
+    "w": 531,
+    "h": 300,
+    "fps": 10
+  },
+  "me-boat-wave": {
+    "src": "/sea/me-boat-wave.webp",
+    "n": 40,
+    "w": 514,
+    "h": 300,
+    "fps": 10
+  },
+  "me-dive": {
+    "src": "/sea/me-dive.webp",
+    "n": 40,
+    "w": 554,
+    "h": 300,
+    "fps": 10
+  },
+  "me-float": {
+    "src": "/sea/me-float.webp",
+    "n": 40,
+    "w": 285,
+    "h": 300,
+    "fps": 10
+  },
+  "me-float-flip": {
+    "src": "/sea/me-float-flip.webp",
+    "n": 40,
+    "w": 345,
+    "h": 300,
+    "fps": 10
+  },
+  "me-hammock": {
+    "src": "/sea/me-hammock.webp",
+    "n": 40,
+    "w": 525,
+    "h": 300,
+    "fps": 10
+  },
+  "me-hammock-wave": {
+    "src": "/sea/me-hammock-wave.webp",
+    "n": 40,
+    "w": 549,
+    "h": 300,
+    "fps": 10
+  },
+  "me-kendo": {
+    "src": "/sea/me-kendo.webp",
+    "n": 40,
+    "w": 326,
+    "h": 300,
+    "fps": 10
+  },
+  "me-kendo-strike": {
+    "src": "/sea/me-kendo-strike.webp",
+    "n": 40,
+    "w": 350,
+    "h": 300,
+    "fps": 10
+  },
+  "me-laptop": {
+    "src": "/sea/me-laptop.webp",
+    "n": 40,
+    "w": 157,
+    "h": 300,
+    "fps": 10
+  },
+  "me-laptop-wave": {
+    "src": "/sea/me-laptop-wave.webp",
+    "n": 40,
+    "w": 153,
+    "h": 300,
+    "fps": 10
+  },
+  "me-record": {
+    "src": "/sea/me-record.webp",
+    "n": 40,
+    "w": 315,
+    "h": 300,
+    "fps": 10
+  },
+  "me-scuba": {
+    "src": "/sea/me-scuba.webp",
+    "n": 40,
+    "w": 493,
+    "h": 300,
+    "fps": 10
+  },
+  "me-scuba-wave": {
+    "src": "/sea/me-scuba-wave.webp",
+    "n": 40,
+    "w": 511,
+    "h": 300,
+    "fps": 10
+  },
+  "person1": {
+    "src": "/sea/person1.webp",
+    "n": 40,
+    "w": 131,
+    "h": 240,
+    "fps": 10
+  },
+  "person2": {
+    "src": "/sea/person2.webp",
+    "n": 40,
+    "w": 128,
+    "h": 240,
+    "fps": 10
+  },
+  "person3": {
+    "src": "/sea/person3.webp",
+    "n": 40,
+    "w": 126,
+    "h": 240,
+    "fps": 10
+  },
+  "person4": {
+    "src": "/sea/person4.webp",
+    "n": 40,
+    "w": 153,
+    "h": 240,
+    "fps": 10
+  },
+  "person5": {
+    "src": "/sea/person5.webp",
+    "n": 40,
+    "w": 124,
+    "h": 240,
+    "fps": 10
+  },
+  "whale-doina": {
+    "src": "/sea/whale-doina.webp",
+    "n": 40,
+    "w": 530,
+    "h": 240,
+    "fps": 10
+  },
+  "whale-radu": {
+    "src": "/sea/whale-radu.webp",
+    "n": 40,
+    "w": 535,
+    "h": 240,
+    "fps": 10
+  },
+  "whale-tudor": {
+    "src": "/sea/whale-tudor.webp",
+    "n": 40,
+    "w": 495,
+    "h": 240,
+    "fps": 10
+  }
+}
