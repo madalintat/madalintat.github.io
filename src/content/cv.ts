@@ -13,7 +13,7 @@ export const CONTACT = {
   email: "madalintat@gmail.com",
   phone: "+40 754 461 974",
   site: "cetusian.com",
-  place: "Bucharest, Romania · EU citizen, remote",
+  place: "Bucharest, Romania · open to remote",
   github: "github.com/madalintat",
   hf: "huggingface.co/cetusian",
   linkedin: "linkedin.com/in/madalin-tatarciuc",
@@ -48,7 +48,7 @@ const MORE: Bullet[] = [
 export const cv: Record<CvVersion, Cv> = {
   research: {
     contact: CONTACT,
-    role: "Applied AI Researcher · Speech and video models",
+    role: "Applied AI Researcher · LLMs, speech and video models",
     profile: "Applied AI researcher who trains small, specialised models and takes them all the way to production: data, training, evaluation, a fast runtime and the product around it. I learn by rebuilding: take a paper, implement it without the reference code, and write each experiment down with its bar before it runs.",
     sections: [
       {
@@ -80,7 +80,7 @@ export const cv: Record<CvVersion, Cv> = {
       },
     ],
     skills: [
-      ["Research", "speech (ASR, TTS), video understanding, fine-tuning (SFT, LoRA), evaluation, quantisation (GGUF)"],
+      ["Research", "LLM fine-tuning (SFT, LoRA), speech (ASR, TTS), video understanding, evaluation, quantisation (GGUF)"],
       ["Engineering", "Python, PyTorch, NeMo, transformers, Go, TypeScript, Rust, C; FastAPI, Postgres, Redis"],
       ["Runtime", "llama.cpp, CPU and streaming inference, Modal GPUs"],
     ],

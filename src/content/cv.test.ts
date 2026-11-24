@@ -6,7 +6,7 @@ const text = (v: CvVersion) => JSON.stringify(cv[v]);
 test("both versions carry the basics and the current speech numbers", () => {
   for (const v of ["research", "builder"] as CvVersion[]) {
     const t = text(v);
-    for (const s of ["EU citizen", "jackrabbit-110m-ro", "Surogates", "5.69%", "madalintat@gmail.com"]) expect(t, `${v} ${s}`).toContain(s);
+    for (const s of ["Bucharest", "jackrabbit-110m-ro", "Surogates", "5.69%", "madalintat@gmail.com"]) expect(t, `${v} ${s}`).toContain(s);
     expect(t.split("madalintat@gmail.com").length - 1).toBe(1);
   }
 });
