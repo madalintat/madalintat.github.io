@@ -234,7 +234,7 @@ export function Home() {
       </SeaScene>
 
       {/* the garden that glows: me in a hammock, and the way to write */}
-      <SeaScene s={S.garden} plate="garden" phone="garden-phone" pose="me-hammock" className="sea-garden" words={<li data-beat={0}><Card s={S.garden} /></li>}>
+      <SeaScene s={S.garden} plate="garden" phone="garden-phone" pose="me-hammock" className="sea-garden" words={<li data-beat={0}><Card s={S.garden} startOpen /></li>}>
         <div className="glow" aria-hidden="true">
           <div className="drift d1"><Sprite name="jelly" /></div>
           <div className="drift d2"><Sprite name="jelly" /></div>

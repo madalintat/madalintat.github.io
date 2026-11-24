@@ -29,13 +29,14 @@ export const SCENES: Scene[] = [
     id: "harbour", m: 0, name: "the harbour", icon: "ipporu",
     tag: "ipporu · a product i built alone",
     title: "ipporu",
-    line: "the home of kendo. every match and every fighter on record, and video models that read a match the way a referee does.",
+    line: "video models that read a kendo match the way a referee does, and the home of kendo i built around them.",
     facts: [
-      { k: "433", text: "accounts, 321 of them in launch week" },
-      { k: "139k", text: "kendoka on record" },
-      { k: "186k", text: "matches on record" },
+      { k: "99 of 103", text: "referees' flag calls found by my flag reader" },
+      { k: "433", text: "accounts, 321 in launch week. 214 follow a kendoka, 57 sent in results" },
+      { k: "139k", text: "kendoka and 186k matches on record" },
+      { k: "1,746", text: "people follow ipporu on instagram" },
     ],
-    links: [{ label: "ipporu.com", href: "https://ipporu.com", icon: "ipporu" }, { label: "how the models work", href: "/work/ipporu", icon: "play" }],
+    links: [{ label: "how the models work", href: "/work/ipporu", icon: "play" }, { label: "ipporu.com", href: "https://ipporu.com", icon: "ipporu" }],
   },
   {
     id: "ships", m: 0, name: "the fleet", icon: "github",
@@ -88,9 +89,9 @@ export const SCENES: Scene[] = [
   },
   {
     id: "lab", m: -4000, name: "the lab", icon: "superstarling",
-    tag: "superstarling · built from an empty repo",
+    tag: "superstarling inc · built from an empty repo",
     title: "superstarling",
-    line: "a workspace where ten ai agents do the work, and nothing goes out until you say yes.",
+    line: "a team of specialist agents that runs your product and your business: growth, sales, ops and publishing. better than notion, and it asks before it acts.",
     facts: [
       { k: "10", text: "agents, led by starling" },
       { k: "1,200+", text: "server tests" },
