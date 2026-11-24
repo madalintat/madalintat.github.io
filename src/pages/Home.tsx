@@ -18,11 +18,13 @@ const S = Object.fromEntries(SCENES.map((s) => [s.id, s])) as Record<SceneId, Sc
 const metres = (m: number) => `${m > 0 ? "+" : m < 0 ? "−" : ""}${Math.abs(m).toLocaleString("en").replace(",", " ")} m`;
 
 /** A painted plate behind a scene: its own upright picture on a phone, never a crop. Loaded as its scene nears. */
+// the plates are cached for a week (public/_headers): a new paint of one gets a new address, so no phone keeps the old
+const PLATE = (name: string) => `/sea/${name}.webp?v=2`;
 function Plate({ name, phone }: { name: string; phone?: string }) {
   return (
     <picture className="plate">
-      {phone && <source media="(max-width: 720px)" srcSet={`/sea/${phone}.webp`} />}
-      <img src={`/sea/${name}.webp`} alt="" width="2064" height="1152" decoding="async" loading="lazy" />
+      {phone && <source media="(max-width: 720px)" srcSet={PLATE(phone)} />}
+      <img src={PLATE(name)} alt="" width="2064" height="1152" decoding="async" loading="lazy" />
     </picture>
   );
 }
@@ -206,7 +208,7 @@ export function Home() {
       </section>
 
       {/* ipporu, model by model: me at the side of the court, filming the match the models read */}
-      <div className="sea-under" data-pose="me-record" style={{ "--plate": "url(/sea/harbour.webp)" } as CSSProperties}>
+      <div className="sea-under" data-pose="me-record" style={{ "--plate": `url(${PLATE("harbour")})` } as CSSProperties}>
         <IpporuStory />
       </div>
 
@@ -243,7 +245,7 @@ export function Home() {
           {["doina", "tudor", "radu"].map((w) => <div key={w} className={`swim swim-${w}`}><Sprite name={`whale-${w}`} /></div>)}
         </div>
       </SeaScene>
-      <div className="sea-under deep" data-pose="me-scuba" style={{ "--plate": "url(/sea/deep-water.webp)" } as CSSProperties}>
+      <div className="sea-under deep" data-pose="me-scuba" style={{ "--plate": `url(${PLATE("deep-water")})` } as CSSProperties}>
         <SpeechStory />
       </div>
 

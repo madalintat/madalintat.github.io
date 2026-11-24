@@ -19,7 +19,7 @@ test("the dive runs from the sky to the floor, in order, each scene with its dep
 test("every picture the page asks for is in public/", () => {
   const srcs = [...html.matchAll(/(?:src|srcSet|srcset)="(\/sea\/[^"]+)"/g), ...html.matchAll(/url\((\/sea\/[^)]+)\)/g)].map((m) => m[1]);
   expect(srcs.length).toBeGreaterThan(20);
-  for (const s of new Set(srcs)) expect(existsSync(`public${s}`), s).toBe(true);
+  for (const s of new Set(srcs)) expect(existsSync(`public${s.split("?")[0]}`), s).toBe(true); // ?v= is only a cache key
 });
 
 test("the page opens on the name, and the proof is on it", () => {

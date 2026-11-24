@@ -58,11 +58,18 @@ export function startStories(): () => void {
   const pinned = [...document.querySelectorAll<HTMLElement>(".st")].map((root) => {
     const caps = [...root.querySelectorAll<HTMLElement>("[data-beat]")], beats = caps.length || 1;
     root.style.setProperty("--beats", String(beats));
-    return { root, caps, beats, list: parts(root), bar: root.querySelector<HTMLElement>(".st-bar"), cur: -1, u: -1, seen: false };
+    return { root, caps, beats, list: parts(root), bar: root.querySelector<HTMLElement>(".st-bar"), cur: -1, u: -1, seen: false, held: null as boolean | null };
   });
   const paint = (s: (typeof pinned)[number], force = false) => {
     let u = s.beats;
-    if (!reduce) { const r = s.root.getBoundingClientRect(); u = sceneProgress(r.top + scrollY, r.height, innerHeight, scrollY) * s.beats; }
+    if (!reduce) {
+      const r = s.root.getBoundingClientRect();
+      u = sceneProgress(r.top + scrollY, r.height, innerHeight, scrollY) * s.beats;
+      // the stage holds the screen only between its top reaching the top and its bottom reaching the bottom; outside
+      // that it scrolls like a page, and what was pinned to it (a phone's bottom sheet) has to step away first
+      const held = r.top <= 1 && r.bottom >= innerHeight - 1;
+      if (held !== s.held) { s.held = held; s.root.toggleAttribute("data-held", held); }
+    }
     if (!force && Math.abs(u - s.u) < 0.0005) return;
     s.u = u;
     draw(s.list, u);

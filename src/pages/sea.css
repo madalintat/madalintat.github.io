@@ -177,6 +177,10 @@
   .card h2 { font-size: 22px; margin-top: 6px; }
   .card-line { font-size: 15px; margin-top: 6px; }
   .card-more { display: none; max-height: 52svh; overflow-y: auto; overscroll-behavior: contain; }
+  /* the sheet belongs to the screen while its scene holds it: as the scene lets go it slides down and away, instead of
+     riding up through the next painting with the page */
+  .sea-scene .sea-caps:has(.card) { transition: transform 0.35s cubic-bezier(.2, .8, .2, 1), opacity 0.25s; }
+  .sea-scene:not([data-held]) .sea-caps:has(.card) { transform: translateY(105%); opacity: 0; pointer-events: none; }
   .card.open .card-more { display: block; }
   .card-stats { grid-template-columns: 1fr 1fr; margin-top: 14px; }
   .card-links { margin-top: 14px; }
@@ -295,4 +299,5 @@ html.sheet-open .me .me-sprite { pointer-events: none; }
 @media (prefers-reduced-motion: reduce), (scripting: none) {
   .sea-scene .st-stage { position: relative; min-height: 100svh; height: auto; overflow: visible; }
   .sea-scene .sea-caps { position: relative; left: auto; top: auto; margin: 0 auto; padding: 96px var(--gutter) 48px; width: min(760px, 100%); }
+  .sea-scene .sea-caps:has(.card) { transform: none !important; opacity: 1 !important; pointer-events: auto !important; }
 }
