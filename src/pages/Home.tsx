@@ -5,7 +5,7 @@ import { Card, IconFor } from "../components/Card";
 import { SCENES, type Icon, type Scene, type SceneId } from "../content/world";
 import { depthAt } from "../world/progress";
 import { startFlock } from "../world/flock";
-import { sprite, type Sheet } from "../world/sprite";
+import { sprite, preload, type Sheet } from "../world/sprite";
 import { startCompanion } from "../world/companion";
 import { startWater } from "../world/water";
 import SHEETS from "../content/sprites.json";
@@ -54,7 +54,7 @@ const CLOUDS = [
 // what is on this page, in one glance under the name: each line jumps to its chapter (a beat inside a pinned story
 // is one screen of scroll from the story's top)
 const INDEX: { to: string; beat?: number; icon: Icon; name: string; what: string }[] = [
-  { to: "sky", beat: 2, icon: "ipporu", name: "ipporu", what: "an ai that reads kendo matches, and the home of the sport" },
+  { to: "sky", beat: 2, icon: "ipporu", name: "ipporu", what: "the home of kendo, and the models that watch it" },
   { to: "ships", icon: "github", name: "surogates", what: "open source ai agents that take calls and chats" },
   { to: "whales", icon: "hf", name: "speech models", what: "romanian speech that runs on a laptop" },
   { to: "lab", icon: "superstarling", name: "superstarling", what: "an ai team for your business and your life" },
@@ -79,20 +79,23 @@ const SH = SHEETS as Record<string, Sheet>;
 /** A sheet's room in the layout before it loads: its frame's ratio (the frames come in as the thing is reached). */
 const firstFrame = (s: Sheet): CSSProperties => ({ aspectRatio: `${s.w} / ${s.h}` });
 
-/** A living thing: a sprite sheet, alive once the page runs (sprite.ts). every: a reaction it plays on its own now and then. */
-function Sprite({ name, className = "", every }: { name: string; className?: string; every?: [string, number] }) {
+/** A living thing: a sprite sheet, alive once the page runs (sprite.ts). every: reactions it plays on its own, one
+    after another, one every so many ms. */
+function Sprite({ name, className = "", every }: { name: string; className?: string; every?: [string[], number] }) {
   const ref = useRef<HTMLDivElement>(null), s = SH[name];
   useEffect(() => {
     if (!ref.current || !s) return;
     const sp = sprite(ref.current, s);
-    const r = every && SH[every[0]], id = r ? window.setInterval(() => sp.react(r), every![1]) : 0;
+    const rs = (every?.[0] ?? []).map((n) => SH[n]).filter(Boolean);
+    preload(...rs);
+    let i = 0;
+    const id = rs.length ? window.setInterval(() => sp.react(rs[i++ % rs.length]), every![1]) : 0;
     return () => { sp.stop(); clearInterval(id); };
   }, [s, every]);
   return s ? <div ref={ref} className={`sprite ${className}`} aria-hidden="true" style={firstFrame(s)} /> : null;
 }
-// the pair in the dojo take turns: aka strikes, then shiro answers a few seconds later
-const AKA_STRIKE: [string, number] = ["kendoka-aka-strike", 7000];
-const SHIRO_STRIKE: [string, number] = ["kendoka-shiro-strike", 10500];
+// the pair in the dojo, one clip with both of them so every strike lands: aka's men, then shiro's kote
+const BOUT: [string[], number] = [["kendo-pair-men", "kendo-pair-kote"], 6500];
 
 /** The water over a plate: rippling under its horizon (surface), or light from above (caustics). */
 function Water({ mode, horizon = [0.707, 0.735] }: { mode: "surface" | "caustics"; horizon?: [number, number] }) {
@@ -169,10 +172,7 @@ export function Home() {
               </div>
               <div className="inside" data-at="1.5" data-to="1.88">
                 <Plate name="dojo-inside" phone="dojo-inside-phone" />
-                <div className="court">
-                  <Sprite name="kendoka-aka" className="kendoka aka" every={AKA_STRIKE} />
-                  <Sprite name="kendoka-shiro" className="kendoka shiro" every={SHIRO_STRIKE} />
-                </div>
+                <Sprite name="kendo-pair-loop" className="court" every={BOUT} />
               </div>
             </div>
           </div>

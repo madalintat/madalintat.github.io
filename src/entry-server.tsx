@@ -9,7 +9,7 @@ export { SCENES };
 export const SITE = "https://cetusian.com";
 type Meta = { title: string; description: string };
 
-const HOME: Meta = { title: "mădălin tatarciuc · applied ai researcher and builder", description: "i train small ai models and ship the products around them: ipporu, an ai that reads kendo; romanian speech models that beat whisper large-v3 at 14 times smaller; superstarling, an ai team for your business and your life." };
+const HOME: Meta = { title: "mădălin tatarciuc · applied ai researcher and builder", description: "i train small ai models and ship the products around them: ipporu, the home of kendo and the models that watch it; romanian speech models that beat whisper large-v3 at 14 times smaller; superstarling, an ai team for your business and your life." };
 
 export function routes(): Record<string, Meta> {
   const r: Record<string, Meta> = { "/": HOME };

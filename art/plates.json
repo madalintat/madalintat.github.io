@@ -202,5 +202,9 @@
  "agents-board": {
   "aspect": "16:9",
   "brief": "Alone, whole, centred on flat chroma green (#00FF00), evenly lit, wide green space all round, nothing else on the green, no shadow, no ground, no water drawn under it. Two people from the reference character sheets, drawn exactly as they appear there (same faces, hair, clothes, skin, the same flat print style): Vance and Cross, standing side by side in three-quarter view turned to the right, working at an unseen wall to their right: Vance reaches up and presses a square sticky note onto it, Cross holds a small stack of sticky notes and points at where the next one goes. Full bodies, feet on one level, at true relative height."
+ },
+ "kendo-pair": {
+  "aspect": "16:9",
+  "brief": "Two kendoka in a match, together, on flat chroma green (#00FF00), evenly lit, nothing else on the green, no shadow, no floor drawn. They are BIG: the two figures fill the full height of the picture, heads near the top, feet near the bottom, with only a thin green margin. Seen from the edge of the court at a slight angle, like a camera beside the shiaijo: the kendoka with the RED tasuki stands on the LEFT, nearer the viewer and a little larger, FACING RIGHT; the kendoka with the WHITE tasuki stands on the RIGHT, one step deeper and a little smaller, FACING LEFT. Both in chudan no kamae at issoku itto no maai: their shinai tips cross in the middle of the picture. Real kendo, drawn accurately, exactly the same two people as the attached images: full bogu (men with metal grille hiding the face, do, kote, tare), the left hand at the end of the tsuka near the navel, the right hand just below the tsuba, RIGHT foot in front and left heel slightly raised. Red: navy keikogi and hakama, red tasuki bow on the back. White: white keikogi top and white hakama with a navy do, white tasuki bow on the back. Calm, alert, weight forward. Clean flat shapes, crisp edges, no motion blur."
  }
 }

@@ -27,34 +27,6 @@
     "h": 200,
     "fps": 10
   },
-  "kendoka-aka": {
-    "src": "/sea/kendoka-aka.webp",
-    "n": 40,
-    "w": 392,
-    "h": 563,
-    "fps": 10
-  },
-  "kendoka-aka-strike": {
-    "src": "/sea/kendoka-aka-strike.webp",
-    "n": 40,
-    "w": 392,
-    "h": 563,
-    "fps": 10
-  },
-  "kendoka-shiro": {
-    "src": "/sea/kendoka-shiro.webp",
-    "n": 40,
-    "w": 410,
-    "h": 456,
-    "fps": 10
-  },
-  "kendoka-shiro-strike": {
-    "src": "/sea/kendoka-shiro-strike.webp",
-    "n": 40,
-    "w": 410,
-    "h": 456,
-    "fps": 10
-  },
   "me-boat-cap": {
     "src": "/sea/me-boat-cap.webp",
     "n": 40,
@@ -172,6 +144,27 @@
     "n": 40,
     "w": 866,
     "h": 420,
+    "fps": 10
+  },
+  "kendo-pair-loop": {
+    "src": "/sea/kendo-pair-loop.webp",
+    "n": 40,
+    "w": 678,
+    "h": 560,
+    "fps": 10
+  },
+  "kendo-pair-men": {
+    "src": "/sea/kendo-pair-men.webp",
+    "n": 60,
+    "w": 678,
+    "h": 560,
+    "fps": 10
+  },
+  "kendo-pair-kote": {
+    "src": "/sea/kendo-pair-kote.webp",
+    "n": 40,
+    "w": 678,
+    "h": 560,
     "fps": 10
   }
 }

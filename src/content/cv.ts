@@ -38,7 +38,7 @@ const EARLIER: CvItem[] = [
 const EARLIER_LINE = "Skillab · Gameloft · Coreto.io";
 
 const MORE: Bullet[] = [
-  ["Education", "buildspace, AI Builder Cohort (2024) · ASE Bucharest, Economic Informatics (2019–2020)"],
+  ["Education", "buildspace, AI Builder Cohort (2024)"],
   ["Certifications", "Deep Learning, Machine Learning, Computer Vision, Hugging Face Deep RL"],
   ["Languages", "Romanian, English · Kendo: Romanian national team, 1 Dan"],
 ];

@@ -109,3 +109,7 @@ Every image generated for the site, in order, rejects included. Model: `google/g
 | me-boat-cap-to-me-boat-ready.mp4 | me-boat-cap → me-boat-ready, google/veo-3.1-lite, 6s | $0.1800 | review |
 | me-dive-to-me-scuba.mp4 | me-dive → me-scuba, google/veo-3.1-lite, 6s | $0.1800 | review |
 | me-boat-ready-to-me-dive.mp4 | me-boat-ready → me-dive, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendo-pair-1.png | kendoka-aka-1.png, kendoka-shiro-1.png | $0.0430 | review |
+| kendo-pair-kote.mp4 | kendo-pair, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendo-pair-loop.mp4 | kendo-pair, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendo-pair-men.mp4 | kendo-pair, google/veo-3.1-lite, 6s | $0.1800 | review |
