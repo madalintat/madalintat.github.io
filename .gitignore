@@ -4,3 +4,4 @@ dist-ssr/
 .superpowers/
 .DS_Store
 _site/
+*.tsbuildinfo
