@@ -189,7 +189,7 @@
   /* the sheet belongs to the screen while its scene holds it: as the scene lets go it slides down and away, instead of
      riding up through the next painting with the page */
   .sea-scene .sea-caps:has(.card) { transition: transform 0.35s cubic-bezier(.2, .8, .2, 1), opacity 0.25s; }
-  .sea-scene:not([data-held]) .sea-caps:has(.card) { transform: translateY(105%); opacity: 0; pointer-events: none; }
+  .sea-scene[data-cur]:not([data-held]) .sea-caps:has(.card) { transform: translateY(105%); opacity: 0; pointer-events: none; }
   .card.open .card-more { display: block; }
   .card-stats { grid-template-columns: 1fr 1fr; margin-top: 14px; }
   .card-links { margin-top: 14px; }

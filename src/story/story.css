@@ -18,6 +18,9 @@
 .st-caps li.on > :nth-child(3) { transition-delay: 120ms; }
 .st-caps li.on > :nth-child(4) { transition-delay: 180ms; }
 .st-caps li.on > :nth-child(n + 5) { transition-delay: 240ms; }
+/* before the script has run (no data-cur yet) each story's first beat is already there: the name and its line are on the
+   first paint, not after the bundle loads; the engine's first paint then marks the same beat, so nothing moves */
+.st:not([data-cur]) .st-caps li[data-beat="0"], .st:not([data-cur]) .st-caps li[data-beat="0"] > * { opacity: 1; transform: none; transition: none; }
 /* a card's numbers: each tile comes in as its own moment of the beat is reached */
 .card-stats [data-at] { opacity: 0; transform: translateY(8px) scale(0.98); transition: opacity 0.4s var(--ease), transform 0.6s var(--ease); }
 .card-stats [data-at].on { opacity: 1; transform: none; }
@@ -39,7 +42,7 @@
   .st { height: auto; }
   .st-stage { position: static; height: auto; }
   .st-caps li { grid-area: auto; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 28px; }
-  .st-caps li > *, .card-stats [data-at] { opacity: 1; transform: none; transition: none; }
+  .st-caps li > *, .st-caps li.on ~ li, .card-stats [data-at] { opacity: 1; transform: none; transition: none; }
 }
 
 /* speech: one panel per beat, in the same place */
