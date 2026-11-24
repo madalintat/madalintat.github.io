@@ -60,3 +60,13 @@ Project pages, notes pages and the CV page keep v1's routes and content, restyle
 ## Left to the builder
 
 Exact image model within the budget, prompt wording, crops, section spacing, reveal timings.
+
+## Revision, 2026-11-24 (owner, in chat): the world
+
+The dojo hero and sentence case above are superseded. What was built:
+
+- The home is one scroll from the sky to the underground. Scenes, in order, each a thing he built: sky (name and proof), flock (superstarling), rooftops (romanian speech, with the amami voices), the city at 02:14 (a moving city: three parallax layers rising with scroll, windows, a train, cars), street (ipporu), under the dojo floor (the engine chain and the match demo), engine room (surogates), bedrock (the e1 to e105 notebook) and the core (contact).
+- A depth gauge reads the altitude as you scroll. Elements form with scroll progress; reduced motion shows every scene formed and static.
+- Night only. Lowercase titles and copy in the cetusian voice; the cv stays in sentence case for recruiters.
+- No commit counts anywhere: what he built, the features, the measured numbers, each with a source.
+- Every route is prerendered with its own meta; a 404 page and a sitemap; deploy by GitHub Actions only after the owner's go.
