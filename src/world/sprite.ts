@@ -70,8 +70,8 @@ export function sprite(el: HTMLElement, loop: Sheet): Sprite {
   live.add(s); io?.observe(el); wake();
   return {
     el,
-    react(sheet, then) { if (reduce()) return; s.cur = sheet; s.once = true; s.t0 = performance.now(); s.then = then; wake(); },
-    swap(sheet) { s.loop = sheet; s.cur = sheet; s.once = false; s.t0 = performance.now(); el.style.aspectRatio = `${sheet.w} / ${sheet.h}`; s.f = -1; wake(); },
+    react(sheet, then) { const prev = s.then; s.then = undefined; prev?.(); if (reduce()) { then?.(); return; } s.cur = sheet; s.once = true; s.t0 = performance.now(); s.then = then; wake(); },
+    swap(sheet) { const prev = s.then; s.then = undefined; s.loop = sheet; s.cur = sheet; s.once = false; s.t0 = performance.now(); el.style.aspectRatio = `${sheet.w} / ${sheet.h}`; s.f = -1; wake(); prev?.(); },
     stop() { live.delete(s); io?.unobserve(el); },
   };
 }

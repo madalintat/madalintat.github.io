@@ -6,7 +6,7 @@ import { IconFor } from "../components/Card";
 /* The engine, one model per beat, pinned while you scroll. Each beat shows its own clip: that model's real output drawn
    on the same all japan 2024 match. Left: what it does in plain words, then what it is, how it learned, how good it
    is, and the bar it was set. After the shinai: its ribbon next to the fencing system it learns from.
-   Only the clip on screen plays; the others wait, paused, with their posters. */
+   Only the clip on screen plays, and only while the story is in view; the others wait, paused, with their posters. */
 
 type Ribbon = { id: "ribbon" };
 type Step = ModelBeat | Ribbon;
@@ -61,15 +61,19 @@ export function IpporuStory() {
     const el = root.current;
     if (!el) return;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let near = false;
     const sync = () => {
       const cur = Number(el.dataset.cur ?? 0);
       el.querySelectorAll<HTMLVideoElement>(".ip-clips video").forEach((v, i) => {
-        if (i === cur && !reduce) { if (v.preload !== "auto") v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
+        if (near && i === cur && !reduce) { if (v.preload !== "auto") v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
       });
     };
+    // nothing loads or plays until the story is on screen, and everything stops once it is passed
+    const io = new IntersectionObserver(([e]) => { near = e.isIntersecting; sync(); });
+    io.observe(el);
     const mo = new MutationObserver(sync);
     mo.observe(el, { attributes: true, attributeFilter: ["data-cur"] });
-    return () => mo.disconnect();
+    return () => { mo.disconnect(); io.disconnect(); };
   }, []);
   let n = 0;
   return (

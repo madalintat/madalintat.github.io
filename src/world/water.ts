@@ -17,7 +17,7 @@ void main(){
   q.y += sin(q.x * 36. + t * .9) * .0009 * a;
   vec4 c = texture2D(img, q);
   float glint = smoothstep(.82, 1., dot(c.rgb, vec3(.33))) * step(hz, q.y);
-  c.rgb += glint * (.12 + .12 * sin(t * 2.3 + uv.x * 40. + uv.y * 90.));
+  c.rgb += glint * (.12 + .12 * sin(t * 2.3 + q.x * 40. + q.y * 90.));
   gl_FragColor = c;
 }`;
 

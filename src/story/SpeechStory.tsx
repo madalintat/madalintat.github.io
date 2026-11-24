@@ -34,7 +34,7 @@ function Voice({ name, wer, at }: { name: (typeof VOICES)[number]["name"]; wer: 
     if (el.paused) el.play().catch(() => {}); else el.pause();
   };
   return (
-    <div className={`sp-voice${playing ? " playing" : ""}`} data-at={at} style={{ "--t": t } as CSSProperties}>
+    <div className="sp-voice" data-playing={playing || undefined} data-at={at} style={{ "--t": t } as CSSProperties}>
       <button type="button" onClick={toggle} aria-label={`${playing ? "pause" : "play"} ${name}`}>{playing ? <PauseIcon /> : <PlayIcon />}</button>
       <b>{name}</b>
       <svg viewBox={`0 0 ${w.length * 2} 80`} preserveAspectRatio="none" aria-hidden="true"><path d={path(w)} /></svg>

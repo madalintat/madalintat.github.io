@@ -65,7 +65,8 @@ export function Card({ s, at = 0, startOpen = false }: { s: Scene; at?: number; 
   const [shot, setShot] = useState<Shot | null>(null);
   // once its beat scrolls away, an opened sheet closes and hands the screen back
   useEffect(() => {
-    if (!open || startOpen) return;
+    // only the contact card on a desktop stays open for good; everywhere else an opened sheet closes as it scrolls away
+    if (!open || (startOpen && !matchMedia("(max-width: 720px)").matches)) return;
     const check = () => {
       const el = me.current, r = el?.getBoundingClientRect();
       if (!el || !r || r.bottom < 0 || r.top > innerHeight || !el.closest("li")?.classList.contains("on")) setOpen(false);

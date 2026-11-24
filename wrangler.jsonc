@@ -1,0 +1,14 @@
+// cetusian.com: the prerendered site in dist/, served as static assets by Cloudflare. `npx wrangler deploy` after `npm run build`.
+{
+  "name": "cetusian",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "cetusian.com", "custom_domain": true },
+    { "pattern": "www.cetusian.com", "custom_domain": true }
+  ]
+}

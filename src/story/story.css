@@ -27,7 +27,7 @@
 @media (prefers-reduced-motion: reduce) {
   .st { height: auto; }
   .st-stage { position: static; height: auto; }
-  .st-caps li { grid-area: auto; opacity: 1; transform: none; margin-bottom: 28px; }
+  .st-caps li { grid-area: auto; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 28px; }
 }
 
 /* speech: one panel per beat, in the same place */
@@ -53,13 +53,13 @@
 .sp-voices { display: grid; gap: 12px; }
 .sp-voice { display: grid; grid-template-columns: 44px 4.5rem minmax(0, 1fr) 3.5rem; gap: 14px; align-items: center; padding: 8px 14px 8px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); opacity: 0; transform: translateX(-12px); transition: opacity 0.4s, transform 0.4s, border-color 0.2s; }
 .sp-voice.on { opacity: 1; transform: none; }
-.sp-voice.playing { border-color: var(--accent); }
+.sp-voice[data-playing] { border-color: var(--accent); }
 .sp-voice button { /* deslop-ignore 19: a round play button */ width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--ink); cursor: pointer; display: grid; place-items: center; }
-.sp-voice.playing button { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.sp-voice[data-playing] button { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .sp-voice b { font: 500 13px var(--font-mono); }
 .sp-voice svg { width: 100%; height: 36px; }
 .sp-voice path { fill: none; stroke: var(--soft); stroke-width: 1; vector-effect: non-scaling-stroke; }
-.sp-voice.playing path { stroke: var(--ink); }
+.sp-voice[data-playing] path { stroke: var(--ink); }
 .sp-voice span { font: var(--size-small) var(--font-mono); color: var(--soft); text-align: right; }
 
 @media (max-width: 900px) {

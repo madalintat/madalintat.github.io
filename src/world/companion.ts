@@ -15,19 +15,25 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
   let pose = root.dataset.pose ?? "me-float", busy = false, sp: Sprite | null = null, timer = 0;
   if (sheets[pose]) sp = sprite(el, sheets[pose]);
 
+  // a change of pose cancels any half-done one: its timer, and the faded-out state it would have undone
+  const settle = () => { clearTimeout(timer); root.classList.remove("out", "in"); };
   const set = (next: string) => {
     // "hidden": the scene draws me itself (the lab, with the agents), so the companion steps out
-    if (next === "hidden") { if (pose !== next) { pose = next; root.dataset.pose = next; } return; }
+    if (next === "hidden") { if (pose !== next) { settle(); pose = next; root.dataset.pose = next; } return; }
     if (next === pose || !sheets[next]) return;
     const from = pose; pose = next;
     preload(sheets[next], ...(REACT[next] && sheets[REACT[next]] ? [sheets[REACT[next]]] : []));
     root.dataset.pose = next;
+    settle();
     if (reduce || !sp) { sp?.swap(sheets[next]); return; }
     const move = sheets[`${from}-to-${next}`];
-    clearTimeout(timer);
     if (move) { sp.swap(sheets[next]); sp.react(move); return; } // the move itself is the change
     root.classList.add("out");
-    timer = window.setTimeout(() => { sp!.swap(sheets[pose]); root.classList.remove("out"); root.classList.add("in"); requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("in"))); }, 260);
+    timer = window.setTimeout(() => {
+      if (!sheets[pose]) return;
+      sp!.swap(sheets[pose]); root.classList.remove("out"); root.classList.add("in");
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("in")));
+    }, 260);
   };
 
   const touch = () => {

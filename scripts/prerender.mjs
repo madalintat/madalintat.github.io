@@ -19,7 +19,7 @@ for (const [url, meta] of Object.entries(all)) {
 }
 // the 404 is never a page of its own: no canonical, and not for indexing
 writeFileSync(D + "404.html", page("/404/", { title: "not here · mădălin tatarciuc", description: "that page does not exist." })
-  .replace(/<link rel="canonical"[^>]*>/, '<meta name="robots" content="noindex" />').replace(/<meta property="og:url"[^>]*>\n\s*/, ""));
+  .replace(/<link rel="canonical"[^>]*>/, '<meta name="robots" content="noindex" />').replace(/<meta property="og:url"[^>]*>\n\s*/, "").replace(/<meta name="robots" content="index[^>]*>\n\s*/, ""));
 const today = new Date().toISOString().slice(0, 10);
 writeFileSync(D + "sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${Object.keys(all).map((u) => `  <url><loc>${SITE}${u === "/" ? "/" : u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}\n</urlset>\n`);
 // every crawler, ai answer engines named so their owners see the yes; and the plain-text summary they read first
