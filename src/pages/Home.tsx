@@ -126,7 +126,7 @@ export function Home() {
     const stopGulls = gulls.current ? startFlock(gulls.current, { count: 26, ink: "#f7f5f0", far: "rgba(247,245,240,.6)" }) : () => {};
     const comp = me.current ? startCompanion(me.current, SH) : null;
     // the depth gauge and my pose: both read off what is under the middle of the screen
-    const scenes = [...document.querySelectorAll<HTMLElement>("[data-scene]")];
+    const scenes = [...document.querySelectorAll<HTMLElement>("[data-scene]")], named = [...document.querySelectorAll<HTMLElement>(".sea [data-name]")];
     const posed = [...document.querySelectorAll<HTMLElement>("[data-pose]")].filter((e) => e !== me.current);
     let raf = 0;
     const tick = () => {
@@ -135,9 +135,10 @@ export function Home() {
       const marks = scenes.map((s) => [s.offsetTop + s.offsetHeight / 2, Number(s.dataset.m)] as [number, number]);
       if (alt.current) alt.current.textContent = metres(depthAt(marks, mid));
       if (rail.current) rail.current.style.setProperty("--g", String(Math.min(1, scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight))));
-      let cur = scenes[0];
-      for (const s of scenes) if (s.offsetTop <= mid) cur = s;
-      if (name.current && cur) name.current.textContent = cur.dataset.name ?? "";
+      // the chapter's name: the last named part above the middle; a part may name each of its beats ("sky,the dojo")
+      let cur = named[0];
+      for (const s of named) if (s.offsetTop <= mid) cur = s;
+      if (name.current && cur) { const ns = cur.dataset.name!.split(","); name.current.textContent = ns[Math.min(ns.length - 1, Number(cur.dataset.cur ?? 0))]; }
       let at: HTMLElement | undefined;
       for (const e of posed) { const r = e.getBoundingClientRect(); if (r.top <= innerHeight / 2 && r.bottom > innerHeight / 2) at = e; }
       if (at && comp) { const list = at.dataset.pose!.split(","); comp.set(list[Math.min(list.length - 1, Number(at.dataset.cur ?? 0))]); }
@@ -168,7 +169,7 @@ export function Home() {
       </div>
 
       {/* the sky: the name alone up high, then the camera comes down onto the dojo by the sea */}
-      <section id="sky" data-scene data-m={S.sky.m} data-name="sky" data-pose="me-float,hidden,hidden" className="st sea-scene sea-sky">
+      <section id="sky" data-scene data-m={S.sky.m} data-name="sky,the dojo,the dojo" data-pose="me-float,hidden,hidden" className="st sea-scene sea-sky">
         <div className="st-stage">
           <div className="cam" data-at="0.1" data-to="1">
             <div className="high">
@@ -208,7 +209,7 @@ export function Home() {
       </section>
 
       {/* ipporu, model by model: me at the side of the court, filming the match the models read */}
-      <div className="sea-under" data-pose="me-record" style={{ "--plate": `url(${PLATE("harbour")})` } as CSSProperties}>
+      <div className="sea-under" data-name="the dojo" data-pose="me-record" style={{ "--plate": `url(${PLATE("harbour")})` } as CSSProperties}>
         <IpporuStory />
       </div>
 
@@ -245,7 +246,7 @@ export function Home() {
           {["doina", "tudor", "radu"].map((w) => <div key={w} className={`swim swim-${w}`}><Sprite name={`whale-${w}`} /></div>)}
         </div>
       </SeaScene>
-      <div className="sea-under deep" data-pose="me-scuba" style={{ "--plate": `url(${PLATE("deep-water")})` } as CSSProperties}>
+      <div className="sea-under deep" data-name="the whales" data-pose="me-scuba" style={{ "--plate": `url(${PLATE("deep-water")})` } as CSSProperties}>
         <SpeechStory />
       </div>
 

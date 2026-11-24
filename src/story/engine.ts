@@ -58,17 +58,17 @@ export function startStories(): () => void {
   const pinned = [...document.querySelectorAll<HTMLElement>(".st")].map((root) => {
     const caps = [...root.querySelectorAll<HTMLElement>("[data-beat]")], beats = caps.length || 1;
     root.style.setProperty("--beats", String(beats));
-    return { root, caps, beats, list: parts(root), bar: root.querySelector<HTMLElement>(".st-bar"), cur: -1, u: -1, seen: false, held: null as boolean | null };
+    return { root, caps, beats, list: parts(root), bar: root.querySelector<HTMLElement>(".st-bar"), cur: -1, u: -1, seen: false, stage: "" };
   });
   const paint = (s: (typeof pinned)[number], force = false) => {
     let u = s.beats;
     if (!reduce) {
       const r = s.root.getBoundingClientRect();
       u = sceneProgress(r.top + scrollY, r.height, innerHeight, scrollY) * s.beats;
-      // the stage holds the screen only between its top reaching the top and its bottom reaching the bottom; outside
-      // that it scrolls like a page, and what was pinned to it (a phone's bottom sheet) has to step away first
-      const held = r.top <= 1 && r.bottom >= innerHeight - 1;
-      if (held !== s.held) { s.held = held; s.root.toggleAttribute("data-held", held); }
+      // data-stage: "before" the stage holds the screen, "held" while it does, "past" once it lets go and scrolls away
+      // like a page; what was pinned to it (a phone's sheet, its words) has to step away first
+      const stage = r.top > 1 ? "before" : r.bottom < innerHeight - 1 ? "past" : "held";
+      if (stage !== s.stage) { s.stage = stage; s.root.dataset.stage = stage; }
     }
     if (!force && Math.abs(u - s.u) < 0.0005) return;
     s.u = u;

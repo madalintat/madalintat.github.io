@@ -95,6 +95,8 @@
   /* !important: these must beat the per-story hiding rules, whatever their specificity */
   [data-at] { opacity: 1 !important; transform: none !important; }
   .draw { stroke-dashoffset: 0 !important; }
+  .ip-facts { display: grid !important; }
+  .ip-more { display: none !important; }
 }
 
 /* ---------- the engine, model by model: a clip per beat, the current one shown ---------- */
@@ -108,6 +110,7 @@
 .ip-facts div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
 .ip-facts dt { font: 12px/1.5 var(--font-mono); color: var(--dim); text-transform: lowercase; }
 .ip-facts dd { font-size: 14px; line-height: 1.45; color: var(--body); }
+.ip-more { display: none; }
 .ip-gate { margin-top: 12px; display: flex; gap: 10px; align-items: baseline; font-size: 13px; color: var(--soft); max-width: 52ch; }
 .ip-gate b { flex: none; font: 600 12px/1 var(--font-mono); padding: 5px 8px; border-radius: 4px; background: var(--line); color: var(--ink); }
 .ip-gate.yes b { background: #1f6f6a; color: #f7f5f0; }
@@ -123,6 +126,10 @@
 .ip-vs-rows p::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 5px; height: 1px; background: var(--dim); }
 @media (max-width: 720px) {
   .ip-facts div { grid-template-columns: 1fr; gap: 2px; }
+  .ip-story:not([data-facts]) .ip-facts { display: none; }
+  .ip-more { display: inline-flex; align-items: center; min-height: 36px; margin-top: 10px; padding: 0 12px; border: 1px solid var(--line); border-radius: 6px; background: none; color: var(--body); font: 500 13px var(--font-sans); cursor: pointer; transition: border-color 0.15s, transform 0.2s var(--ease); }
+  .ip-more:active { transform: scale(0.97); }
+  .ip-more[aria-expanded="true"] { border-color: var(--accent); color: var(--ink); }
   /* the two rigs side by side even on a phone, small, so the ribbon's beat fits the screen */
   .ip-vs { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
   .ip-vs > div { padding: 9px 10px; }
