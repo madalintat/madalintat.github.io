@@ -9,8 +9,8 @@ const html = renderToString(<MemoryRouter><Home /></MemoryRouter>);
 const text = html.replace(/<[^>]+>/g, " ");
 
 test("the dive runs from the sky to the floor, in order, each scene with its depth", () => {
-  expect(SCENES.map((l) => l.id)).toEqual(["sky", "harbour", "ships", "surface", "whales", "lab", "notebook", "garden"]);
-  const shown = SCENES.filter((l) => l.id !== "harbour" && l.id !== "notebook"); // beats inside the sky and the lab
+  expect(SCENES.map((l) => l.id)).toEqual(["sky", "harbour", "ships", "surface", "whales", "bench", "lab", "notebook", "garden"]);
+  const shown = SCENES.filter((l) => !["harbour", "bench", "notebook"].includes(l.id)); // beats inside the sky, the whales and the lab
   const at = shown.map((l) => html.indexOf(`id="${l.id}"`));
   expect(at.every((x, i) => x > 0 && (i === 0 || x > at[i - 1]))).toBe(true);
   for (const l of shown) expect(html).toMatch(new RegExp(`id="${l.id}"[^>]*data-m="${l.m}"`));
@@ -24,7 +24,7 @@ test("every picture the page asks for is in public/", () => {
 
 test("the page opens on the name, and the proof is on it", () => {
   expect(html).toMatch(/<h1[^>]*>mădălin tatarciuc<\/h1>/);
-  for (const s of ["5.69%", "of 182 strikes found", "e1 to e105"]) expect(text).toContain(s); // the proof lives in the stories below
+  for (const s of ["5.69%", "of 182 strikes found", "105 experiments"]) expect(text).toContain(s); // the proof lives in the stories below
 });
 
 test("titles are lowercase, copy has no em dash, no commit counts, no stale or retracted numbers", () => {

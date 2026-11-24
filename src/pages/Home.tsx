@@ -1,6 +1,7 @@
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { TopBar } from "../layout/Shell";
+import { Card } from "../components/Card";
 import { SCENES, EXPERIMENTS, type Scene, type SceneId } from "../content/world";
 import { depthAt } from "../world/progress";
 import { startFlock } from "../world/flock";
@@ -28,27 +29,6 @@ export function Plate({ name, phone, alt = "" }: { name: string; phone?: string;
   );
 }
 
-function Go({ href, children }: { href: string; children: ReactNode }) {
-  return href.startsWith("/") ? <Link to={href}>{children}</Link> : <a href={href}>{children}</a>;
-}
-
-function Words({ s, at = 0, h1 = false }: { s: Scene; at?: number; h1?: boolean }) {
-  const T = h1 ? "h1" : "h2";
-  return (
-    <>
-      {s.tag && <p className="sea-tag"><b>{metres(s.m)}</b> {s.tag}</p>}
-      <T>{s.title}</T>
-      {s.line && <p className="sea-line">{s.line}</p>}
-      {s.facts.length > 0 && (
-        <dl className="sea-facts">
-          {s.facts.map((f, i) => <div key={f.text} data-at={(at + 0.15 + i * 0.1).toFixed(2)}><dt>{f.k}</dt><dd>{f.text}</dd></div>)}
-        </dl>
-      )}
-      {s.links.length > 0 && <p className="sea-links">{s.links.map((l) => <Go key={l.href} href={l.href}>{l.label}</Go>)}</p>}
-    </>
-  );
-}
-
 /** A full-bleed scene: a plate, what lives on it, and its words, pinned for `beats` screens of scroll. */
 function SeaScene({ s, plate, phone, pose, className = "", children, words }: { s: Scene; plate: string; phone?: string; pose?: string; className?: string; children?: ReactNode; words: ReactNode }) {
   return (
@@ -73,11 +53,13 @@ const CLOUDS = [
   { n: 1, x: 4, y: 20, w: 34, k: 40 }, { n: 2, x: 62, y: 12, w: 30, k: 25 }, { n: 4, x: 78, y: 46, w: 12, k: 60 },
   { n: 3, x: 26, y: 64, w: 40, k: 80 }, { n: 5, x: 6, y: 50, w: 8, k: 55 },
 ];
-// the people in the lab: who, where they start on the floor (frame %), how far they walk, how long a round takes
+// the people in the lab: who, where they start on the floor (frame %), how far they walk. A round there and back
+// takes as long as their stride says: about 6 % of the room a second, a stroll.
+const STROLL = 6;
 const PEOPLE = [
-  { n: 1, x: 18, span: 22, dur: 34, delay: -3 }, { n: 2, x: 52, span: 16, dur: 28, delay: -17 },
-  { n: 3, x: 70, span: 12, dur: 26, delay: -8 }, { n: 4, x: 34, span: 26, dur: 40, delay: -25 }, { n: 5, x: 8, span: 18, dur: 31, delay: -12 },
-];
+  { n: 1, x: 6, span: 52, delay: -3 }, { n: 2, x: 40, span: 44, delay: -6 }, { n: 3, x: 64, span: 26, delay: -1 },
+  { n: 4, x: 22, span: 60, delay: -9 }, { n: 5, x: 50, span: 36, delay: -4 }, { n: 1, x: 74, span: 18, delay: -2 }, { n: 3, x: 12, span: 34, delay: -7 },
+].map((p) => ({ ...p, dur: +((2 * p.span) / STROLL).toFixed(1) }));
 const SH = SHEETS as Record<string, Sheet>;
 
 /** A sheet's room in the layout before it loads: its frame's ratio (the frames come in as the thing is reached). */
@@ -109,12 +91,13 @@ function Water({ mode, horizon = [0.707, 0.735] }: { mode: "surface" | "caustics
 }
 
 export function Home() {
-  const flock = useRef<HTMLCanvasElement>(null), me = useRef<HTMLDivElement>(null);
+  const flock = useRef<HTMLCanvasElement>(null), gulls = useRef<HTMLCanvasElement>(null), me = useRef<HTMLDivElement>(null);
   const alt = useRef<HTMLSpanElement>(null), rail = useRef<HTMLElement>(null), name = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const stopStories = startStories();
     const stopFlock = flock.current ? startFlock(flock.current) : () => {};
+    const stopGulls = gulls.current ? startFlock(gulls.current, { count: 26, ink: "#f7f5f0", far: "rgba(247,245,240,.6)" }) : () => {};
     const comp = me.current ? startCompanion(me.current, SH) : null;
     // the depth gauge and my pose: both read off what is under the middle of the screen
     const scenes = [...document.querySelectorAll<HTMLElement>("[data-scene]")];
@@ -137,7 +120,7 @@ export function Home() {
     tick();
     addEventListener("scroll", ask, { passive: true });
     addEventListener("resize", ask);
-    return () => { stopStories(); stopFlock(); comp?.stop(); cancelAnimationFrame(raf); removeEventListener("scroll", ask); removeEventListener("resize", ask); };
+    return () => { stopStories(); stopFlock(); stopGulls(); comp?.stop(); cancelAnimationFrame(raf); removeEventListener("scroll", ask); removeEventListener("resize", ask); };
   }, []);
 
   return (
@@ -170,12 +153,12 @@ export function Home() {
           </div>
           <ol className="st-caps sea-caps">
             <li data-beat={0} className="hero">
-              <p className="sea-tag">{S.sky.tag}</p>
+              <p className="hero-kind">{S.sky.tag}</p>
               <h1>{S.sky.title}</h1>
               <p className="sea-line">{S.sky.line}</p>
-              <p className="down" aria-hidden="true"><span>into the sea</span><i /></p>
+              <p className="down" aria-hidden="true"><span className="mouse"><i /></span><span className="desk-only">scroll to dive</span><span className="phone-only">swipe to dive</span></p>
             </li>
-            <li data-beat={1}><Words s={S.harbour} at={1} /></li>
+            <li data-beat={1}><Card s={S.harbour} at={1} /></li>
           </ol>
         </div>
       </section>
@@ -193,10 +176,11 @@ export function Home() {
       {/* the seaside: rowing out past the fleet, then in */}
       <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat,me-dive" className="sea-ships"
         words={<>
-          <li data-beat={0}><Words s={S.ships} /></li>
+          <li data-beat={0}><Card s={S.ships} /></li>
           <li data-beat={1}><p className="sea-tag"><b>0 m</b> the surface</p><h2>and then, in.</h2></li>
         </>}>
         <Water mode="surface" />
+        <canvas ref={gulls} className="gulls" aria-hidden="true" />
         <div className="fleet" aria-hidden="true">
           {SHIPS.map((sh) => (
             <figure key={sh.img} className="ship" style={{ "--x": sh.x, "--w": sh.w, "--d": sh.d } as CSSProperties}>
@@ -210,13 +194,11 @@ export function Home() {
       {/* through the surface */}
       <section id="surface" data-scene data-m={S.surface.m} data-name={S.surface.name} data-pose="me-dive" className="sea-pass" aria-label={S.surface.title}>
         <Plate name="surface" />
-        <Water mode="caustics" />
       </section>
 
       {/* the whales: romanian speech; me with them, diving */}
       <SeaScene s={S.whales} plate="deep-water" phone="deep-water-phone" pose="me-scuba" className="sea-whales"
-        words={<li data-beat={0}><Words s={S.whales} /></li>}>
-        <Water mode="caustics" />
+        words={<><li data-beat={0}><Card s={S.whales} /></li><li data-beat={1}><Card s={S.bench} at={1} /></li></>}>
         <div className="pod">
           {["doina", "tudor", "radu"].map((w) => <div key={w} className={`swim swim-${w}`}><Sprite name={`whale-${w}`} /></div>)}
         </div>
@@ -228,8 +210,8 @@ export function Home() {
       {/* the lab: superstarling, people at work, the sea outside the window; then the notebook; me at my laptop */}
       <SeaScene s={S.lab} plate="lab" phone="lab-phone" pose="me-laptop" className="sea-lab"
         words={<>
-          <li data-beat={0}><Words s={S.lab} /></li>
-          <li data-beat={1}><Words s={S.notebook} at={1} />
+          <li data-beat={0}><Card s={S.lab} /></li>
+          <li data-beat={1}><Card s={S.notebook} at={1} />
             <ol className="strata" aria-label={`${EXPERIMENTS.length} notebook entries, e1 to e105`}>
               {Array.from({ length: 105 }, (_, i) => i + 1).map((n) => (
                 <li key={n} className={`${EXPERIMENTS.includes(n) ? "on" : ""}${n === 101 ? " hit" : ""}`} title={`e${n}`} />
@@ -243,8 +225,8 @@ export function Home() {
             <div className="far far-jelly"><Sprite name="jelly" /></div>
             <img className="far far-lantern" src="/sea/lantern.webp" alt="" />
           </div>
-          {PEOPLE.map((p) => (
-            <span key={p.n} className="person" style={{ left: `${p.x}%`, "--span": p.span, animationDuration: `${p.dur}s`, animationDelay: `${p.delay}s` } as CSSProperties}>
+          {PEOPLE.map((p, i) => (
+            <span key={i} className="person" style={{ left: `${p.x}%`, "--span": p.span, animationDuration: `${p.dur}s`, animationDelay: `${p.delay}s` } as CSSProperties}>
               <Sprite name={`person${p.n}`} />
             </span>
           ))}
@@ -252,11 +234,12 @@ export function Home() {
       </SeaScene>
 
       {/* the garden that glows: me in a hammock, and the way to write */}
-      <SeaScene s={S.garden} plate="garden" phone="garden-phone" pose="me-hammock" className="sea-garden" words={<li data-beat={0}><Words s={S.garden} /></li>}>
-        <Water mode="caustics" />
+      <SeaScene s={S.garden} plate="garden" phone="garden-phone" pose="me-hammock" className="sea-garden" words={<li data-beat={0}><Card s={S.garden} /></li>}>
         <div className="glow" aria-hidden="true">
           <div className="drift d1"><Sprite name="jelly" /></div>
           <div className="drift d2"><Sprite name="jelly" /></div>
+          <div className="drift d3"><Sprite name="jelly" /></div>
+          <div className="drift d4"><Sprite name="jelly" /></div>
         </div>
       </SeaScene>
     </div>

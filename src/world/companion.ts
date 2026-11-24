@@ -43,8 +43,10 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
     const dx = Math.max(-1, Math.min(1, (e.clientX - cx) / innerWidth * 2)), dy = Math.max(-1, Math.min(1, (e.clientY - cy) / innerHeight * 2));
     tilt.style.transform = `rotateY(${(dx * 14).toFixed(2)}deg) rotateX(${(-dy * 9).toFixed(2)}deg)`;
   };
+  // I do my thing on my own now and then, not only when touched
+  const idle = window.setInterval(() => { if (!document.hidden && !reduce) touch(); }, 13000);
   el.addEventListener("pointerenter", touch);
   el.addEventListener("click", touch);
   addEventListener("pointermove", near, { passive: true });
-  return { set, stop() { sp?.stop(); clearTimeout(timer); removeEventListener("pointermove", near); } };
+  return { set, stop() { sp?.stop(); clearTimeout(timer); clearInterval(idle); removeEventListener("pointermove", near); } };
 }

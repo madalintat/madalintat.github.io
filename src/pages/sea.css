@@ -100,9 +100,12 @@
 .sea-sky .sea-caps .hero { --ink: #111318; --body: #2b3140; --soft: #454c5c; place-self: center; text-align: center; max-width: 880px; padding: 0 20px; margin-top: -6svh; }
 .sea-sky .sea-caps .hero h1 { max-width: none; font-size: clamp(46px, 7.6vw, 118px); margin-top: 10px; }
 .sea-sky .sea-caps .hero .sea-line { margin: 14px auto 0; max-width: 30ch; font-size: clamp(17px, 1.6vw, 22px); }
-.down { margin-top: 34px; display: inline-flex; flex-direction: column; align-items: center; gap: 10px; font: 500 var(--size-tag) var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: #454c5c; }
-.down i { width: 1px; height: 44px; background: linear-gradient(#454c5c, transparent); animation: down 2.4s ease-in-out infinite; transform-origin: top; }
-@keyframes down { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+.down { margin-top: 38px; display: inline-flex; align-items: center; gap: 12px; padding: 8px 16px 8px 10px; border: 1px solid rgba(17, 19, 24, 0.16); border-radius: 6px; background: #f7f5f0; font: 500 13px var(--font-sans); color: #2b3140; }
+.down .mouse { width: 18px; height: 27px; border: 1.5px solid #2b3140; border-radius: 9px; position: relative; flex: none; }
+.down .mouse i { position: absolute; left: 50%; top: 5px; width: 3px; height: 6px; margin-left: -1.5px; border-radius: 2px; background: var(--aka, #e0563a); animation: dot 1.8s cubic-bezier(.6, 0, .3, 1) infinite; }
+.down .phone-only { display: none; }
+@keyframes dot { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 70% { transform: translateY(9px); opacity: 0; } 100% { opacity: 0; } }
+@media (max-width: 720px) { .down .desk-only { display: none; } .down .phone-only { display: inline; } }
 .sea-sky .sea-caps li[data-beat="1"] { align-self: start; justify-self: start; margin: clamp(92px, 16svh, 170px) 0 0 clamp(20px, 7vw, 120px); max-width: 560px; text-shadow: 0 1px 14px rgba(7, 12, 18, 0.85); }
 .opponent { position: absolute; z-index: 2; left: 60%; bottom: 4%; width: 15vw; min-width: 120px; }
 
@@ -122,22 +125,22 @@
 .me.acting .me-sprite { filter: drop-shadow(0 14px 18px rgba(7, 12, 18, 0.28)) drop-shadow(0 0 22px rgba(255, 215, 168, 0.35)); }
 @keyframes breathe { 50% { translate: 0 -1.2%; } }
 /* where I am in each scene: left, top, how wide */
-.me[data-pose="me-float"]   { --mx: 72; --my: 44; --mw: 14vw; }
-.me[data-pose="me-kendo"]   { --mx: 36; --my: 50; --mw: 17vw; }
-.me[data-pose="me-record"]  { --mx: 2%;  --my: 64%; --mw: 13vw; }
-.me[data-pose="me-boat"]    { --mx: 34; --my: 60; --mw: 22vw; }
-.me[data-pose="me-dive"]    { --mx: 40; --my: 34; --mw: 20vw; }
-.me[data-pose="me-scuba"]   { --mx: 50; --my: 58; --mw: 24vw; }
-.me[data-pose="me-laptop"]  { --mx: 70; --my: 50; --mw: 11vw; }
-.me[data-pose="me-hammock"] { --mx: 54; --my: 50; --mw: 30vw; }
+.me[data-pose="me-float"]   { --mx: 74; --my: 46; --mw: 11vw; }
+.me[data-pose="me-kendo"]   { --mx: 40; --my: 56; --mw: 13vw; }
+.me[data-pose="me-record"]  { --mx: 2;  --my: 70; --mw: 10vw; }
+.me[data-pose="me-boat"]    { --mx: 36; --my: 66; --mw: 16vw; }
+.me[data-pose="me-dive"]    { --mx: 42; --my: 40; --mw: 15vw; }
+.me[data-pose="me-scuba"]   { --mx: 56; --my: 62; --mw: 16vw; }
+.me[data-pose="me-laptop"]  { --mx: 72; --my: 58; --mw: 7vw; }
+.me[data-pose="me-hammock"] { --mx: 56; --my: 58; --mw: 20vw; }
 
 /* ---------- the whales, swimming through ---------- */
-.pod { z-index: 2; position: absolute; inset: 0; pointer-events: none; }
+.pod { z-index: 2; }
 .swim { position: absolute; left: 0; animation: swim linear infinite; }
-.swim-doina { top: 50%; width: 46%; animation-duration: 70s; animation-delay: -22s; }
-.swim-tudor { top: 30%; width: 30%; animation-duration: 95s; animation-delay: -60s; opacity: 0.85; }
-.swim-radu { top: 68%; width: 24%; animation-duration: 82s; animation-delay: -8s; }
-@keyframes swim { from { transform: translate3d(240%, 0, 0); } 50% { transform: translate3d(80%, -6%, 0); } to { transform: translate3d(-130%, 0, 0); } }
+.swim-doina { top: 44%; width: 62%; animation-duration: 36s; animation-delay: -12s; }
+.swim-tudor { top: 22%; width: 40%; animation-duration: 46s; animation-delay: -30s; opacity: 0.82; }
+.swim-radu { top: 64%; width: 34%; animation-duration: 30s; animation-delay: -4s; }
+@keyframes swim { from { transform: translate3d(190%, 0, 0); } 25% { transform: translate3d(110%, -14%, 0); } 50% { transform: translate3d(35%, 4%, 0); } 75% { transform: translate3d(-40%, -10%, 0); } to { transform: translate3d(-120%, 0, 0); } }
 
 /* ---------- the lab: the window, the people ---------- */
 .sea-lab .frame { container-type: inline-size; }
@@ -147,7 +150,7 @@
 .far-jelly { top: 8%; left: 62%; width: 7%; animation: bob 7s ease-in-out infinite; }
 .far-lantern { top: 58%; width: 9%; animation-duration: 24s; animation-delay: -9s; }
 @keyframes past { from { transform: translateX(320%); } to { transform: translateX(-120%); } }
-.person { position: absolute; bottom: 7%; width: 7.2%; z-index: 2; animation: walk linear infinite; }
+.person { position: absolute; bottom: 6%; width: 8.4%; z-index: 2; animation: walk linear infinite; }
 @keyframes walk {
   0% { transform: translateX(0) scaleX(1); } 48% { transform: translateX(calc(var(--span) * 1cqw)) scaleX(1); }
   50% { transform: translateX(calc(var(--span) * 1cqw)) scaleX(-1); } 98% { transform: translateX(0) scaleX(-1); } 100% { transform: translateX(0) scaleX(1); }
@@ -164,13 +167,13 @@
 /* ---------- phones: their own layout. I am bigger and stand at the bottom, out of the words' way ---------- */
 @media (max-width: 720px) {
   .me { left: auto; right: 2vw; top: auto; bottom: 54px; transform: none; width: var(--pw, 46vw) !important; }
-  .me[data-pose="me-float"] { --pw: 44vw; } .me[data-pose="me-kendo"] { --pw: 40vw; } .me[data-pose="me-record"] { --pw: 34vw; }
-  .me[data-pose="me-boat"] { --pw: 56vw; } .me[data-pose="me-dive"] { --pw: 52vw; } .me[data-pose="me-scuba"] { --pw: 62vw; }
-  .me[data-pose="me-laptop"] { --pw: 36vw; } .me[data-pose="me-hammock"] { --pw: 70vw; }
+  .me[data-pose="me-float"] { --pw: 34vw; } .me[data-pose="me-kendo"] { --pw: 32vw; } .me[data-pose="me-record"] { --pw: 28vw; }
+  .me[data-pose="me-boat"] { --pw: 44vw; } .me[data-pose="me-dive"] { --pw: 42vw; } .me[data-pose="me-scuba"] { --pw: 46vw; }
+  .me[data-pose="me-laptop"] { --pw: 22vw; } .me[data-pose="me-hammock"] { --pw: 54vw; }
   .sea-under .me, .me[data-pose="me-record"] { opacity: 0.95; }
   .opponent { width: 34vw; left: 4%; }
-  .swim-doina { width: 92%; } .swim-tudor { width: 62%; } .swim-radu { width: 50%; }
-  .person { width: 15%; }
+  .swim-doina { width: 120%; } .swim-tudor { width: 80%; } .swim-radu { width: 66%; }
+  .person { width: 17%; }
   .sea-sky .sea-caps .hero { margin-top: -18svh; }
   .drift.d1 { width: 14vw; } .drift.d2 { width: 10vw; }
 }
@@ -182,3 +185,38 @@
 /* the lab's words sit on the window glass, not the white wall */
 .sea-lab .sea-caps { left: max(18%, 20px); }
 @media (max-width: 720px) { .sea-lab .sea-caps { left: 20px; } }
+
+/* more life: the ships drift on the swell, gulls over the seaside, the garden's jellies */
+.ship { animation: sail 70s ease-in-out infinite alternate; }
+.ship:nth-child(2n) { animation-duration: 95s; animation-direction: alternate-reverse; }
+@keyframes sail { to { translate: 7% 0; } }
+.gulls { position: absolute; inset: 0 0 35% 0; width: 100%; height: 65%; z-index: 2; pointer-events: none; }
+.drift.d3 { left: 70%; top: 44%; width: 3vw; animation-duration: 18s; animation-delay: -4s; }
+.drift.d4 { left: 28%; top: 12%; width: 2.6vw; animation-duration: 25s; animation-delay: -14s; }
+@media (max-width: 720px) { .drift.d3 { width: 8vw; } .drift.d4 { width: 7vw; } }
+
+/* ---------- the cards: a scene's words on a solid surface, readable over any painting ---------- */
+.sea-hero-kind, .hero-kind { font: 500 15px var(--font-sans); color: #454c5c; }
+.card { width: min(440px, calc(100vw - 32px)); background: #f7f5f0; color: #111318; border: 1px solid rgba(17, 19, 24, 0.1); border-radius: 8px; padding: 22px 22px 20px; box-shadow: 0 18px 40px rgba(7, 12, 18, 0.28); text-shadow: none; }
+.card-kind { display: flex; align-items: center; gap: 8px; font: 500 13px var(--font-sans); color: #454c5c; }
+.card .ico { width: 18px; height: 18px; flex: none; }
+.card h2 { margin-top: 12px; font: 600 clamp(26px, 2.4vw, 34px)/1.08 var(--font-sans); letter-spacing: -0.02em; color: #111318; max-width: none; }
+.card-line { margin-top: 10px; font: 400 16px/1.5 var(--font-sans); color: #2b3140; }
+.card-stats { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 8px; }
+.card-stats div { background: #ece8e0; border-radius: 6px; padding: 12px 12px 11px; }
+.card-stats dt { font: 600 22px/1.05 var(--font-sans); letter-spacing: -0.01em; color: #111318; }
+.card-stats dd { margin-top: 5px; font: 400 13px/1.35 var(--font-sans); color: #454c5c; }
+.card-links { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+.card .btn { margin: 0; display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 12px; border-radius: 6px; border: 1px solid rgba(17, 19, 24, 0.16); background: #fff; color: #111318; font: 500 14px var(--font-sans); text-decoration: none; transition: background 0.15s, border-color 0.15s; }
+.card .btn:hover { background: #ece8e0; border-color: rgba(17, 19, 24, 0.3); }
+.card .btn.main { background: #111318; color: #f7f5f0; border-color: #111318; }
+.card .btn.main:hover { background: #2b3140; }
+.card .btn.main img.ico { filter: invert(1); }
+.sea-caps li:has(.card) { align-self: center; }
+@media (max-width: 720px) {
+  .card { padding: 18px 16px 16px; }
+  .card h2 { font-size: 26px; }
+  .card-stats { grid-template-columns: 1fr 1fr; }
+  .card .btn { height: 40px; }
+  .sea-caps li:has(.card) { align-self: start; margin-top: 64px; }
+}
