@@ -209,10 +209,10 @@ export function startWorld(canvas: HTMLCanvasElement): () => void {
     if (!reduce) raf = requestAnimationFrame(frame);
   }
 
-  const onScroll = () => { if (reduce) requestAnimationFrame(frame); };
+  const onScroll = () => { if (reduce && !raf) raf = requestAnimationFrame((t) => { raf = 0; frame(t); }); };
   const onResize = () => { measure(); if (reduce) frame(0); };
   measure();
-  const ro = new ResizeObserver(() => measure());
+  const ro = new ResizeObserver(onResize);
   ro.observe(document.body);
   addEventListener("resize", onResize);
   addEventListener("scroll", onScroll, { passive: true });

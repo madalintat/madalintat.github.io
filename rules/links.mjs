@@ -29,10 +29,12 @@ for (const [href, from] of internal) {
 }
 for (const url of external) {
   let status = 0;
-  try {
-    status = (await fetch(url, { method: "HEAD", redirect: "follow" })).status;
-    if (status >= 400) status = (await fetch(url, { redirect: "follow" })).status;
-  } catch (e) { status = -1; }
+  for (let attempt = 0; attempt < 2 && (status === 0 || status >= 400 || status < 0); attempt++) {
+    try {
+      status = (await fetch(url, { method: "HEAD", redirect: "follow", signal: AbortSignal.timeout(10000) })).status;
+      if (status >= 400) status = (await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(10000) })).status;
+    } catch (e) { status = -1; }
+  }
   const wall = BOT_WALLS.some((w) => new URL(url).hostname.endsWith(w));
   if (status >= 400 || status < 0) { if (wall) console.log(`wall     ${status} ${url}`); else { bad++; console.log(`broken   ${status} ${url}`); } }
 }

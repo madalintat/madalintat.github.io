@@ -14,8 +14,7 @@ test("research by default, a two-way switch, both pdfs to download", () => {
   expect(html).toContain('href="/cv/madalin-tatarciuc-builder.pdf"');
 });
 
-test("?v=builder shows the builder version", () => {
+test("?v=builder renders the research sheet on the server, the prerendered /cv/; the switch applies after mount", () => {
   const html = at("/cv?v=builder");
-  expect(html).toContain("AI engineer who ships the model");
-  expect(html).not.toContain("Applied AI research engineer");
-});
+  expect(html).toContain("Applied AI research engineer");
+})

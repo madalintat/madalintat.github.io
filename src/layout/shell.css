@@ -9,4 +9,4 @@
 .bar .mail { color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
 .bar .mail:hover { border-color: var(--accent); }
 .page { max-width: 1080px; margin: 0 auto; padding: 96px var(--gutter) 64px; }
-@media (max-width: 720px) { .bar nav { display: none; } }
+@media (max-width: 720px) { .bar { gap: 14px; } .bar nav { gap: 14px; } .bar .mail { padding: 6px 12px; } }

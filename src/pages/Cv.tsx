@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Shell } from "../layout/Shell";
 import { cv, type CvVersion } from "../content/cv";
@@ -5,7 +6,10 @@ import "./cv.css";
 
 export function CvPage() {
   const [params, setParams] = useSearchParams();
-  const v: CvVersion = params.get("v") === "builder" ? "builder" : "research";
+  // /cv/ is prerendered as the research cv; the query applies once mounted, so hydration matches
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const v: CvVersion = mounted && params.get("v") === "builder" ? "builder" : "research";
   const print = params.get("print") === "1";
   const c = cv[v];
   const sheet = (

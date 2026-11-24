@@ -112,7 +112,7 @@ export function Home() {
     tick();
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", onScroll);
-    return () => { if ("cancelIdleCallback" in window) cancelIdleCallback(idle); stopWorld(); removeEventListener("scroll", onScroll); removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
+    return () => { if ("cancelIdleCallback" in window) cancelIdleCallback(idle); else clearTimeout(idle); stopWorld(); removeEventListener("scroll", onScroll); removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
   }, []);
 
   return (

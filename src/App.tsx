@@ -4,9 +4,12 @@ import { WorkPage } from "./pages/Work";
 import { NotFound } from "./pages/NotFound";
 import { NotesPage, NotePage } from "./pages/Notes";
 import { CvPage } from "./pages/Cv";
+import { ScrollOnNav } from "./layout/ScrollOnNav";
 
 export function App() {
   return (
+    <>
+    <ScrollOnNav />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/work/:slug" element={<WorkPage />} />
@@ -15,5 +18,6 @@ export function App() {
       <Route path="/notes/:slug" element={<NotePage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </>
   );
 }

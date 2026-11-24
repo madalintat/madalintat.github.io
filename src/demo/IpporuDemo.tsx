@@ -49,7 +49,7 @@ export function IpporuDemo({ src, poster, data }: { src: string; poster: string;
         <p>{data.title}, {data.sub}. every mark below came out of the engine, not from me.</p>
       </header>
 
-      <div className="stage">
+      <div className="demo-stage">
         {failed ? (
           <img src={poster} alt="the match, at the first ippon" />
         ) : (
@@ -87,7 +87,7 @@ export function IpporuDemo({ src, poster, data }: { src: string; poster: string;
         ))}
       </ol>
 
-      <p className="credit">
+      <p className="demo-credit">
         footage: <a href={data.source}>all japan kendo championships 2024, public stream</a>; name bar cropped. engine output: ipporu.
         {!data.heldOut && " this is not a held-out match: it appears in the tracking experiments."}
       </p>

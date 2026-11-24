@@ -59,7 +59,7 @@
 .caption { opacity: 0.8; }
 
 /* under the dojo floor: the chain links up, then the match */
-.under { position: relative; z-index: 2; padding: 12svh var(--gutter) 14svh clamp(64px, 11vw, 168px); }
+.under { --p: 1; position: relative; z-index: 2; padding: 12svh var(--gutter) 14svh clamp(64px, 11vw, 168px); }
 .under h2 { margin-bottom: 30px; }
 .links-chain { list-style: none; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; counter-reset: link; }
 .links-chain li { position: relative; padding: 14px 14px 14px 0; border-top: 2px solid var(--dim); counter-increment: link; }
