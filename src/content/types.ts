@@ -5,6 +5,7 @@ export type Work = {
   slug: Slug;
   title: string;
   line: string;
+  stat: string; // one number with its unit, for the home row; the full figure is in numbers
   hero: { kind: "film" | "image" | "figure"; src: string; poster?: string; alt: string };
   numbers: Num[];
   links: { label: string; href: string }[];

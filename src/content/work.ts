@@ -5,6 +5,7 @@ export const work: Work[] = [
     slug: "ipporu",
     title: "ipporu",
     line: "video models that find every strike and ippon in a kendo match",
+    stat: "99 countries",
     hero: { kind: "film", src: "/work/ipporu.mp4", poster: "/work/ipporu.jpg", alt: "ipporu launch film: each ippon as it was scored" },
     numbers: [
       { value: "99", label: "countries in the record", condition: "kendoka, clubs and competitions on ipporu.com", source: "ipporu-site" },
@@ -38,6 +39,7 @@ export const work: Work[] = [
     slug: "romanian-speech",
     title: "romanian speech",
     line: "recognition and three voices that run on a CPU, built at invergent",
+    stat: "5.00% WER",
     hero: { kind: "figure", src: "speech", alt: "audio into a 110M recogniser, text into a 357M speech model, both on a CPU" },
     numbers: [
       { value: "5.00%", label: "WER offline", condition: "CTC + 4-gram, 3,196 test clips from FLEURS, common voice 22, voxpopuli", source: "jackrabbit-card" },
@@ -71,6 +73,7 @@ export const work: Work[] = [
     slug: "superstarling",
     title: "superstarling",
     line: "a workspace where an agent team drafts and you say yes",
+    stat: "31 block types",
     hero: { kind: "image", src: "/work/superstarling-home.webp", alt: "superstarling home: what needs you, drafts to approve, what goes out" },
     numbers: [
       { value: "31", label: "block types", condition: "pages with markdown shortcuts, a slash menu, history and trash", source: "superstarling-readme" },
@@ -97,6 +100,7 @@ export const work: Work[] = [
     slug: "surogates",
     title: "surogates",
     line: "the open runtime for managed agents, at invergent",
+    stat: "708 commits",
     hero: { kind: "figure", src: "surogates", alt: "an agent session that survives a crash: durable session, isolated execution, a policy check on every tool call" },
     numbers: [
       { value: "708", label: "of my commits", condition: "invergent-ai/surogates, merges excluded, as of 24 nov 2026", source: "surogates-git" },

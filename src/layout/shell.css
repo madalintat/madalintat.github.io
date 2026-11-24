@@ -1,0 +1,5 @@
+.bar { display: flex; justify-content: space-between; gap: var(--gap); max-width: 1080px; margin: 0 auto; padding: 20px 24px; font-size: var(--size-small); color: var(--soft); }
+.bar a:hover { color: var(--ink); }
+.bar nav { display: flex; gap: 20px; }
+.page { max-width: 1080px; margin: 0 auto; padding: 8px 24px 64px; }
+@media (max-width: 820px) { .bar, .page { padding-left: 16px; padding-right: 16px; } }
