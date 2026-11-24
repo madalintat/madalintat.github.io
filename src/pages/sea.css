@@ -201,6 +201,8 @@
 .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .card-toggle { display: none; width: 36px; height: 36px; margin: -6px -8px -6px 0; border: 0; border-radius: 6px; background: transparent; color: #2b3140; cursor: pointer; align-items: center; justify-content: center; transition: transform 0.2s; }
 .card.open .card-toggle { transform: rotate(180deg); }
+/* a card with no kind line still keeps its toggle at the right */
+.card-toggle { margin-left: auto; }
 @media (max-width: 720px) { .card-toggle { display: inline-flex; } }
 @media (scripting: none) { .card-more { display: block !important; } .card-toggle { display: none !important; } }
 

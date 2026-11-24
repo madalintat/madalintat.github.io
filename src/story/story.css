@@ -120,7 +120,11 @@
 .ip-vs-rows p::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 5px; height: 1px; background: var(--dim); }
 @media (max-width: 720px) {
   .ip-facts div { grid-template-columns: 1fr; gap: 2px; }
-  .ip-vs { grid-template-columns: 1fr; }
+  /* the two rigs side by side even on a phone, small, so the ribbon's beat fits the screen */
+  .ip-vs { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .ip-vs > div { padding: 9px 10px; }
+  .ip-vs-name { font-size: 12.5px; }
+  .ip-vs-rows p { font-size: 12px; line-height: 1.35; }
   .ip-story .st-caps h3 { font-size: 22px; }
   .ip-story .st-caps li > p:not([class]) { font-size: 14.5px; margin-top: 8px; }
   .ip-story .st-num { margin-top: 8px; }
