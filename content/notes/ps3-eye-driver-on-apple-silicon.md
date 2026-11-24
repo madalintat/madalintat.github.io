@@ -1,8 +1,7 @@
 ---
-title: Building a camera driver from scratch - PS3 Eye Camera on Mac Silicon
+title: ps3 eye driver on apple silicon
 date: 2025-03-04
-tags: [hardware, low-level, MacOS]
-layout: project
+summary: five second-hand ps3 eye cameras, no mac driver for apple silicon, so i wrote one over libusb.
 ---
 
 GitHub Repo: [PS3Eye Driver for Macbook Silicon](https://github.com/madalintat/PS3Eye-Driver-MacOS-Silicon/tree/main)
@@ -23,7 +22,7 @@ so I am going to use it no matter what. So that's how I started the adventure of
 I definitely have no experience with this, but luckily I've been studying
 low-level programming and hardware for the last few months, so my brain is warmed up for the challenge.
 
-![3 out of the 5 PS3 Eye cameras](../../images/ps3eye_cameras.jpg)
+![3 out of the 5 PS3 Eye cameras](/notes/ps3-eye/ps3eye_cameras.jpg)
 _3 out of the 5 cameras + 3 esp32 wroom for the drones._
 
 ---
@@ -49,7 +48,7 @@ The way that the driver works is this:
 > 6. Release interface → reattach kernel driver if needed;
 > 7. Clean up and exit.
 
-![PS3 Eye camera connected to the Macbook Air M3](../../images/ps3eye_camera_2.jpeg)
+![PS3 Eye camera connected to the Macbook Air M3](/notes/ps3-eye/ps3eye_camera_2.jpg)
 _PS3 Eye camera connected to the Macbook Air M3_
 
 ---
@@ -302,7 +301,7 @@ gcc -o ps3eye_test ps3eye_test.c -I/opt/homebrew/Cellar/libusb/1.0.27/include/li
 ./ps3eye_test
 ```
 
-![Succesfully connected the PS3 Eye camera to Macbook Air M3](../../images/ps3eye_driver_1.jpeg)
+![Succesfully connected the PS3 Eye camera to Macbook Air M3](/notes/ps3-eye/ps3eye_driver_1.jpg)
 _Succesfully connected the PS3 Eye camera to Macbook Air M3_
 
 > #### Limitations
@@ -322,5 +321,5 @@ Now, the main goal is getting these cameras to capture video directly on my Macb
 
 Until next time!
 
-![Wolly the whale](../../images/wolly_the_whale.jpg)
+![Wolly the whale](/notes/ps3-eye/wolly_the_whale.jpg)
 _This is Wolly, the Whale. He helped me in building the driver._
