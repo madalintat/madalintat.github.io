@@ -9,12 +9,12 @@ export { SCENES };
 export const SITE = "https://cetusian.com";
 type Meta = { title: string; description: string };
 
-const HOME: Meta = { title: "mădălin tatarciuc · applied ai researcher and builder", description: "i train small ai models and ship the products around them: ipporu, an ai that reads kendo; romanian speech models that beat whisper large-v3 at 14 times smaller; superstarling, an ai team for your business." };
+const HOME: Meta = { title: "mădălin tatarciuc · applied ai researcher and builder", description: "i train small ai models and ship the products around them: ipporu, an ai that reads kendo; romanian speech models that beat whisper large-v3 at 14 times smaller; superstarling, an ai team for your business and your life." };
 
 export function routes(): Record<string, Meta> {
   const r: Record<string, Meta> = { "/": HOME };
   for (const w of work) r[`/work/${w.slug}/`] = { title: `${w.title} · mădălin tatarciuc`, description: w.line };
-  r["/notes/"] = { title: "notes · mădălin tatarciuc", description: "what i measured, and what broke." };
+  r["/notes/"] = { title: "notes from the lab · mădălin tatarciuc", description: "long-form notes on training small models, reading kendo from video and romanian speech: what i measured, what broke, and what i took back." };
   for (const n of notes) r[`/notes/${n.slug}/`] = { title: `${n.title} · mădălin tatarciuc`, description: n.summary };
   r["/cv/"] = { title: "cv · mădălin tatarciuc", description: "applied ai research engineer. research and builder versions, with pdfs." };
   return r;
@@ -48,7 +48,7 @@ export function llms() {
     for (const l of s.links) out.push(`- [${l.label}](${l.href.startsWith("/") ? SITE + l.href : l.href})`);
     out.push("");
   }
-  out.push("## Pages", "", `- [Work](${SITE}/work/)`, `- [Notes](${SITE}/notes/)`, `- [CV](${SITE}/cv/)`, "");
+  out.push("## Pages", "", ...work.map((w) => `- [${w.title}](${SITE}/work/${w.slug}/)`), `- [Notes](${SITE}/notes/)`, `- [CV](${SITE}/cv/)`, "");
   return out.join("\n");
 }
 
@@ -70,11 +70,23 @@ export function head(url: string, m: Meta) {
     `<meta name="twitter:description" content="${esc(m.description)}" />`,
     `<meta name="twitter:creator" content="@cetusian" />`,
     `<meta name="author" content="Mădălin Tatarciuc" />`,
+    `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />`,
+    `<meta property="og:locale" content="en_GB" />`,
+    `<meta property="og:image:width" content="1200" />`,
+    `<meta property="og:image:height" content="630" />`,
     `<link rel="alternate" type="text/plain" href="${SITE}/llms.txt" title="llms.txt" />`,
+    `<link rel="alternate" type="application/rss+xml" href="${SITE}/notes/rss.xml" title="notes from the lab" />`,
     `<script type="application/ld+json">${graph()}</script>`,
   ].join("\n    ");
 }
 
 export function render(url: string) {
   return renderToString(<StaticRouter location={url}><App /></StaticRouter>);
+}
+
+const xml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+/** The notes as rss 2.0: published posts only, newest first. An empty channel is a valid feed to subscribe to early. */
+export function rss() {
+  const items = notes.map((n) => `  <item>\n    <title>${xml(n.title)}</title>\n    <link>${SITE}/notes/${n.slug}/</link>\n    <guid>${SITE}/notes/${n.slug}/</guid>\n    <pubDate>${new Date(n.date + "T12:00:00Z").toUTCString()}</pubDate>\n    <description>${xml(n.summary)}</description>\n  </item>`);
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>\n  <title>notes from the lab · mădălin tatarciuc</title>\n  <link>${SITE}/notes/</link>\n  <atom:link href="${SITE}/notes/rss.xml" rel="self" type="application/rss+xml" />\n  <description>long-form notes on small models, kendo video and romanian speech.</description>\n  <language>en</language>\n${items.join("\n")}${items.length ? "\n" : ""}</channel>\n</rss>\n`;
 }

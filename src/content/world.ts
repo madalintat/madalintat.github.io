@@ -113,7 +113,7 @@ export const SCENES: Scene[] = [
     title: "how i work: 105 experiments, each with a gate",
     line: "every experiment is written down before it runs, with the number it has to beat. when a result turns out wrong, i say so in public and take it back.",
     facts: [{ k: "76% → 57%", text: "who struck, once the labels came from the referees' flags. i took the 76% back" }],
-    links: [{ label: "when my labels fooled me", href: "/notes/when-my-labels-fooled-me/", icon: "cv" }, { label: "all notes", href: "/notes/" }],
+    links: [{ label: "how the models work", href: "/work/ipporu/", icon: "play" }, { label: "notes", href: "/notes/" }],
   },
   {
     id: "garden", m: 380, name: "the orchard",

@@ -8,9 +8,7 @@ const read = (p) => readFileSync(D + p, "utf8");
 const ROUTES = {
   "": "mădălin tatarciuc",
   "work/ipporu/": "ipporu", "work/romanian-speech/": "romanian speech", "work/superstarling/": "superstarling", "work/surogates/": "surogates",
-  "notes/": "what i measured, and what broke",
-  "notes/when-my-labels-fooled-me/": "when my labels fooled me",
-  "notes/ps3-eye-driver-on-apple-silicon/": "ps3 eye driver on apple silicon",
+  "notes/": "notes from the lab",
   "cv/": "Mădălin Tatarciuc",
 };
 
@@ -43,5 +41,12 @@ describe.skipIf(!has)("the prerendered site", () => {
     expect(read("404.html")).toContain("not here");
     const map = read("sitemap.xml");
     for (const r of Object.keys(ROUTES)) expect(map).toContain(`https://cetusian.com/${r}<`);
+  });
+  test("drafts stay out of the build: no page, not in the sitemap, an empty but valid feed", () => {
+    expect(existsSync(D + "notes/when-my-labels-fooled-me/index.html")).toBe(false);
+    expect(read("sitemap.xml")).not.toContain("when-my-labels-fooled-me");
+    const feed = read("notes/rss.xml");
+    expect(feed).toContain("<rss version=\"2.0\"");
+    expect(feed).not.toContain("<item>");
   });
 });

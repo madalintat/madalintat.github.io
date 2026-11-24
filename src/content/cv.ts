@@ -1,120 +1,127 @@
 // Both CVs, one source: the /cv page renders them and scripts/cv-pdf.mjs prints them. Sentence case: a document for
-// recruiters, not the cetusian voice. Numbers match the home page and the model cards.
+// recruiters, not the cetusian voice. The shape follows Mădălin's own resume: a profile, then each job as
+// company · role with short "label: what" bullets, an Earlier line, skills and education. Few numbers, each one earned.
 export type CvVersion = "research" | "builder";
-export type CvItem = { title: string; when?: string; sub?: string; bullets?: string[] };
+/** one bullet: a bold label and what was done; an empty label prints the text alone */
+export type Bullet = [string, string];
+export type CvItem = { org: string; role?: string; note?: string; when?: string; bullets?: Bullet[] };
+export type CvSection = { heading: string; items: CvItem[]; earlier?: string };
+export type Cv = { contact: typeof CONTACT; role: string; profile: string; sections: CvSection[]; skills: Bullet[]; more: Bullet[] };
 
 export const CONTACT = {
   name: "Mădălin Tatarciuc",
   email: "madalintat@gmail.com",
-  site: "madalintat.github.io",
+  site: "cetusian.com",
+  place: "Bucharest, Romania · EU citizen, remote",
   github: "github.com/madalintat",
-  hf: "hf.co/cetusian",
+  hf: "huggingface.co/cetusian",
   linkedin: "linkedin.com/in/madalin-tatarciuc",
-  terms: "EU citizen · remote, CET · B2B or employment",
 };
 
-export type Cv = { contact: typeof CONTACT; role: string; summary: string; sections: { heading: string; items: CvItem[] }[]; skills: [string, string][] };
+const INVERGENT = { org: "Invergent", role: "Applied AI Researcher", note: "surogate.ai", when: "Mar 2026 – Present" };
 
 const EARLIER: CvItem[] = [
-  { title: "Engineering Team Lead, Salestools", when: "Jun 2025 – Nov 2025", sub: "LLM-driven sales platform. Led the engineering team, on-site in Bucharest." },
-  { title: "AI Automation Engineer, Plant an App", when: "Jul 2024 – Jun 2025", sub: "Bazinga AI: assistants for customer support, onboarding and retention. Remote." },
-  { title: "Co-founder and CEO, .worlds", when: "Jun 2024 – Jun 2025", sub: "Generated lo-fi music videos from text. buildspace S5." },
-  { title: "Romania Chapter Lead and Business Development, Omdena", when: "Apr 2023 – Apr 2024", sub: "Ran open-source AI projects with local contributors; brought Omdena into the Romanian market." },
+  { org: "Salestools", role: "Engineering Team Lead", when: "Jun 2025 – Nov 2025", bullets: [
+    ["", "Led the team building an LLM-driven outbound sales platform on multi-step agents (research → personalise → write)."],
+    ["", "Designed agent pipelines combining retrieval, reasoning and validated JSON output, with confidence scoring and failure routing."],
+  ] },
+  { org: "Plant an App & Bazinga AI", role: "AI Automation Engineer", when: "Jul 2024 – Jun 2025", bullets: [
+    ["", "Fine-tuned and deployed models for sales and support automation; integrated them into production APIs and internal tools."],
+  ] },
+  { org: ".worlds", role: "Co-founder, CEO", when: "Jun 2024 – Jun 2025", bullets: [
+    ["", "Built text-to-image and image-to-video pipelines that turned a song into a music video. buildspace S5."],
+  ] },
+  { org: "Omdena", role: "Romania Chapter Lead · BD Partner", when: "Apr 2023 – Apr 2024", bullets: [
+    ["", "Led open-source applied ML projects, including computer vision for environmental monitoring; brought Omdena into the Romanian market."],
+  ] },
 ];
+const EARLIER_LINE = "Skillab · Gameloft · Coreto.io";
 
-const SUROGATES = "Surogates, Invergent's public agent runtime, the parts I built: phone calls to agents over SIP on my Romanian speech models, Simulate (practice worlds for WhatsApp, Telegram, Slack, Teams, Discord and phone), Discord and Teams channels, a website widget, an OpenAI-compatible endpoint for any agent, follow-ups, credits and the EU AI Act disclosure.";
+const MORE: Bullet[] = [
+  ["Education", "buildspace, AI Builder Cohort (2024) · ASE Bucharest, Economic Informatics (2019–2020)"],
+  ["Certifications", "Deep Learning, Machine Learning, Computer Vision, Hugging Face Deep RL"],
+  ["Languages", "Romanian, English · Kendo: Romanian national team, 1 Dan"],
+];
 
 export const cv: Record<CvVersion, Cv> = {
   research: {
     contact: CONTACT,
-    role: "Applied AI research engineer: speech, video understanding, small models that run on CPUs",
-    summary: "I take a model from data to a shipped product on my own: corpus, training recipe, evaluation, quantized runtime and the app around it. Most of what I know came from rebuilding papers without opening the reference code.",
+    role: "Applied AI Researcher · Speech and video models",
+    profile: "Applied AI researcher who trains small, specialised models and takes them all the way to production: data, training, evaluation, a fast runtime and the product around it. I learn by rebuilding: take a paper, implement it without the reference code, and write each experiment down with its bar before it runs.",
     sections: [
       {
         heading: "Experience",
         items: [
-          {
-            title: "Applied AI Researcher, Invergent", when: "Mar 2026 – now",
-            sub: "Surogate: open-source training, serving and agent stack. Full-time, Bucharest.",
-            bullets: [
-              "Romanian speech recognition, built alone: fine-tuned NVIDIA's 110M Parakeet TDT-CTC with a 4-gram LM over its own vocabulary. 5.69% WER on FLEURS (Canary 1B v2: 5.95%, Whisper large-v3: 8.42%), 2.07% on Common Voice 21. Released as jackrabbit-110m-ro.",
-              "Streaming variant: cache-aware encoder, full-context re-read after each pause. 7.03% WER on FLEURS fed as live 32 ms packets; final text about 0.72 s after the speaker stops.",
-              "Romanian text-to-speech, built alone: adapted the 357M Magpie TTS. Three voices in one checkpoint, 2.02% WER read back by Whisper large-v3, native runtime on CPU, CUDA and Metal with no PyTorch. Released as amami-357m-ro.",
-              "Corpus and evaluation for both: collected and cleaned Romanian ASR and TTS data; one normalizer and corrected references so numbers stay comparable across runs.",
-              SUROGATES,
-            ],
-          },
+          { ...INVERGENT, bullets: [
+            ["Speech recognition", "built jackrabbit-110m-ro alone, Romanian ASR at 5.69% WER on FLEURS: ahead of Whisper large-v3 at a fourteenth of its size, with a streaming variant for live calls."],
+            ["Text-to-speech", "built amami-357m-ro alone, three Romanian voices in one model, running natively on CPU, CUDA and Metal."],
+            ["Data and evaluation", "collected and cleaned the Romanian speech corpus, with one normaliser so every run stays comparable."],
+            ["Agents", "built the parts of Surogates where an agent meets a customer: phone calls over SIP, Discord, Teams and website chat, and simulated channels to test an agent before it goes live."],
+          ] },
           ...EARLIER,
         ],
+        earlier: EARLIER_LINE,
       },
       {
-        heading: "Own research and products",
+        heading: "Own research",
         items: [
-          {
-            title: "ipporu: video understanding for kendo", when: "Oct 2026 – now · solo",
-            bullets: [
-              "A chain of specialist models on Modal GPUs: tracking (0 swaps on 7 test matches), a referee-flag reader I trained (99 of 103 calls), strike detection (152 of 182 found), shinai keypoints and a who-struck model on V-JEPA 2 features.",
-              "Caught my own false result: who-struck scored 76% on agent-made labels and 57% on 83 clean referee-flag labels, against 58% for always guessing red. Ippon side now comes from flags and tasuki; 177 matches agree with the official record. Notebook E1 to E105, each with its gate.",
-              "Product on top, live at ipporu.com: a record of 139k kendoka across 99 countries, scouting, Ippon Lab for your own videos, Live for organisers and a coach agent in 7 languages.",
-            ],
-          },
-          { title: "Open source and datasets", when: "2025 – 2026", bullets: ["PS3 Eye camera driver for Apple silicon. LlamaRanch, a home for local models. vecdb, a disk-backed ANN vector database in C.", "Chess SFT data (200k mix, Lichess 2200+) and a synthetic markdown-table QA suite on Hugging Face."] },
+          { org: "ipporu", role: "Video understanding for kendo", note: "ipporu.com", when: "Oct 2026 – Present", bullets: [
+            ["Models", "a chain of specialist video models on Modal GPUs: player tracking, a referee-flag reader, strike detection, shinai keypoints and a who-struck model on V-JEPA 2."],
+            ["Method", "every experiment logged with its gate before it runs; when clean labels disagreed with my own result, I retracted it and rebuilt the method."],
+            ["Product", "live, with the record of 139k kendoka, scouting, video analysis and live scoring on top of the models."],
+          ] },
+          { org: "Open models and tools", note: "huggingface.co/cetusian", bullets: [
+            ["Chess LLM", "SFT datasets from Lichess games and puzzles for training a chess-playing model."],
+            ["Tools", "PS3 Eye camera driver for Apple silicon; vecdb, a disk-backed vector database in C; LlamaRanch for local models."],
+          ] },
         ],
       },
     ],
     skills: [
-      ["Models", "PyTorch, NeMo, transformers, ASR (CTC, TDT, n-gram LMs), TTS, V-JEPA 2, pose and keypoints, SFT and LoRA"],
-      ["Runtime", "GGUF and llama.cpp, quantized CPU runtimes, streaming inference, Modal GPUs"],
-      ["Software", "Python, Go, TypeScript, Rust and C; FastAPI, Node, Postgres, SQLite, Redis"],
-      ["Other", "English and Romanian, both native. Competes for Romania's national kendo team."],
+      ["Research", "speech (ASR, TTS), video understanding, fine-tuning (SFT, LoRA), evaluation, quantisation (GGUF)"],
+      ["Engineering", "Python, PyTorch, NeMo, transformers, Go, TypeScript, Rust, C; FastAPI, Postgres, Redis"],
+      ["Runtime", "llama.cpp, CPU and streaming inference, Modal GPUs"],
     ],
+    more: MORE,
   },
   builder: {
     contact: CONTACT,
-    role: "AI engineer who ships the model and the product around it",
-    summary: "I build alone from model to launch: training and evaluation, the backend, the app, the brand and the launch film. Two products of my own in 2026, ipporu and Superstarling, and Surogate's Romanian speech models.",
+    role: "AI Engineer · From the model to the product",
+    profile: "I build products from the model up: training and evaluation, the backend, the app, the brand and the launch. In 2026 I shipped two products of my own, ipporu and Superstarling, and built the Romanian speech models behind Surogate.",
     sections: [
       {
         heading: "Products I built",
         items: [
-          {
-            title: "ipporu: the home of kendo", when: "Oct 2026 – now · solo",
-            bullets: [
-              "Live at ipporu.com: the record of 139k kendoka across 99 countries with a rating, scouting with the draw simulated 2,000 times, Ippon Lab that finds every strike in your videos, Live scoring for organisers, Dojo for clubs and a coach agent in 7 languages.",
-              "Video engine as a chain of specialist models on Modal GPUs, with a daily cost cap: tracking, referee-flag reader, strike detection, ippon from flags and tasuki (177 matches agree with the record), who-struck on V-JEPA 2.",
-              "Brand, marks, launch films and copy are mine too.",
-            ],
-          },
-          {
-            title: "Superstarling: a workspace with an agent team inside", when: "Nov 2026 – now · solo",
-            bullets: [
-              "Pages with 31 block types, tables with five views, one calendar for posts, emails and articles, sales with quotes and invoices. Starling leads nine agents; every tool declares if it is risky and risky ones wait for a person's yes.",
-              "My own agent loop with step, time and credit budgets, about 80 tools over MCP. Node 24 with node:http and node:sqlite, no framework, live sync and presence; 1,200+ server tests. Articles ship as pull requests on your site's repo.",
-            ],
-          },
+          { org: "ipporu", role: "The home of kendo", note: "ipporu.com", when: "Oct 2026 – Present · solo", bullets: [
+            ["Product", "the record of 139k kendoka across 99 countries, scouting, Ippon Lab to analyse your own videos, live scoring for organisers and a coach agent."],
+            ["Engine", "specialist video models on Modal GPUs that find the strikes and read the referees' flags."],
+            ["Brand", "the marks, launch films and copy."],
+          ] },
+          { org: "Superstarling", role: "An AI team for your business and your life", when: "Nov 2026 – Present · solo", bullets: [
+            ["Workspace", "pages, tables and one calendar for posts, emails and articles, quotes and invoices."],
+            ["Agents", "Starling leads nine specialist agents on my own agent loop with about 80 tools over MCP; anything risky waits for a person's yes."],
+            ["Stack", "Node and SQLite with no framework, live sync, over a thousand server tests."],
+          ] },
         ],
       },
       {
         heading: "Experience",
         items: [
-          {
-            title: "Applied AI Researcher, Invergent", when: "Mar 2026 – now",
-            sub: "Surogate: open-source training, serving and agent stack. Full-time, Bucharest.",
-            bullets: [
-              "Built Surogate's Romanian speech alone: jackrabbit-110m-ro at 5.69% WER on FLEURS, ahead of Canary 1B v2 and Whisper large-v3, with a streaming variant; amami-357m-ro, three voices in one checkpoint at 2.02% WER, no PyTorch at runtime.",
-              SUROGATES,
-            ],
-          },
+          { ...INVERGENT, bullets: [
+            ["Speech", "built Surogate's Romanian models alone: jackrabbit-110m-ro (5.69% WER on FLEURS, ahead of Whisper large-v3) and amami-357m-ro, three voices in one model."],
+            ["Agents", "built the parts of Surogates where an agent meets a customer: phone calls, Discord, Teams and website chat, and simulated channels for testing."],
+          ] },
           ...EARLIER,
         ],
+        earlier: EARLIER_LINE,
       },
-      { heading: "Open source", items: [{ title: "PS3 Eye camera driver for Apple silicon, LlamaRanch for local models, vecdb (ANN vector database in C), a Rust handbook." }] },
+      { heading: "Open source", items: [{ org: "", bullets: [["", "PS3 Eye camera driver for Apple silicon · vecdb, a vector database in C · LlamaRanch for local models · chess SFT datasets on Hugging Face."]] }] },
     ],
     skills: [
       ["Product", "TypeScript, React, Node, Python, FastAPI, Go; Postgres, SQLite, Redis"],
-      ["AI", "PyTorch, NeMo, transformers, speech (ASR, TTS), video models, agents and MCP, GGUF and llama.cpp"],
+      ["AI", "PyTorch, NeMo, transformers, speech (ASR, TTS), video models, agents and MCP, llama.cpp"],
       ["Ship", "Modal, Fly, Vercel, Cloudflare, GitHub Actions, PostHog, Stripe"],
-      ["Other", "English and Romanian, both native. Competes for Romania's national kendo team."],
     ],
+    more: MORE,
   },
 };

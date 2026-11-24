@@ -9,7 +9,6 @@ test("both versions carry the basics and the current speech numbers", () => {
     for (const s of ["EU citizen", "jackrabbit-110m-ro", "Surogates", "5.69%", "madalintat@gmail.com"]) expect(t, `${v} ${s}`).toContain(s);
     expect(t.split("madalintat@gmail.com").length - 1).toBe(1);
   }
-  expect(text("research")).toContain("57%");
 });
 
 test("neither version names private work, a retracted number, a stale number or a commit count", () => {

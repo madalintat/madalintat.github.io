@@ -2,6 +2,7 @@
 title: ps3 eye driver on apple silicon
 date: 2025-03-04
 summary: five second-hand ps3 eye cameras, no mac driver for apple silicon, so i wrote one over libusb.
+draft: true
 ---
 
 GitHub Repo: [PS3Eye Driver for Macbook Silicon](https://github.com/madalintat/PS3Eye-Driver-MacOS-Silicon/tree/main)

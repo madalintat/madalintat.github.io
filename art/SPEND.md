@@ -106,3 +106,6 @@ Every image generated for the site, in order, rejects included. Model: `google/g
 | me-boat-cap.mp4 | me-boat-cap, google/veo-3.1-lite, 4s | $0.1200 | review |
 | agents-board.mp4 | agents-board, google/veo-3.1-lite, 4s | $0.1200 | review |
 | me-record-to-me-boat-cap.mp4 | me-record → me-boat-cap, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-boat-cap-to-me-boat-ready.mp4 | me-boat-cap → me-boat-ready, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-dive-to-me-scuba.mp4 | me-dive → me-scuba, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-boat-ready-to-me-dive.mp4 | me-boat-ready → me-dive, google/veo-3.1-lite, 4s | $0.1200 | review |

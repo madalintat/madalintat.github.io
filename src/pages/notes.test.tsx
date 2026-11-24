@@ -2,6 +2,7 @@ import { test, expect } from "vitest";
 import { renderToString } from "react-dom/server";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { NotesPage, NotePage } from "./Notes";
+import { notes, drafts } from "../content/notes";
 
 const at = (url: string) => renderToString(
   <MemoryRouter initialEntries={[url]}>
@@ -9,17 +10,21 @@ const at = (url: string) => renderToString(
   </MemoryRouter>,
 );
 
-test("the notes index lists both notes, newest first, with dates", () => {
+test("with no published post, the blog shows its head, what it covers and how to follow", () => {
+  expect(notes).toHaveLength(0);
   const html = at("/notes");
-  const a = html.indexOf('href="/notes/when-my-labels-fooled-me"'), b = html.indexOf('href="/notes/ps3-eye-driver-on-apple-silicon"');
-  expect(a).toBeGreaterThan(0); expect(b).toBeGreaterThan(a);
-  expect(html).toContain("2026-11-24");
+  expect(html).toContain("notes from the lab");
+  expect(html).toContain("first notes on their way");
+  expect(html).toContain('href="/notes/rss.xml"');
 });
 
-test("a note renders its title, date and body", () => {
-  const html = at("/notes/when-my-labels-fooled-me");
-  expect(html).toMatch(/<h1[^>]*>when my labels fooled me<\/h1>/);
-  expect(html).toContain("<table>");
+test("a draft is never listed and its address is not here", () => {
+  expect(drafts.length).toBeGreaterThan(0);
+  const index = at("/notes");
+  for (const d of drafts) {
+    expect(index).not.toContain(`/notes/${d.slug}`);
+    expect(at(`/notes/${d.slug}`)).toContain("not here");
+  }
 });
 
 test("an unknown note is not here", () => {

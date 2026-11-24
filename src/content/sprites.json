@@ -20,13 +20,6 @@
     "h": 440,
     "fps": 10
   },
-  "agents-talk-3": {
-    "src": "/sea/agents-talk-3.webp",
-    "n": 40,
-    "w": 382,
-    "h": 320,
-    "fps": 10
-  },
   "jelly": {
     "src": "/sea/jelly.webp",
     "n": 40,
@@ -34,89 +27,75 @@
     "h": 200,
     "fps": 10
   },
-  "kendo-opponent": {
-    "src": "/sea/kendo-opponent.webp",
-    "n": 40,
-    "w": 322,
-    "h": 300,
-    "fps": 10
-  },
-  "kendo-opponent-strike": {
-    "src": "/sea/kendo-opponent-strike.webp",
-    "n": 40,
-    "w": 306,
-    "h": 300,
-    "fps": 10
-  },
   "kendoka-aka": {
     "src": "/sea/kendoka-aka.webp",
     "n": 40,
-    "w": 207,
-    "h": 300,
+    "w": 392,
+    "h": 563,
     "fps": 10
   },
   "kendoka-aka-strike": {
     "src": "/sea/kendoka-aka-strike.webp",
     "n": 40,
-    "w": 207,
-    "h": 300,
+    "w": 392,
+    "h": 563,
     "fps": 10
   },
   "kendoka-shiro": {
     "src": "/sea/kendoka-shiro.webp",
     "n": 40,
-    "w": 269,
-    "h": 300,
+    "w": 410,
+    "h": 456,
     "fps": 10
   },
   "kendoka-shiro-strike": {
     "src": "/sea/kendoka-shiro-strike.webp",
     "n": 40,
-    "w": 269,
-    "h": 300,
-    "fps": 10
-  },
-  "me-boat": {
-    "src": "/sea/me-boat.webp",
-    "n": 40,
-    "w": 581,
-    "h": 300,
+    "w": 410,
+    "h": 456,
     "fps": 10
   },
   "me-boat-cap": {
     "src": "/sea/me-boat-cap.webp",
     "n": 40,
-    "w": 582,
+    "w": 718,
     "h": 400,
     "fps": 10
+  },
+  "me-boat-cap-to-me-boat-ready": {
+    "src": "/sea/me-boat-cap-to-me-boat-ready.webp",
+    "n": 60,
+    "w": 718,
+    "h": 400,
+    "fps": 14
   },
   "me-boat-ready": {
     "src": "/sea/me-boat-ready.webp",
     "n": 40,
-    "w": 654,
+    "w": 718,
     "h": 400,
     "fps": 10
   },
-  "me-boat-to-me-dive": {
-    "src": "/sea/me-boat-to-me-dive.webp",
+  "me-boat-ready-to-me-dive": {
+    "src": "/sea/me-boat-ready-to-me-dive.webp",
     "n": 40,
-    "w": 531,
-    "h": 300,
-    "fps": 10
-  },
-  "me-boat-wave": {
-    "src": "/sea/me-boat-wave.webp",
-    "n": 40,
-    "w": 514,
-    "h": 300,
+    "w": 718,
+    "h": 400,
     "fps": 10
   },
   "me-dive": {
     "src": "/sea/me-dive.webp",
     "n": 40,
-    "w": 738,
+    "w": 718,
     "h": 400,
     "fps": 10
+  },
+  "me-dive-to-me-scuba": {
+    "src": "/sea/me-dive-to-me-scuba.webp",
+    "n": 60,
+    "w": 718,
+    "h": 400,
+    "fps": 14
   },
   "me-float": {
     "src": "/sea/me-float.webp",
@@ -132,13 +111,6 @@
     "h": 400,
     "fps": 10
   },
-  "me-hammock": {
-    "src": "/sea/me-hammock.webp",
-    "n": 40,
-    "w": 525,
-    "h": 300,
-    "fps": 10
-  },
   "me-hammock-orchard": {
     "src": "/sea/me-hammock-orchard.webp",
     "n": 40,
@@ -146,73 +118,31 @@
     "h": 240,
     "fps": 10
   },
-  "me-hammock-wave": {
-    "src": "/sea/me-hammock-wave.webp",
-    "n": 40,
-    "w": 549,
-    "h": 300,
-    "fps": 10
-  },
-  "me-kendo": {
-    "src": "/sea/me-kendo.webp",
-    "n": 40,
-    "w": 326,
-    "h": 300,
-    "fps": 10
-  },
-  "me-kendo-strike": {
-    "src": "/sea/me-kendo-strike.webp",
-    "n": 40,
-    "w": 350,
-    "h": 300,
-    "fps": 10
-  },
-  "me-laptop": {
-    "src": "/sea/me-laptop.webp",
-    "n": 40,
-    "w": 157,
-    "h": 300,
-    "fps": 10
-  },
-  "me-laptop-wave": {
-    "src": "/sea/me-laptop-wave.webp",
-    "n": 40,
-    "w": 153,
-    "h": 300,
-    "fps": 10
-  },
-  "me-ready-sky": {
-    "src": "/sea/me-ready-sky.webp",
-    "n": 40,
-    "w": 254,
-    "h": 300,
-    "fps": 10
-  },
   "me-record": {
     "src": "/sea/me-record.webp",
     "n": 40,
-    "w": 582,
+    "w": 718,
     "h": 400,
     "fps": 10
   },
   "me-record-to-me-boat-cap": {
     "src": "/sea/me-record-to-me-boat-cap.webp",
     "n": 80,
-    "w": 582,
+    "w": 718,
     "h": 400,
-    "fps": 16
+    "fps": 14
   },
   "me-scuba": {
     "src": "/sea/me-scuba.webp",
     "n": 40,
-    "w": 657,
+    "w": 718,
     "h": 400,
     "fps": 10
   },
   "me-scuba-wave": {
     "src": "/sea/me-scuba-wave.webp",
     "n": 40,
-    "w": 681,
+    "w": 718,
     "h": 400,
     "fps": 10
   },
@@ -221,41 +151,6 @@
     "n": 40,
     "w": 412,
     "h": 400,
-    "fps": 10
-  },
-  "person1": {
-    "src": "/sea/person1.webp",
-    "n": 40,
-    "w": 131,
-    "h": 240,
-    "fps": 10
-  },
-  "person2": {
-    "src": "/sea/person2.webp",
-    "n": 40,
-    "w": 128,
-    "h": 240,
-    "fps": 10
-  },
-  "person3": {
-    "src": "/sea/person3.webp",
-    "n": 40,
-    "w": 126,
-    "h": 240,
-    "fps": 10
-  },
-  "person4": {
-    "src": "/sea/person4.webp",
-    "n": 40,
-    "w": 153,
-    "h": 240,
-    "fps": 10
-  },
-  "person5": {
-    "src": "/sea/person5.webp",
-    "n": 40,
-    "w": 124,
-    "h": 240,
     "fps": 10
   },
   "whale-doina": {

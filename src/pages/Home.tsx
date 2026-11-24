@@ -17,12 +17,12 @@ import "./sea.css";
 const S = Object.fromEntries(SCENES.map((s) => [s.id, s])) as Record<SceneId, Scene>;
 const metres = (m: number) => `${m > 0 ? "+" : m < 0 ? "−" : ""}${Math.abs(m).toLocaleString("en").replace(",", " ")} m`;
 
-/** A painted plate behind a scene: its own upright picture on a phone, never a crop. */
+/** A painted plate behind a scene: its own upright picture on a phone, never a crop. Loaded as its scene nears. */
 export function Plate({ name, phone, alt = "" }: { name: string; phone?: string; alt?: string }) {
   return (
     <picture className="plate">
       {phone && <source media="(max-width: 720px)" srcSet={`/sea/${phone}.webp`} />}
-      <img src={`/sea/${name}.webp`} alt={alt} width="2064" height="1152" decoding="async" />
+      <img src={`/sea/${name}.webp`} alt={alt} width="2064" height="1152" decoding="async" loading="lazy" />
     </picture>
   );
 }

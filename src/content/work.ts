@@ -15,7 +15,6 @@ export const work: Work[] = [
     ],
     links: [
       { label: "ipporu.com", href: "https://ipporu.com" },
-      { label: "the labels note", href: "/notes/when-my-labels-fooled-me" },
     ],
     sections: [
       {

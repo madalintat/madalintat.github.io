@@ -60,7 +60,6 @@ export const IPPORU: ModelBeat[] = [
     gate: { bar: "a rule: no number set before", met: null } },
   { id: "who", model: "who-struck probe", title: "who struck, not solved", clip: "who-struck",
     line: "when no flag goes up, who attacked? my model says 47 of 83 right; always answering aka says 48. so the engine ships it as unsure.",
-    link: { label: "how my labels fooled me", href: "/notes/when-my-labels-fooled-me/" },
     kind: "a linear head on frozen v-jepa 2 video features of each fighter",
     learned: "196 labels over 43 matches; the clean test uses only labels that came from the flags",
     score: "47 of 83 on clean labels, the same as always saying aka. research only, not in the engine",

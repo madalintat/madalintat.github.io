@@ -4,7 +4,7 @@ import { pathToFileURL } from "node:url";
 
 const D = new URL("../dist/", import.meta.url).pathname;
 const S = new URL("../dist-ssr/entry-server.js", import.meta.url);
-const { render, routes, head, SITE, llms } = await import(pathToFileURL(S.pathname).href);
+const { render, routes, head, SITE, llms, rss } = await import(pathToFileURL(S.pathname).href);
 import { readdirSync } from "node:fs";
 // the h1 is the largest paint and waits on inter (latin, and latin-ext for the ă), so those fonts load first
 const fonts = readdirSync(D + "assets").filter((f) => /^(inter-latin-wght|inter-latin-ext-wght|jetbrains-mono-latin-wght)-normal-.*\.woff2$/.test(f));
@@ -26,5 +26,7 @@ writeFileSync(D + "sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlse
 const bots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "PerplexityBot", "Google-Extended", "Applebot-Extended", "CCBot"];
 writeFileSync(D + "robots.txt", `User-agent: *\nAllow: /\n\n${bots.map((b) => `User-agent: ${b}\nAllow: /`).join("\n\n")}\n\nSitemap: ${SITE}/sitemap.xml\n`);
 writeFileSync(D + "llms.txt", llms());
+mkdirSync(D + "notes", { recursive: true });
+writeFileSync(D + "notes/rss.xml", rss());
 rmSync(new URL("../dist-ssr/", import.meta.url), { recursive: true, force: true });
 console.log(`prerendered ${Object.keys(all).length} routes, 404, sitemap`);

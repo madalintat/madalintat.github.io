@@ -7,7 +7,7 @@ const at = (url: string) => renderToString(<MemoryRouter initialEntries={[url]}>
 
 test("research by default, a two-way switch, both pdfs to download", () => {
   const html = at("/cv");
-  expect(html).toContain("Applied AI research engineer");
+  expect(html).toContain("Applied AI Researcher · Speech");
   expect(html).toMatch(/<button[^>]*aria-pressed="true"[^>]*>research<\/button>/);
   expect(html).toMatch(/<button[^>]*aria-pressed="false"[^>]*>builder<\/button>/);
   expect(html).toContain('href="/cv/madalin-tatarciuc-research.pdf"');
@@ -16,5 +16,5 @@ test("research by default, a two-way switch, both pdfs to download", () => {
 
 test("?v=builder renders the research sheet on the server, the prerendered /cv/; the switch applies after mount", () => {
   const html = at("/cv?v=builder");
-  expect(html).toContain("Applied AI research engineer");
+  expect(html).toContain("Applied AI Researcher · Speech");
 })

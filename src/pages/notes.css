@@ -1,13 +1,39 @@
-.page-title { font-size: var(--size-display); line-height: 1.02; letter-spacing: -0.04em; font-weight: 600; margin-top: 14px; max-width: 18ch; }
-.note-list { list-style: none; margin-top: 40px; border-top: 1px solid var(--line); }
-.note-list a { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 4px 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
-.note-list time { font: var(--size-small)/1.6 var(--font-mono); color: var(--soft); grid-row: span 2; }
+.page-title { font-size: var(--size-display); line-height: 1.02; letter-spacing: -0.04em; font-weight: 600; margin-top: 14px; max-width: 18ch; text-wrap: balance; }
+
+/* the blog's head: what it is, what it covers */
+.blog-head { max-width: 62ch; }
+.blog-lede { margin-top: 18px; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; color: var(--body); }
+.blog-topics { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 6px; }
+.blog-topics span, .post-tag { font: 12px/1 var(--font-mono); color: var(--soft); padding: 6px 9px; border: 1px solid var(--line); border-radius: 6px; }
+
+/* no post yet: one quiet panel and the ways to hear about the first */
+.blog-empty { margin-top: 48px; max-width: 62ch; padding: 28px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.blog-empty-title { font-size: var(--size-head); font-weight: 600; letter-spacing: -0.02em; }
+.blog-empty-line { margin-top: 10px; font-size: 17px; line-height: 1.55; color: var(--body); }
+.blog-follow { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+.blog-follow .btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; border-radius: 6px; border: 1px solid var(--line); color: var(--ink); font: 500 14px var(--font-sans); transition: border-color 0.15s, background 0.15s; }
+.blog-follow .btn:hover { border-color: var(--soft); }
+.blog-follow .btn.main { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* the newest post, large; the rest as a list */
+.post-feature { display: grid; gap: 10px; margin-top: 48px; padding: 28px; border: 1px solid var(--line); border-radius: 8px; max-width: 72ch; transition: border-color 0.15s; }
+.post-feature:hover { border-color: var(--soft); }
+.post-feature b { font-size: clamp(26px, 3vw, 38px); line-height: 1.1; letter-spacing: -0.03em; font-weight: 600; }
+.post-feature span { color: var(--body); font-size: 17px; line-height: 1.5; }
+.post-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font: var(--size-small)/1.4 var(--font-mono); color: var(--soft); }
+.note-list { list-style: none; margin-top: 32px; border-top: 1px solid var(--line); max-width: 72ch; }
+.note-list a { display: grid; gap: 6px; padding: 20px 0; border-bottom: 1px solid var(--line); }
 .note-list b { font-size: var(--size-head); font-weight: 600; }
 .note-list span { color: var(--body); }
-.note-list a:hover b { color: var(--accent); }
+.note-list a:hover b, .post-feature:hover b { color: var(--accent); }
 
+/* a post */
 .note { max-width: 70ch; }
-.note .tag a:hover { color: var(--ink); }
+.post-back, .post-foot a { display: inline-flex; align-items: center; gap: 6px; font: var(--size-small) var(--font-mono); color: var(--soft); }
+.post-back:hover, .post-foot a:hover { color: var(--ink); }
+.post-summary { margin-top: 16px; font-size: 19px; line-height: 1.5; color: var(--body); }
+.note .post-meta { margin-top: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.post-foot { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; }
 .prose { margin-top: 32px; color: var(--body); font-size: 17px; line-height: 1.7; }
 .prose > * + * { margin-top: 1em; }
 .prose h2 { color: var(--ink); font-size: 22px; letter-spacing: -0.02em; font-weight: 600; margin-top: 2em; }
@@ -21,4 +47,4 @@
 .prose th, .prose td { text-align: right; padding: 8px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
 .prose th:first-child, .prose td:first-child { text-align: left; }
 .prose th { color: var(--ink); font-weight: 500; }
-@media (max-width: 720px) { .note-list a { grid-template-columns: 1fr; } .note-list time { grid-row: auto; } }
+@media (max-width: 720px) { .blog-empty, .post-feature { padding: 20px; } }

@@ -16,7 +16,7 @@ export function TopBar({ home = false }: { home?: boolean }) {
     <header className={home ? "bar bar-home" : "bar"}>
       {!home && <Link className="who" to="/">mădălin tatarciuc</Link>}
       <nav>
-        <Link to="/#flock">work</Link>
+        <Link to="/#sky">work</Link>
         <Link to="/notes">notes</Link>
         <Link to="/cv">cv</Link>
       </nav>

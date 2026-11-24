@@ -1,25 +1,57 @@
 import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, Rss } from "lucide-react";
+import { siX } from "simple-icons";
 import { Shell } from "../layout/Shell";
-import { notes, getNote } from "../content/notes";
+import { notes, getNote, type Note } from "../content/notes";
 import { NotFound } from "./NotFound";
 import "./notes.css";
 
+// what the notes are about, said once at the top so a reader knows what to expect before the first post
+const TOPICS = ["small models", "speech", "video", "kendo", "agents", "evaluation", "shipping"];
+const ic = { size: 16, strokeWidth: 1.8, "aria-hidden": true } as const;
+const xIcon = <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d={siX.path} fill="currentColor" /></svg>;
+
+const when = (d: string) => new Date(d + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }).toLowerCase();
+
+function Meta({ n }: { n: Note }) {
+  return <p className="post-meta"><time dateTime={n.date}>{when(n.date)}</time><span>{n.minutes} min read</span>{n.tags.map((t) => <span key={t} className="post-tag">{t}</span>)}</p>;
+}
+
 export function NotesPage() {
+  const [first, ...rest] = notes;
   return (
     <Shell>
-      <p className="tag">notes</p>
-      <h1 className="page-title">what i measured, and what broke</h1>
-      <ol className="note-list">
-        {notes.map((n) => (
-          <li key={n.slug}>
-            <Link to={`/notes/${n.slug}`}>
-              <time>{n.date}</time>
-              <b>{n.title}</b>
-              <span>{n.summary}</span>
-            </Link>
-          </li>
-        ))}
-      </ol>
+      <header className="blog-head">
+        <p className="tag">notes</p>
+        <h1 className="page-title">notes from the lab</h1>
+        <p className="blog-lede">long-form notes on training small models, reading kendo from video and romanian speech: what i measured, what broke, and what i took back.</p>
+        <p className="blog-topics" aria-label="what the notes cover">{TOPICS.map((t) => <span key={t}>{t}</span>)}</p>
+      </header>
+      {first ? (
+        <>
+          <Link className="post-feature" to={`/notes/${first.slug}`}>
+            <Meta n={first} />
+            <b>{first.title}</b>
+            <span>{first.summary}</span>
+          </Link>
+          {rest.length > 0 && (
+            <ol className="note-list">
+              {rest.map((n) => (
+                <li key={n.slug}><Link to={`/notes/${n.slug}`}><Meta n={n} /><b>{n.title}</b><span>{n.summary}</span></Link></li>
+              ))}
+            </ol>
+          )}
+        </>
+      ) : (
+        <section className="blog-empty" aria-label="no notes yet">
+          <h2 className="blog-empty-title">first notes on their way</h2>
+          <p className="blog-empty-line">the experiments are in the notebook; the write-ups come next. follow along and the first one reaches you the day it is out.</p>
+          <p className="blog-follow">
+            <a className="btn main" href="/notes/rss.xml"><Rss {...ic} />rss feed</a>
+            <a className="btn" href="https://x.com/cetusian">{xIcon}@cetusian</a>
+          </p>
+        </section>
+      )}
     </Shell>
   );
 }
@@ -31,9 +63,15 @@ export function NotePage() {
   return (
     <Shell>
       <article className="note">
-        <p className="tag"><Link to="/notes">notes</Link> · <time>{n.date}</time></p>
+        <Link className="post-back" to="/notes"><ArrowLeft {...ic} />notes</Link>
         <h1 className="page-title">{n.title}</h1>
+        <p className="post-summary">{n.summary}</p>
+        <Meta n={n} />
         <div className="prose" dangerouslySetInnerHTML={{ __html: n.html }} />
+        <footer className="post-foot">
+          <Link to="/notes"><ArrowLeft {...ic} />all notes</Link>
+          <a href="/notes/rss.xml"><Rss {...ic} />rss</a>
+        </footer>
       </article>
     </Shell>
   );

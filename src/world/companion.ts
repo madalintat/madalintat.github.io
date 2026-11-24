@@ -1,16 +1,13 @@
 /* Me, the character who goes down the page with the reader: one layer over the scenes, in the pose of the scene under
    the middle of the screen (Home picks it from [data-pose]). A pose is a looping sprite (sprite.ts); a new pose lifts
-   the old one away and drops the new one in, and where a clip of the move exists (me-boat-to-me-dive) it plays first.
+   the old one away and drops the new one in, and where a clip of the move exists (me-record-to-me-boat-cap, me-boat-ready-to-me-dive…) it plays first.
    The pointer near me tilts me a little towards it, in 3D; a touch or a hover plays my reaction for the scene (a wave,
    a strike, a somersault) and I go back to what I was doing. With less motion asked for: still frames, no tilt. */
 import { sprite, preload, type Sheet, type Sprite } from "./sprite";
 
 export type Sheets = Record<string, Sheet>;
 // what each pose does when it is touched
-const REACT: Record<string, string> = {
-  "me-float": "me-float-flip", "me-kendo": "me-kendo-strike", "me-boat": "me-boat-wave",
-  "me-scuba": "me-scuba-wave", "me-laptop": "me-laptop-wave", "me-hammock": "me-hammock-wave",
-};
+const REACT: Record<string, string> = { "me-float": "me-float-flip", "me-scuba": "me-scuba-wave" };
 
 export function startCompanion(root: HTMLElement, sheets: Sheets) {
   const tilt = root.querySelector<HTMLElement>(".me-tilt")!, el = root.querySelector<HTMLElement>(".me-sprite")!;

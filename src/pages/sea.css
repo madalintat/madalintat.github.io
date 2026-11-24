@@ -18,21 +18,10 @@
 .sea-scene:not(.sea-sky) .sea-tag { color: rgba(227, 222, 214, 0.78); }
 .sea-tag b { color: var(--accent); font-weight: 600; margin-right: 8px; }
 .sea-line { font-size: clamp(17px, 1.45vw, 21px); line-height: 1.45; color: var(--body); margin-top: 16px; max-width: 32ch; }
-.sea-facts { display: grid; gap: 4px; margin-top: 22px; }
-.sea-facts div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 14px; align-items: baseline; padding-top: 6px; border-top: 1px solid var(--line); opacity: 0; transform: translateY(8px); transition: opacity 0.4s, transform 0.4s; }
-.sea-facts div.on { opacity: 1; transform: none; }
-.sea-facts dt { font: 600 17px/1.2 var(--font-sans); letter-spacing: -0.02em; }
-.sea-facts dd { font-size: 14.5px; line-height: 1.4; color: var(--body); }
-.sea-links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 22px; font-size: 15px; }
-.sea-links a { border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 
 /* the sky is light: ink words */
 .sea-sky .sea-caps li { --ink: #111318; --body: #2b3140; --soft: #454c5c; --line: rgba(17, 19, 24, 0.16); }
 .sea-sky .sea-caps h1 { max-width: 7ch; }
-.sea-sky [data-beat="0"] .sea-facts { grid-template-columns: repeat(4, auto); gap: 18px; }
-.sea-sky [data-beat="0"] .sea-facts div { border: 0; grid-template-columns: 1fr; gap: 2px; opacity: 1; transform: none; }
-.sea-sky [data-beat="0"] .sea-facts dt { font-size: clamp(20px, 2vw, 28px); }
-.sea-sky [data-beat="0"] .sea-facts dd { font: var(--size-tag)/1.3 var(--font-mono); color: #454c5c; }
 .flock { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
 
 /* the fleet: on the horizon, and closer when it is the fleet's turn */
@@ -45,23 +34,8 @@
 @keyframes bob { 50% { transform: translateY(-2.5%) rotate(-0.6deg); } }
 
 /* the harbour, and the stories told over it */
-.sea-harbour .sea-caps h2 { font-size: clamp(56px, 8vw, 120px); }
 .sea-under .st-stage { background: linear-gradient(rgba(7, 9, 15, 0.84), rgba(7, 9, 15, 0.9)), var(--plate) center / cover no-repeat; }
 .sea-under.deep .st-stage { background: linear-gradient(rgba(7, 12, 18, 0.7), rgba(7, 12, 18, 0.86)), var(--plate) center / cover no-repeat; }
-.together { position: relative; z-index: 2; padding: 12svh var(--gutter) 14svh clamp(64px, 9vw, 140px); background: var(--bg); }
-.together h2 { font-size: clamp(32px, 4vw, 56px); letter-spacing: -0.04em; font-weight: 600; margin: 12px 0 28px; }
-.together .demo { max-width: 1040px; }
-
-
-
-/* the trench: the notebook as layers of rock, one glowing */
-.strata { list-style: none; position: absolute; z-index: 2; right: clamp(20px, 9vw, 160px); bottom: 14svh; width: min(150px, 24vw); display: grid; gap: 3px; }
-.strata li { height: 2px; border-radius: 1px; background: rgba(110, 116, 131, 0.12); }
-.strata li.on { background: rgba(207, 200, 188, 0.3); }
-.strata li.hit { background: var(--aka); height: 5px; box-shadow: 0 0 12px var(--aka); }
-
-/* the floor */
-.sea-floor .sea-links { font-size: clamp(17px, 2vw, 22px); gap: 12px 28px; margin-top: 30px; }
 
 /* the gauge */
 .gauge { position: fixed; left: clamp(10px, 1.6vw, 24px); top: 50%; transform: translateY(-50%); z-index: 15; display: flex; flex-direction: column; gap: 10px; font: var(--size-tag)/1 var(--font-mono); color: var(--soft); mix-blend-mode: difference; }
@@ -75,16 +49,12 @@
   .fleet { --hz: 73.5%; }
   .ship figcaption { display: none; } /* the list above already names each ship */
   .sea-caps { top: 84px; }
-  .sea-sky [data-beat="0"] .sea-facts { grid-template-columns: 1fr 1fr; }
-  .strata { width: 40vw; bottom: 6svh; }
   .gauge { top: auto; bottom: 12px; transform: none; flex-direction: row; align-items: center; }
   .gauge .rail { width: 70px; height: 1px; }
   .gauge .rail i { top: -3px; left: calc(var(--g) * 100%); width: 1px; height: 7px; }
-  .together { padding-left: var(--gutter); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ship img, .swim, .person, .drift, .cloud, .far { animation: none !important; }
-  .sea-facts div { opacity: 1; transform: none; }
+  .ship img, .swim, .cloud, .far { animation: none !important; }
 }
 
 /* ---------- the camera over the sky: the name up high, then down onto the dojo by the sea ---------- */
@@ -123,17 +93,12 @@
 @keyframes breathe { 50% { translate: 0 -1.2%; } }
 /* where I am in each scene: left, top, how wide */
 .me[data-pose="me-float"]   { --mx: 74; --my: 46; --mw: 11vw; }
-.me[data-pose="me-kendo"]   { --mx: 40; --my: 56; --mw: 13vw; }
-/* me-record, the move to the boat and me-boat-cap share one crop (the whole move), so the boat lands where it rows */
-.me[data-pose="me-record"]  { --mx: 77; --my: 71; --mw: 15vw; }
-.me[data-pose="me-boat"] { --mx: 44; --my: 64; --mw: 17vw; }
-.me[data-pose="me-boat-cap"] { --mx: 40; --my: 59; --mw: 22vw; }
-.me[data-pose="me-dive"]    { --mx: 42; --my: 40; --mw: 15vw; }
-.me[data-pose="me-scuba"]   { --mx: 66; --my: 72; --mw: 14vw; }
-.me[data-pose="me-laptop"]  { --mx: 72; --my: 58; --mw: 7vw; }
-.me[data-pose="me-hammock"] { --mx: 56; --my: 58; --mw: 20vw; }
-.me[data-pose="me-ready-sky"] { --mx: 82; --my: 12; --mw: 8vw; }
-.me[data-pose="me-boat-ready"] { --mx: 40; --my: 61; --mw: 16vw; }
+/* from filming to scuba every pose and every move between them is the full video frame (one shared crop), so each
+   move ends exactly where the next pose begins; the widths are the frame's, the figure fills about half of it */
+.me[data-pose="me-record"]  { --mx: 75; --my: 71; --mw: 18vw; }
+.me[data-pose="me-boat-cap"], .me[data-pose="me-boat-ready"] { --mx: 34; --my: 55; --mw: 28vw; }
+.me[data-pose="me-dive"]    { --mx: 30; --my: 28; --mw: 30vw; }
+.me[data-pose="me-scuba"]   { --mx: 63; --my: 66; --mw: 19vw; }
 .me[data-pose="me-hammock-orchard"] { --mx: 54; --my: 50; --mw: 28vw; }
 
 /* ---------- the whales, swimming through ---------- */
@@ -152,32 +117,12 @@
 .far-jelly { top: 8%; left: 62%; width: 7%; animation: bob 7s ease-in-out infinite; }
 .far-lantern { top: 58%; width: 9%; animation-duration: 24s; animation-delay: -9s; }
 @keyframes past { from { transform: translateX(320%); } to { transform: translateX(-120%); } }
-.person { position: absolute; bottom: 6%; width: 8.4%; z-index: 2; animation: walk linear infinite; }
-@keyframes walk {
-  0% { transform: translateX(0) scaleX(1); } 48% { transform: translateX(calc(var(--span) * 1cqw)) scaleX(1); }
-  50% { transform: translateX(calc(var(--span) * 1cqw)) scaleX(-1); } 98% { transform: translateX(0) scaleX(-1); } 100% { transform: translateX(0) scaleX(1); }
-}
-.person { --span: 16; }
-
-/* ---------- the garden ---------- */
-.sea-garden .glow { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.drift { position: absolute; animation: rise 22s ease-in-out infinite; }
-.drift.d1 { left: 44%; top: 18%; width: 6vw; }
-.drift.d2 { left: 78%; top: 22%; width: 4vw; animation-duration: 28s; animation-delay: -9s; }
-@keyframes rise { 50% { transform: translate(2vw, -6vh); } }
 
 /* ---------- phones: their own layout. I am bigger and stand at the bottom, out of the words' way ---------- */
 @media (max-width: 720px) {
   .me { left: auto; right: 2vw; top: auto; bottom: 54px; transform: none; width: var(--pw, 46vw) !important; }
-  .me[data-pose="me-float"] { --pw: 34vw; } .me[data-pose="me-kendo"] { --pw: 32vw; } .me[data-pose="me-record"] { --pw: 28vw; }
-  .me[data-pose="me-boat"] { --pw: 44vw; } .me[data-pose="me-dive"] { --pw: 42vw; } .me[data-pose="me-scuba"] { --pw: 46vw; }
-  .me[data-pose="me-laptop"] { --pw: 32vw; } .me[data-pose="me-hammock"] { --pw: 54vw; }
-  .me[data-pose="me-ready-sky"] { --pw: 34vw; } .me[data-pose="me-boat-ready"] { --pw: 44vw; } 
-  .sea-under .me, .me[data-pose="me-record"] { opacity: 0.95; }
   .swim-doina { width: 120%; } .swim-tudor { width: 80%; } .swim-radu { width: 66%; }
-  .person { width: 17%; }
   .sea-sky .sea-caps .hero { margin-top: -18svh; }
-  .drift.d1 { width: 14vw; } .drift.d2 { width: 10vw; }
 }
 
 /* the seaside's sky is light: ink words, like the hero */
@@ -193,12 +138,9 @@
 .ship:nth-child(2n) { animation-duration: 95s; animation-direction: alternate-reverse; }
 @keyframes sail { to { translate: 7% 0; } }
 .gulls { position: absolute; inset: 0 0 35% 0; width: 100%; height: 65%; z-index: 2; pointer-events: none; }
-.drift.d3 { left: 70%; top: 44%; width: 3vw; animation-duration: 18s; animation-delay: -4s; }
-.drift.d4 { left: 28%; top: 12%; width: 2.6vw; animation-duration: 25s; animation-delay: -14s; }
-@media (max-width: 720px) { .drift.d3 { width: 8vw; } .drift.d4 { width: 7vw; } }
 
 /* ---------- the cards: a scene's words on a solid surface, readable over any painting ---------- */
-.sea-hero-kind, .hero-kind { font: 500 15px var(--font-sans); color: #454c5c; }
+.hero-kind { font: 500 15px var(--font-sans); color: #454c5c; }
 .card { width: min(480px, calc(100vw - 32px)); max-height: calc(100svh - 112px); overflow-y: auto; scrollbar-width: none; background: #f7f5f0; color: #111318; border: 1px solid rgba(17, 19, 24, 0.1); border-radius: 8px; padding: 22px 22px 20px; box-shadow: 0 18px 40px rgba(7, 12, 18, 0.28); text-shadow: none; }
 .card-kind { display: flex; align-items: center; gap: 8px; font: 500 13px var(--font-sans); color: #454c5c; }
 .card .ico { width: 18px; height: 18px; flex: none; }
@@ -230,7 +172,6 @@
   .card { user-select: none; -webkit-user-select: none; }
   .card-head { cursor: pointer; }
   html.sheet-open .me { opacity: 0; transition: opacity 0.2s; }
-  .me[data-pose="me-hammock"], .me[data-pose="me-hammock-orchard"] { top: 84px; bottom: auto; }
   .card { width: 100%; border-radius: 16px 16px 0 0; border-width: 1px 0 0; padding: 10px 18px calc(16px + env(safe-area-inset-bottom)); box-shadow: 0 -12px 32px rgba(7, 12, 18, 0.3); touch-action: pan-x; }
   .card::before { content: ""; display: block; width: 36px; height: 4px; margin: 0 auto 10px; border-radius: 2px; background: rgba(17, 19, 24, 0.18); }
   .card h2 { font-size: 22px; margin-top: 6px; }
@@ -254,17 +195,18 @@
 .low .zoom { position: absolute; inset: 0; transform-origin: 69% 79%; transform: scale(calc(1 + var(--t, 0) * var(--t, 0) * 1.8)); will-change: transform; }
 .low .inside { position: absolute; inset: 0; opacity: calc((var(--t, 0) - 0.08) * 3); }
 .low .inside:not(.on) { visibility: hidden; }
-/* the court sits right of the card, the two fighters face each other a few steps apart */
-.court { position: absolute; left: 55%; bottom: 8%; width: 42%; height: 62%; }
-.kendoka { position: absolute; bottom: 0; width: 31%; }
-.kendoka.aka { left: 8%; }
-.kendoka.shiro { right: 8%; }
+/* the court: both fighters cut from the same video scale, so one box in source pixels keeps them the same height.
+   aka's sheet is 392 wide, shiro's 410; shiro starts at about 330, where the two shinai tips cross (issoku itto no maai) */
+.court { position: absolute; left: 55%; bottom: 5%; width: 44%; aspect-ratio: 759 / 563; }
+.kendoka { position: absolute; bottom: 0; }
+.kendoka.aka { left: 0; width: 51.65%; z-index: 1; }
+.kendoka.shiro { left: 43.5%; width: 54.02%; }
+/* their shadows on the floor, so they stand on it */
+.court::before { /* deslop-ignore 06: a contact shadow under the feet, not atmosphere */ content: ""; position: absolute; left: 6%; right: 6%; bottom: -1.5%; height: 6%; background: radial-gradient(closest-side, rgba(10, 8, 6, 0.42), transparent); }
 .sea-caps li.quiet { display: none; }
 @media (max-width: 720px) {
   .low .zoom { transform-origin: 70% 76%; }
-  .court { left: 0; width: 100%; height: 44%; bottom: 22%; }
-  .kendoka { width: 46%; }
-  .kendoka.aka { left: 2%; } .kendoka.shiro { right: 2%; }
+  .court { left: 3%; width: 94%; bottom: 24%; }
 }
 
 .me[data-pose="hidden"] .me-sprite { opacity: 0; transform: translateY(24px) scale(0.94); pointer-events: none; }
@@ -306,12 +248,9 @@
   .hero-index span { grid-column: 2; }
 }
 
-/* phones: I keep out of the words and the fighters: high up in the sky and the dojo, the hammock between the trees */
+/* phones: up in the sky I float high, out of the name's way */
 @media (max-width: 720px) {
-  .me[data-pose="me-float"], .me[data-pose="me-ready-sky"], .me[data-pose="me-record"] { top: 62px; bottom: auto; }
-  .me[data-pose="me-float"] { --pw: 24vw; } .me[data-pose="me-ready-sky"] { --pw: 20vw; } .me[data-pose="me-record"] { --pw: 22vw; }
-  /* the phone orchard: trunks at a quarter and seven tenths of the width, the hammock slung between them */
-  .me[data-pose="me-hammock"], .me[data-pose="me-hammock-orchard"] { top: 60svh; bottom: auto; right: 14vw; --pw: 66vw; }
+  .me[data-pose="me-float"] { top: 62px; bottom: auto; --pw: 24vw; }
   .sea-ships .sea-caps li[data-beat="1"] { margin-bottom: 56svh; padding: 0 20px; }
 }
 
@@ -345,7 +284,7 @@
   .hammock { left: 23%; top: 66%; width: 46%; }
   /* the phone has no room for me beside the clips: I film off screen there */
   .me[data-pose="me-record"] { opacity: 0; }
-  .me[data-pose="me-boat-cap"] { --pw: 60vw; }
+  .me[data-pose="me-boat-cap"], .me[data-pose="me-boat-ready"] { --pw: 84vw; } .me[data-pose="me-dive"] { --pw: 84vw; } .me[data-pose="me-scuba"] { --pw: 62vw; }
 }
 
 @media (max-width: 720px) {

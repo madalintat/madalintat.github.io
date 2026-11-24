@@ -15,33 +15,43 @@ export function CvPage() {
   const sheet = (
     <article className="sheet">
       <header>
-        <div>
-          <h1>{c.contact.name}</h1>
-          <p className="role">{c.role}</p>
-        </div>
+        <h1>{c.contact.name}</h1>
+        <p className="role">{c.role}</p>
         <p className="contact">
-          <a href={`mailto:${c.contact.email}`}>{c.contact.email}</a><br />
-          <a href={`https://${c.contact.site}`}>{c.contact.site}</a> · <a href={`https://${c.contact.linkedin}`}>linkedin</a><br />
-          <a href={`https://${c.contact.github}`}>{c.contact.github}</a> · <a href="https://huggingface.co/cetusian">{c.contact.hf}</a><br />
-          {c.contact.terms}
+          <a href={`mailto:${c.contact.email}`}>{c.contact.email}</a><i>|</i><a href={`https://${c.contact.site}`}>{c.contact.site}</a><i>|</i><span>{c.contact.place}</span>
+        </p>
+        <p className="contact">
+          <a href={`https://${c.contact.linkedin}`}>{c.contact.linkedin}</a><i>|</i><a href={`https://${c.contact.github}`}>{c.contact.github}</a><i>|</i><a href={`https://${c.contact.hf}`}>{c.contact.hf}</a>
         </p>
       </header>
-      <p className="summary">{c.summary}</p>
+      <section>
+        <h2>Profile</h2>
+        <p className="profile">{c.profile}</p>
+      </section>
       {c.sections.map((s) => (
         <section key={s.heading}>
           <h2>{s.heading}</h2>
           {s.items.map((it) => (
-            <div className="item" key={it.title}>
-              <div className="top"><b>{it.title}</b>{it.when && <span className="when">{it.when}</span>}</div>
-              {it.sub && <p className="sub">{it.sub}</p>}
-              {it.bullets && <ul>{it.bullets.map((b) => <li key={b}>{b}</li>)}</ul>}
+            <div className="item" key={it.org + (it.role ?? "")}>
+              {it.org && (
+                <div className="top">
+                  <span><b>{it.org}</b>{it.role && <> · <em>{it.role}</em></>}{it.note && <small> · {it.note}</small>}</span>
+                  {it.when && <span className="when">{it.when}</span>}
+                </div>
+              )}
+              {it.bullets && <ul>{it.bullets.map(([k, t]) => <li key={t}>{k && <b>{k}: </b>}{t}</li>)}</ul>}
             </div>
           ))}
+          {s.earlier && <p className="line"><b>Earlier:</b> {s.earlier}</p>}
         </section>
       ))}
-      <section className="skills">
+      <section>
         <h2>Skills</h2>
-        {c.skills.map(([k, t]) => <p key={k}><b>{k}</b> {t}</p>)}
+        {c.skills.map(([k, t]) => <p className="line" key={k}><b>{k}:</b> {t}</p>)}
+      </section>
+      <section>
+        <h2>Education and more</h2>
+        {c.more.map(([k, t]) => <p className="line" key={k}><b>{k}:</b> {t}</p>)}
       </section>
     </article>
   );

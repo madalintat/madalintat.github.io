@@ -18,46 +18,11 @@
 
 .st-screen { display: grid; gap: 14px; min-width: 0; }
 
-/* ipporu: the frame and the lanes */
-.ip-frame { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--surface); }
-.ip-frame img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
-.ip-frame figcaption { position: absolute; left: 12px; bottom: 12px; display: flex; gap: 8px; }
-.ip-frame .tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: var(--panel); color: var(--ink); opacity: 0; transition: opacity 0.4s; }
-.ip-frame .tag.on { opacity: 1; }
-.dot { /* deslop-ignore 19: a legend dot is round */ width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-.dot.aka { background: var(--aka); }
-.dot.shiro { background: var(--ink); }
-
-.ip-time { width: 100%; height: auto; overflow: visible; }
-.ip-time .lane line { stroke: var(--line); stroke-width: 1; }
-.ip-time .lane text { font: 11px var(--font-mono); fill: var(--dim); transition: fill 0.3s; }
-.ip-time .ly { opacity: 0; transition: opacity 0.4s; }
-.ip-time .ly.on { opacity: 1; }
-.ip-time .draw { fill: none; stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--t, 0)); vector-effect: non-scaling-stroke; }
-.ip-time .crack { stroke: var(--accent); stroke-width: 1.4; opacity: var(--t, 0); }
-.ip-time .mk { fill: var(--ink); }
-.ip-time .mk.aka { fill: var(--aka); }
-.ip-time .ip line { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 3 3; }
-.ip-time .ip circle { fill: var(--accent); }
-/* the lane of the model on screen lights its name */
-.ip-story[data-cur="1"] [data-lane="track"] text, .ip-story[data-cur="2"] [data-lane="feet"] text,
-.ip-story[data-cur="3"] [data-lane="sound"] text, .ip-story[data-cur="4"] [data-lane="flags"] text,
-.ip-story[data-cur="5"] [data-lane="strike"] text, .ip-story[data-cur="6"] [data-lane="ippon"] text { fill: var(--ink); }
-
-.ip-who { display: grid; gap: 8px; opacity: 0; transition: opacity 0.4s; font-size: 14px; color: var(--soft); }
-.ip-who.on { opacity: 1; }
-.ip-who p { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 3rem; gap: 12px; align-items: center; }
-.ip-who i { height: 6px; border-radius: 3px; background: var(--line); position: relative; overflow: hidden; }
-.ip-who i::after { content: ""; position: absolute; inset: 0; background: var(--ink); transform-origin: left; transform: scaleX(calc(var(--who-aka) / 100)); }
-.ip-who p + p i::after { background: var(--soft); transform: scaleX(calc(var(--who-base) / 100)); }
-.ip-who b { color: var(--ink); font-variant-numeric: tabular-nums; }
-
 @media (max-width: 900px) {
   .st-stage { grid-template-columns: 1fr; grid-template-rows: auto 1fr; align-items: start; gap: 18px; padding: 64px var(--gutter) 24px; }
   .st-screen { grid-row: 1; }
   .st-caps h3 { font-size: 26px; }
   .st-num b { font-size: 36px; }
-  .ip-time .lane text { font-size: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .st { height: auto; }
@@ -68,7 +33,7 @@
 /* speech: one panel per beat, in the same place */
 .sp-screen { display: grid; }
 .sp-panel { grid-area: 1 / 1; opacity: 0; transform: translateY(10px); transition: opacity 0.4s, transform 0.4s; pointer-events: none; list-style: none; }
-.sp-story[data-cur="0"] .sp-hear, .sp-story[data-cur="1"] .sp-stream, .sp-story[data-cur="2"] .sp-voices, .sp-story[data-cur="3"] .sp-loop { opacity: 1; transform: none; pointer-events: auto; }
+.sp-story[data-cur="0"] .sp-hear, .sp-story[data-cur="1"] .sp-stream, .sp-story[data-cur="2"] .sp-voices { opacity: 1; transform: none; pointer-events: auto; }
 .sp-wave { width: 100%; height: 120px; }
 .sp-wave .draw { fill: none; stroke: var(--ink); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--t, 0)); vector-effect: non-scaling-stroke; }
 .sp-board { list-style: none; display: grid; gap: 10px; margin-top: 26px; }
@@ -97,18 +62,12 @@
 .sp-voice.playing path { stroke: var(--ink); }
 .sp-voice span { font: var(--size-small) var(--font-mono); color: var(--soft); text-align: right; }
 
-.sp-loop { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; counter-reset: s; }
-.sp-loop li { padding: 18px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); font-size: 15px; counter-increment: s; opacity: 0; transform: translateY(10px); transition: opacity 0.4s, transform 0.4s; }
-.sp-loop li::before { content: counter(s); display: block; font: var(--size-tag) var(--font-mono); color: var(--accent); margin-bottom: 10px; }
-.sp-loop li.on { opacity: 1; transform: none; }
-
 @media (max-width: 900px) {
   .sp-board li { grid-template-columns: 7.5rem minmax(0, 1fr) 3.5rem; font-size: 13px; }
-  .sp-loop { grid-template-columns: 1fr 1fr; }
   .sp-wave, .sp-packets { height: 80px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sp-panel, .sp-voice, .sp-loop li { grid-area: auto; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 24px; }
+  .sp-panel, .sp-voice { grid-area: auto; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 24px; }
 }
 
 /* no javascript: nothing will ever add .on, so every story and scene is laid flat and shown whole */
@@ -116,7 +75,7 @@
   .st { height: auto; }
   .st-stage { position: relative; height: auto; min-height: 100svh; }
   .st-caps { position: relative; }
-  .st-caps li, .sp-panel, .sp-voice, .sp-loop li { grid-area: auto; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 28px; }
+  .st-caps li, .sp-panel, .sp-voice { grid-area: auto; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 28px; }
   /* !important: these must beat the per-story hiding rules, whatever their specificity */
   [data-at], .sea-facts div { opacity: 1 !important; transform: none !important; }
   .draw { stroke-dashoffset: 0 !important; }

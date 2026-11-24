@@ -2,6 +2,7 @@
 title: when my labels fooled me
 date: 2026-11-24
 summary: who struck read 76% for weeks. clean labels from the referees' flags put it at 57%, a point under always guessing aka.
+draft: true
 ---
 
 ipporu reads a kendo match from video. at every strike it has to say who struck, aka or shiro. the referees raise flags only for the strikes they score, so for everything else a model has to decide.
