@@ -14,7 +14,7 @@ const HOME: Meta = { title: "mădălin tatarciuc · applied ai researcher and bu
 export function routes(): Record<string, Meta> {
   const r: Record<string, Meta> = { "/": HOME };
   for (const w of work) r[`/work/${w.slug}/`] = { title: `${w.title} · mădălin tatarciuc`, description: w.line };
-  r["/notes/"] = { title: "notes from the lab · mădălin tatarciuc", description: "long-form notes on training small models, reading kendo from video and romanian speech: what i measured, what broke, and what i took back." };
+  r["/notes/"] = { title: "notes · mădălin tatarciuc", description: "what i'm building and training, and everything around it: kendo, chess, fishing in transylvania, old hardware brought back to life, and life itself. written when there's something worth saying." };
   for (const n of notes) r[`/notes/${n.slug}/`] = { title: `${n.title} · mădălin tatarciuc`, description: n.summary };
   r["/cv/"] = { title: "cv · mădălin tatarciuc", description: "applied ai research engineer. research and builder versions, with pdfs." };
   return r;
@@ -75,7 +75,7 @@ export function head(url: string, m: Meta) {
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
     `<link rel="alternate" type="text/plain" href="${SITE}/llms.txt" title="llms.txt" />`,
-    `<link rel="alternate" type="application/rss+xml" href="${SITE}/notes/rss.xml" title="notes from the lab" />`,
+    `<link rel="alternate" type="application/rss+xml" href="${SITE}/notes/rss.xml" title="notes · mădălin tatarciuc" />`,
     `<script type="application/ld+json">${graph()}</script>`,
   ].join("\n    ");
 }
@@ -87,5 +87,5 @@ export function render(url: string) {
 /** The notes as rss 2.0: published posts only, newest first. An empty channel is a valid feed to subscribe to early. */
 export function rss() {
   const items = notes.map((n) => `  <item>\n    <title>${esc(n.title)}</title>\n    <link>${SITE}/notes/${n.slug}/</link>\n    <guid>${SITE}/notes/${n.slug}/</guid>\n    <pubDate>${new Date(n.date + "T12:00:00Z").toUTCString()}</pubDate>\n    <description>${esc(n.summary)}</description>\n  </item>`);
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>\n  <title>notes from the lab · mădălin tatarciuc</title>\n  <link>${SITE}/notes/</link>\n  <atom:link href="${SITE}/notes/rss.xml" rel="self" type="application/rss+xml" />\n  <description>long-form notes on small models, kendo video and romanian speech.</description>\n  <language>en</language>\n${items.join("\n")}${items.length ? "\n" : ""}</channel>\n</rss>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>\n  <title>notes · mădălin tatarciuc</title>\n  <link>${SITE}/notes/</link>\n  <atom:link href="${SITE}/notes/rss.xml" rel="self" type="application/rss+xml" />\n  <description>long-form notes on small models, kendo video and romanian speech.</description>\n  <language>en</language>\n${items.join("\n")}${items.length ? "\n" : ""}</channel>\n</rss>\n`;
 }

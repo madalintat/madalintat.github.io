@@ -8,7 +8,7 @@ const read = (p) => readFileSync(D + p, "utf8");
 const ROUTES = {
   "": "mădălin tatarciuc",
   "work/ipporu/": "ipporu", "work/romanian-speech/": "romanian speech", "work/superstarling/": "superstarling", "work/surogates/": "surogates",
-  "notes/": "notes from the lab",
+  "notes/": "notes, about anything",
   "cv/": "Mădălin Tatarciuc",
 };
 
