@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { PlayIcon, PauseIcon } from "./icons";
 import "./film.css";
 
 type Props = { src: string; poster: string; alt: string };
@@ -25,7 +26,7 @@ export function Film({ src, poster, alt }: Props) {
     <figure className="film">
       <video ref={ref} src={src} poster={poster} muted loop playsInline preload="metadata" aria-label={alt} />
       <button type="button" className="film-toggle" onClick={toggle} aria-label={playing ? "pause film" : "play film"}>
-        {playing ? "❚❚" : "▶"}
+        {playing ? <PauseIcon /> : <PlayIcon />}
       </button>
     </figure>
   );

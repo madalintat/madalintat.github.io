@@ -18,9 +18,10 @@ test("without js the page lists every event with its time", () => {
   expect(html).toContain("kote");
 });
 
-test("every event is a jump button with a label", () => {
-  const buttons = html.match(/<button[^>]*aria-label="jump to [^"]+"/g) ?? [];
+test("every event is a button named by what it shows: the time and the event", () => {
+  const buttons = html.match(/<button type="button"><time>[^<]+<\/time><span>[^<]+<\/span><\/button>/g) ?? [];
   expect(buttons.length).toBe(data.events.length);
+  expect(html).not.toMatch(/aria-label="jump to/);
 });
 
 test("never autoplays, credits the footage and says it is not held out", () => {

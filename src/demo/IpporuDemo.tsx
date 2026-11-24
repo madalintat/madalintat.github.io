@@ -59,7 +59,7 @@ export function IpporuDemo({ src, poster, data }: { src: string; poster: string;
       <p className={`now ${current?.kind ?? ""} ${current?.side ?? ""}`} aria-live="polite">
         {current ? `${clock(current.t)}  ${describe(current)}` : "play it, or pick a moment below"}
       </p>
-      {failed && <p className="note">the video did not load. the events below still hold.</p>}
+      {failed && <p className="demo-note">the video did not load. the events below still hold.</p>}
 
       <div className="track" aria-hidden="true">
         {shown.map((e, i) => (
@@ -79,7 +79,7 @@ export function IpporuDemo({ src, poster, data }: { src: string; poster: string;
       <ol className="events">
         {data.events.map((e, i) => (
           <li key={i} className={`ev ${e.kind} ${e.side ?? ""}${on[e.kind] ? "" : " off"}${current === e ? " is-now" : ""}`}>
-            <button type="button" onClick={() => jump(e.t)} aria-label={`jump to ${describe(e)} at ${clock(e.t)}`}>
+            <button type="button" onClick={() => jump(e.t)}>
               <time>{clock(e.t)}</time>
               <span>{describe(e)}</span>
             </button>

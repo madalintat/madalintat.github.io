@@ -70,18 +70,23 @@ export function startWorld(canvas: HTMLCanvasElement): () => void {
     }
     if (!birds.length) {
       const n = W < 720 ? 90 : 170;
-      for (let i = 0; i < n; i++) birds.push({ x: W * (W < 720 ? 0.5 : 0.76) + (rnd() - 0.5) * 240, y: 90 + rnd() * 220, vx: rnd() - 0.5, vy: rnd() - 0.5 });
+      for (let i = 0; i < n; i++) birds.push({ x: W * (W < 720 ? 0.62 : 0.76) + (rnd() - 0.5) * 200, y: (W < 720 ? 60 : 90) + rnd() * (W < 720 ? 80 : 220), vx: rnd() - 0.5, vy: rnd() - 0.5 });
     }
   }
 
   const ground = () => { const c = scenes.city; return c ? c.top + c.height - 60 : docH * 0.6; };
 
   function flock(t: number) {
-    const cx = W < 720 ? W * 0.5 : W * 0.76, cy = W < 720 ? H * 0.16 : H * 0.2;
-    const ax = cx + Math.sin(t * 0.00031) * W * (W < 720 ? 0.3 : 0.13), ay = cy + Math.sin(t * 0.00047) * 110;
+    const cx = W < 720 ? W * 0.62 : W * 0.76, cy = W < 720 ? H * 0.11 : H * 0.2;
+    const ax = cx + Math.sin(t * 0.00031) * W * (W < 720 ? 0.3 : 0.13), ay = cy + Math.sin(t * 0.00047) * (W < 720 ? 30 : 110);
+    // a grid of 40 px cells: each bird only looks at the birds in its own cell and the eight round it
+    const grid = new Map<number, typeof birds>();
+    const key = (x: number, y: number) => Math.floor(x / 40) * 4096 + Math.floor(y / 40);
+    for (const b of birds) { const k = key(b.x, b.y); const c = grid.get(k); if (c) c.push(b); else grid.set(k, [b]); }
     for (const b of birds) {
       let sx = 0, sy = 0, avx = 0, avy = 0, n = 0;
-      for (const o of birds) {
+      const gx = Math.floor(b.x / 40), gy = Math.floor(b.y / 40);
+      for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) for (const o of grid.get((gx + i) * 4096 + gy + j) ?? []) {
         const dx = o.x - b.x, dy = o.y - b.y, d = dx * dx + dy * dy;
         if (d < 1600 && o !== b) { avx += o.vx; avy += o.vy; n++; if (d < 120) { sx -= dx; sy -= dy; } }
       }

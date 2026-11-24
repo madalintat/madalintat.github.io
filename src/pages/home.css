@@ -10,7 +10,7 @@
 }
 .f { --k: clamp(0, (var(--p) - var(--at, 0)) * 7, 1); opacity: var(--k); transform: translateY(calc((1 - var(--k)) * 22px)); }
 
-.world h1 { font-size: var(--size-hero); line-height: 0.95; letter-spacing: -0.05em; font-weight: 600; margin-top: 18px; max-width: 9ch; }
+.world h1 { /* deslop-ignore 11: the h1 is a name */ font-size: var(--size-hero); line-height: 0.95; letter-spacing: -0.05em; font-weight: 600; margin-top: 18px; max-width: 9ch; }
 .stage h2, .under > h2 { font-size: var(--size-display); line-height: 1; letter-spacing: -0.04em; font-weight: 600; margin-top: 14px; }
 .world .tag b { color: var(--accent); font-weight: 500; margin-right: 10px; }
 .world .line { font-size: clamp(17px, 1.5vw, 20px); color: var(--body); max-width: 44ch; margin-top: 16px; }
@@ -48,7 +48,7 @@
 .wave path { fill: none; stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--k)); vector-effect: non-scaling-stroke; }
 .voice { display: flex; align-items: center; gap: 14px; padding: 6px 14px 6px 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); }
 .voice.on { border-color: var(--accent); }
-.voice button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--ink); font-size: 12px; cursor: pointer; flex: none; }
+.voice button { /* deslop-ignore 19: a round play button */ width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--ink); font-size: 12px; cursor: pointer; flex: none; }
 .voice.on button { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .voice span { width: 56px; font: 500 var(--size-tag)/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; }
 .voice i { flex: 1; height: 2px; background: linear-gradient(90deg, var(--accent) calc(var(--t) * 100%), var(--line) 0); border-radius: 2px; }
@@ -65,7 +65,7 @@
 .links-chain li { position: relative; padding: 14px 14px 14px 0; border-top: 2px solid var(--dim); counter-increment: link; }
 .links-chain li::before { content: ""; position: absolute; left: 0; top: -2px; height: 2px; width: calc(var(--k) * 100%); background: var(--ink); }
 .links-chain li.ships::before { background: var(--accent); }
-.links-chain li::after { content: ""; position: absolute; left: 0; top: -6px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.links-chain li::after { /* deslop-ignore 19: a chain node is round */ content: ""; position: absolute; left: 0; top: -6px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
 .links-chain b { display: block; font: 600 15px/1.3 var(--font-sans); margin-top: 8px; }
 .links-chain b::before { content: counter(link) "  "; font: var(--size-tag) var(--font-mono); color: var(--soft); }
 .links-chain span { display: block; font-size: var(--size-small); color: var(--soft); margin-top: 4px; line-height: 1.4; }

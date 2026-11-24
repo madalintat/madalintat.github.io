@@ -5,7 +5,7 @@ export type Step = { name: string; note?: string; ships?: boolean };
 
 export function Chain({ title, steps }: { title: string; steps: Step[] }) {
   return (
-    <figure className="chain" role="img" aria-label={`${title}: ${steps.map((s) => s.name).join(", then ")}`}>
+    <figure className="chain">
       <ol>
         {steps.map((s) => (
           <li key={s.name} className={s.ships ? "ships" : undefined}>
@@ -21,7 +21,7 @@ export function Chain({ title, steps }: { title: string; steps: Step[] }) {
 
 export const FIGURES: Record<string, { title: string; steps: Step[] }> = {
   ipporu: {
-    title: "the ipporu engine, one match at a time. the cyan path ships today",
+    title: "the ipporu engine, one match at a time. the marked steps ship today",
     steps: [
       { name: "tracker", note: "the two kendoka", ships: true },
       { name: "pose", note: "per frame" },

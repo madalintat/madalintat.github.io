@@ -5,7 +5,11 @@ import { pathToFileURL } from "node:url";
 const D = new URL("../dist/", import.meta.url).pathname;
 const S = new URL("../dist-ssr/entry-server.js", import.meta.url);
 const { render, routes, head, SITE } = await import(pathToFileURL(S.pathname).href);
-const template = readFileSync(D + "index.html", "utf8");
+import { readdirSync } from "node:fs";
+// the h1 is the largest paint and waits on inter (latin, and latin-ext for the ă), so those fonts load first
+const fonts = readdirSync(D + "assets").filter((f) => /^(inter-latin-wght|inter-latin-ext-wght|jetbrains-mono-latin-wght)-normal-.*\.woff2$/.test(f));
+const preload = fonts.map((f) => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin />`).join("\n    ");
+const template = readFileSync(D + "index.html", "utf8").replace("<!--head-->", `${preload}\n    <!--head-->`);
 const page = (url, meta) => template.replace("<!--head-->", head(url, meta)).replace("<!--app-->", render(url));
 
 const all = routes();

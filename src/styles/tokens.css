@@ -12,6 +12,7 @@
   --accent: #e0463c;
   --accent-ink: #07090f;
   --aka: #e0463c;
+  /* deslop-ignore-next-line 34: mono for keys, numbers and depths, the owner's cetusian register; prose is inter */
   --font-mono: "JetBrains Mono Variable", ui-monospace, Menlo, monospace;
   --font-sans: "Inter Variable", -apple-system, "Segoe UI", sans-serif;
   --size-hero: clamp(48px, 9vw, 128px);

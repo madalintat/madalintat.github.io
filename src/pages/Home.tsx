@@ -6,10 +6,12 @@ import { sceneProgress, depthAt } from "../world/progress";
 import { startWorld } from "../world/canvas";
 import { IpporuDemo, type DemoData } from "../demo/IpporuDemo";
 import demo from "../../public/demo/all-japan-2024.json";
+import { PlayIcon, PauseIcon } from "../components/icons";
 import "./home.css";
 
 // how long each scene holds the screen while it forms, in screen heights
 const HOLD: Record<Layer["id"], number> = { sky: 1, flock: 2.6, rooftops: 2.3, city: 2.2, street: 2, engine: 2.4, bedrock: 2.2, core: 1 };
+// deslop-ignore-next-line 17: the names of the editor's blocks, data
 const BLOCKS = ["text", "heading", "sub", "bullet", "number", "todo", "quote", "callout", "code", "toggle", "divider", "page", "image", "file", "embed", "table", "chart", "button", "post", "email", "article", "calendar", "plan", "team", "design", "note", "card", "frame", "arrow", "link", "gallery"];
 const VOICES = ["doina", "tudor", "radu"];
 const at = (v: number) => ({ "--at": v.toFixed(3) }) as CSSProperties;
@@ -26,7 +28,7 @@ function Voice({ name, style }: { name: string; style: CSSProperties }) {
   };
   return (
     <div className={`voice f${playing ? " on" : ""}`} style={style}>
-      <button type="button" onClick={toggle} aria-label={`${playing ? "pause" : "play"} ${name}`}>{playing ? "❚❚" : "▶"}</button>
+      <button type="button" onClick={toggle} aria-label={`${playing ? "pause" : "play"} ${name}`}>{playing ? <PauseIcon /> : <PlayIcon />}</button>
       <span>{name}</span>
       <i style={{ "--t": t } as CSSProperties} />
       <audio ref={a} preload="none" src={`/voices/${name}.mp3`}
@@ -85,7 +87,10 @@ export function Home() {
   const alt = useRef<HTMLSpanElement>(null), pin = useRef<HTMLElement>(null), name = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const stopWorld = canvas.current ? startWorld(canvas.current) : () => {};
+    // the world starts once the page is idle, so the first paint and the text never wait on it
+    let stopWorld = () => {};
+    const go = () => { if (canvas.current) stopWorld = startWorld(canvas.current); };
+    const idle = "requestIdleCallback" in window ? requestIdleCallback(go, { timeout: 1500 }) : (setTimeout(go, 300) as unknown as number);
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const scenes = [...document.querySelectorAll<HTMLElement>("[data-scene]")];
     const forms = [...document.querySelectorAll<HTMLElement>("[data-form]")];
@@ -107,7 +112,7 @@ export function Home() {
     tick();
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", onScroll);
-    return () => { stopWorld(); removeEventListener("scroll", onScroll); removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
+    return () => { if ("cancelIdleCallback" in window) cancelIdleCallback(idle); stopWorld(); removeEventListener("scroll", onScroll); removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
   }, []);
 
   return (
