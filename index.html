@@ -1,50 +1,13 @@
----
-layout: default
-title: Home
----
-
-<section class="intro-section">
-  <p>building <a href="https://www.na-se.com/" target="_blank" rel="noopener">native sentience.</a> making machines understand.</p>
-  <p>i'm instinctively drawn to the frontier where intelligence meets constraints.</p>
-</section>
-
-<section class="writing-section" data-writing>
-  <div class="writing-top">
-    <h2>writing</h2>
-    <div class="writing-controls">
-      <div class="writing-filters" role="tablist" aria-label="Sort writing">
-        <button class="filter-btn is-active" data-sort="newest" type="button" aria-pressed="true">newest</button>
-        <button class="filter-btn" data-sort="oldest" type="button" aria-pressed="false">oldest</button>
-      </div>
-      <div class="writing-search">
-        <input type="search" placeholder="search..." aria-label="Search writing" data-search />
-      </div>
-    </div>
-  </div>
-
-  <div class="writing-list">
-    {% assign writing_items = site.posts | concat: site.projects | sort: "date" | reverse %}
-    {% for item in writing_items %}
-      {% assign item_title = item.title | strip_html | strip_newlines | escape | downcase %}
-      {% assign item_excerpt = item.excerpt | strip_html | strip_newlines | escape | downcase %}
-      {% assign item_tags = item.tags | join: ' ' | strip_newlines | escape | downcase %}
-    <article class="writing-item" data-item data-date="{{ item.date | date: "%s" }}" data-title="{{ item_title }}" data-excerpt="{{ item_excerpt }}" data-tags="{{ item_tags }}">
-      <div class="writing-meta">
-        <span class="writing-date">{{ item.date | date: "%b %d, %Y" }}</span>
-      </div>
-      <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
-      <p class="writing-excerpt">{{ item.excerpt | strip_html | truncatewords: 24 }}</p>
-    </article>
-    {% endfor %}
-  </div>
-  <p class="writing-empty" data-empty hidden>no matches yet.</p>
-</section>
-
-<section class="footer-links">
-  <p>
-    <a href="https://github.com/madalintat" target="_blank" rel="noopener">github</a> •
-    <a href="https://huggingface.co/cetusian" target="_blank" rel="noopener">huggingface</a> •
-    <a href="https://x.com/cetusian" target="_blank" rel="noopener">x</a> •
-    <a href="https://linkedin.com/in/madalin-tatarciuc" target="_blank" rel="noopener">linkedin</a>
-  </p>
-</section>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png" />
+    <!--head-->
+  </head>
+  <body>
+    <div id="root"><!--app--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

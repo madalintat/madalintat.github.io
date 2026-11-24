@@ -1,0 +1,31 @@
+/* the cetusian palette: near-white and near-black, one cyan, aka red only inside the ipporu demo */
+:root {
+  color-scheme: light dark;
+  --bg: #fbfbfa;
+  --surface: #f2f2f0;
+  --ink: #16181d;
+  --soft: #5f646e;
+  --line: #e4e4e1;
+  --accent: #0077a3;
+  --accent-ink: #ffffff;
+  --aka: #d23c3c;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --font-sans: "Inter Variable", -apple-system, "Segoe UI", sans-serif;
+  --size-display: 28px;
+  --size-head: 15px;
+  --size-body: 15px;
+  --size-small: 12.5px;
+  --radius: 8px;
+  --gap: 16px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1012;
+    --surface: #17181b;
+    --ink: #ebebe8;
+    --soft: #8f949d;
+    --line: #25272b;
+    --accent: #3fb8e6;
+    --accent-ink: #0f1012;
+  }
+}
