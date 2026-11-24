@@ -22,7 +22,7 @@ test("every number names a source that exists and a condition", () => {
 
 test("nothing banned anywhere in the content", () => {
   const all = JSON.stringify(work);
-  for (const bad of ["—", "Superstar (", "Surogate Ops", "73–74", "74%"]) expect(all).not.toContain(bad);
+  for (const bad of ["—", "Superstar (", "Surogate Ops", "73–74", "74%", "commit", "5.00%", "5.75%", "7.15"]) expect(all).not.toContain(bad);
 });
 
 test("titles and lines are lowercase, brand caps aside", () => {

@@ -15,7 +15,7 @@ import { pathToFileURL } from "node:url";
 const SRC = new URL("../src/", import.meta.url).pathname;
 
 // Set from JavaScript, with setProperty or a style prop, so no stylesheet declares them.
-const FROM_JS = new Set(["--t"]);
+const FROM_JS = new Set(["--t", "--p", "--at", "--hold"]);
 
 function* sheets(dir) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {

@@ -1,31 +1,26 @@
-/* the cetusian palette: near-white and near-black, one cyan, aka red only inside the ipporu demo */
+/* night: ink, cream, one red. the same on every page, the world is always at night */
 :root {
-  color-scheme: light dark;
-  --bg: #fbfbfa;
-  --surface: #f2f2f0;
-  --ink: #16181d;
-  --soft: #5f646e;
-  --line: #e4e4e1;
-  --accent: #0077a3;
-  --accent-ink: #ffffff;
-  --aka: #d23c3c;
-  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+  --bg: #07090f;
+  --surface: #10131b;
+  --panel: rgba(9, 11, 17, 0.74);
+  --ink: #ece6d8;
+  --body: #c9c3b5;
+  --soft: #9a968c;
+  --dim: #4a4943;
+  --line: rgba(236, 230, 216, 0.14);
+  --accent: #e0463c;
+  --accent-ink: #07090f;
+  --aka: #e0463c;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, Menlo, monospace;
   --font-sans: "Inter Variable", -apple-system, "Segoe UI", sans-serif;
-  --size-display: 28px;
-  --size-head: 15px;
-  --size-body: 15px;
-  --size-small: 12.5px;
-  --radius: 8px;
+  --size-hero: clamp(48px, 9vw, 128px);
+  --size-display: clamp(36px, 5.4vw, 72px);
+  --size-head: 18px;
+  --size-body: 16px;
+  --size-small: 13px;
+  --size-tag: 11.5px;
+  --radius: 12px;
   --gap: 16px;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f1012;
-    --surface: #17181b;
-    --ink: #ebebe8;
-    --soft: #8f949d;
-    --line: #25272b;
-    --accent: #3fb8e6;
-    --accent-ink: #0f1012;
-  }
+  --gutter: clamp(16px, 4vw, 48px);
 }

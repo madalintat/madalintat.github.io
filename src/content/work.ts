@@ -11,7 +11,7 @@ export const work: Work[] = [
       { value: "99", label: "countries in the record", condition: "kendoka, clubs and competitions on ipporu.com", source: "ipporu-site" },
       { value: "152 / 182", label: "sure strikes found", condition: "20 held-out matches; 32% of calls still wrong", source: "ipporu-strikes" },
       { value: "57%", label: "who struck, on clean labels", condition: "83 flag labels; always guessing aka gets 58%", source: "ipporu-e101" },
-      { value: "~2,600", label: "commits, alone", condition: "since 8 oct 2026, merges excluded", source: "ipporu-git" },
+      { value: "177", label: "matches agree with the record", condition: "ippon count and side, from flags, tasuki and the strike before them", source: "ipporu-engine" },
     ],
     links: [
       { label: "ipporu.com", href: "https://ipporu.com" },
@@ -27,7 +27,7 @@ export const work: Work[] = [
         body: "who scored comes from the flags and the tasuki, not from a model guessing. that part holds up. the record of kendo, ippon lab for your own videos, live replays for organisers, a dojo space and a coach agent that answers from your matches all sit on top.",
       },
     ],
-    mine: "all of it. the models, the 99 logged experiments, the app, the brand marks and the launch films.",
+    mine: "all of it, alone. the record and the rating, scouting, ippon lab, live, the dojo space, the coach agent, the gpu engine, the notebook from e1 to e105, the brand and the films.",
     limits: [
       "who struck on strikes that don't score is at chance on clean labels. 83 labels are too few to train on.",
       "new halls are the worst case for strikes: almost half the calls were wrong before retraining.",
@@ -39,13 +39,14 @@ export const work: Work[] = [
     slug: "romanian-speech",
     title: "romanian speech",
     line: "recognition and three voices that run on a CPU, built at invergent",
-    stat: "5.00% WER",
+    stat: "5.69% WER",
     hero: { kind: "figure", src: "speech", alt: "audio into a 110M recogniser, text into a 357M speech model, both on a CPU" },
     numbers: [
-      { value: "5.00%", label: "WER offline", condition: "CTC + 4-gram, 3,196 test clips from FLEURS, common voice 22, voxpopuli", source: "jackrabbit-card" },
-      { value: "5.75%", label: "WER streaming", condition: "same clips, full-attention finals after pauses", source: "jackrabbit-card" },
-      { value: "7.15–8.08%", label: "WER of the three voices", condition: "301 stress sentences, read back by our own recogniser on a CPU", source: "amami-card" },
-      { value: "615", label: "downloads of the voices", condition: "hugging face, as of 24 nov 2026", source: "amami-downloads" },
+      { value: "5.69%", label: "WER on FLEURS", condition: "CTC + 4-gram, 883 clips. canary 1b v2 gets 5.95%, whisper large-v3 8.42%", source: "jackrabbit-card" },
+      { value: "2.07%", label: "WER on common voice 21", condition: "3,929 clips, the sped test list", source: "jackrabbit-card" },
+      { value: "7.03%", label: "WER streaming", condition: "FLEURS fed as live 32 ms packets; the final text lands about 0.72 s after you stop", source: "streaming-card" },
+      { value: "2.02%", label: "WER of the three voices", condition: "100 sentences, read back by whisper large-v3", source: "amami-card" },
+      { value: "615", label: "downloads last month", condition: "the voices, hugging face, 24 nov 2026", source: "amami-downloads" },
     ],
     links: [
       { label: "jackrabbit-110m-ro", href: "https://huggingface.co/surogate/jackrabbit-110m-ro" },
@@ -55,17 +56,17 @@ export const work: Work[] = [
     sections: [
       {
         heading: "no graphics card, no cloud",
-        body: "the recogniser is nvidia's 110M parakeet, fine-tuned for romanian. a 4-gram language model rescores the ctc beam. the streaming version keeps a cached encoder and runs a full-attention pass when you pause.",
+        body: "the recogniser is nvidia's 110M parakeet tdt-ctc, fine-tuned for romanian. a 4-gram language model over its own 2,048-piece vocabulary rescores the ctc beam. the streaming version is cache-aware with about a second of lookahead, and re-reads the sentence with full context after a 640 ms pause.",
       },
       {
         heading: "three voices, one checkpoint",
-        body: "the voices are an adaptation of the 357M magpie tts. doina, tudor and radu live in one checkpoint, so switching voice costs nothing at inference. creating a voice needs gpus once; speaking afterwards is cpu only.",
+        body: "the voices adapt nvidia's 357M magpie tts. doina, tudor and radu live in one checkpoint, so switching voice costs nothing. it reads numbers, dates and ibans. a native c++ build runs it on cpu, cuda and metal with no pytorch, about real time on an 8 gb m3.",
       },
     ],
     mine: "built both alone at invergent: data, training recipes, evaluation and the cpu runtimes. the models are invergent's and public under cc-by-nc-4.0.",
     limits: [
-      "streaming is behind offline by about 0.75 points of WER.",
-      "the voice numbers use our own recogniser as the judge, so they inherit its errors.",
+      "streaming finals trail offline by 1.34 points on FLEURS.",
+      "the voice numbers use a recogniser as the judge, so they inherit its errors.",
     ],
     next: { label: "the agent runtime at invergent", href: "/work/surogates" },
   },
@@ -79,7 +80,7 @@ export const work: Work[] = [
       { value: "31", label: "block types", condition: "pages with markdown shortcuts, a slash menu, history and trash", source: "superstarling-readme" },
       { value: "10", label: "agents on the team", condition: "each with a role; nothing goes out without a yes", source: "superstarling-readme" },
       { value: "1,200+", label: "server tests", condition: "node 24 with node:http and node:sqlite, no framework", source: "superstarling-readme" },
-      { value: "~800", label: "commits, alone", condition: "since 11 nov 2026, merges excluded", source: "superstarling-git" },
+      { value: "~80", label: "tools over MCP", condition: "pages, canvas, design, library and video; each says if it edits and if it's risky", source: "superstarling-code" },
     ],
     links: [],
     sections: [
@@ -93,27 +94,28 @@ export const work: Work[] = [
       },
     ],
     mine: "everything, from zero: the server, the editor, the agents, the publishing and the design.",
-    limits: ["in private build. no sign-up yet.", "one sqlite file per install; it has not met a large team."],
+    limits: ["not deployed yet. no sign-up.", "social posting has only met test accounts.", "one sqlite file per install; it has not met a large team."],
     next: { label: "back to the work", href: "/" },
   },
   {
     slug: "surogates",
     title: "surogates",
     line: "the open runtime for managed agents, at invergent",
-    stat: "708 commits",
+    stat: "8 features",
     hero: { kind: "figure", src: "surogates", alt: "an agent session that survives a crash: durable session, isolated execution, a policy check on every tool call" },
     numbers: [
-      { value: "708", label: "of my commits", condition: "invergent-ai/surogates, merges excluded, as of 24 nov 2026", source: "surogates-git" },
+
     ],
     links: [{ label: "github.com/invergent-ai/surogates", href: "https://github.com/invergent-ai/surogates" }],
     sections: [
-      {
-        heading: "agents that survive a bad decision",
-        body: "durable sessions, isolated execution and governance on every tool call. an agent picks up where it was after a crash or a restart, and a policy can stop a call before it runs.",
-      },
+      { heading: "phone calls to agents", body: "calls come in over livekit sip and run on my romanian speech models, with turn-taking, barge-in and a background soundscape." },
+      { heading: "simulate", body: "practice worlds for whatsapp, telegram, slack, teams, discord, the website and phone. autopilot plays the customers; read-only tools run for real and the rest are faked." },
+      { heading: "channels", body: "discord, microsoft teams, telegram parity, a drop-in website chat widget, and any agent served as an openai-compatible endpoint." },
+      { heading: "follow-ups and programs", body: "an agent walks a person through a protocol on whatsapp and escalates to the team when it matters." },
+      { heading: "commerce and governance", body: "end-user accounts, token allowances, packages and credits on every channel. per-agent policy and the eu ai act art. 50 disclosure." },
     ],
-    mine: "a core contributor: features, fixes and tooling across the runtime, from slack and voice channels to session handling.",
-    limits: ["a team project. the design is not mine alone."],
+    mine: "the features on this page, each merged as a pull request on the public repo.",
+    limits: ["a team project. the runtime's design is not mine."],
     next: { label: "the speech models", href: "/work/romanian-speech" },
   },
 ];
