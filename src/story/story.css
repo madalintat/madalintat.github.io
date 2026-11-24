@@ -121,3 +121,41 @@
   [data-at], .sea-facts div { opacity: 1 !important; transform: none !important; }
   .draw { stroke-dashoffset: 0 !important; }
 }
+
+/* ---------- the engine, model by model: a clip per beat, the current one shown ---------- */
+.ip-clips { display: grid; gap: 10px; align-content: center; }
+.ip-clip { grid-area: 1 / 1; margin: 0; border-radius: 8px; overflow: hidden; background: #111318; opacity: 0; transition: opacity 0.35s ease; }
+.ip-clip video { display: block; width: 100%; height: auto; aspect-ratio: 1128 / 520; object-fit: contain; background: #111318; }
+.ip-credit { grid-area: 2 / 1; font: 12px/1.4 var(--font-mono); color: var(--dim); }
+.ip-story[data-cur="0"] .ip-clip[data-i="0"], .ip-story[data-cur="1"] .ip-clip[data-i="1"], .ip-story[data-cur="2"] .ip-clip[data-i="2"], .ip-story[data-cur="3"] .ip-clip[data-i="3"], .ip-story[data-cur="4"] .ip-clip[data-i="4"], .ip-story[data-cur="5"] .ip-clip[data-i="5"], .ip-story[data-cur="6"] .ip-clip[data-i="6"], .ip-story[data-cur="7"] .ip-clip[data-i="7"], .ip-story[data-cur="8"] .ip-clip[data-i="8"] { opacity: 1; }
+.ip-story .st-caps li > p:not([class]) { max-width: 46ch; }
+.ip-facts { margin-top: 16px; display: grid; gap: 8px; max-width: 52ch; }
+.ip-facts div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+.ip-facts dt { font: 12px/1.5 var(--font-mono); color: var(--dim); text-transform: lowercase; }
+.ip-facts dd { font-size: 14px; line-height: 1.45; color: var(--body); }
+.ip-gate { margin-top: 12px; display: flex; gap: 10px; align-items: baseline; font-size: 13px; color: var(--soft); max-width: 52ch; }
+.ip-gate b { flex: none; font: 600 12px/1 var(--font-mono); padding: 5px 8px; border-radius: 4px; background: var(--line); color: var(--ink); }
+.ip-gate.yes b { background: #1f6f6a; color: #f7f5f0; }
+.ip-gate.no b { background: #e0563a; color: #f7f5f0; }
+/* the fencing system next to the ribbon: their rig in numbers, ours below it */
+.ip-vs { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 56ch; }
+.ip-vs > div { padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; }
+.ip-vs > div.us { border-color: var(--accent); }
+.ip-vs-name { font-weight: 600; font-size: 14px; color: var(--ink); display: grid; gap: 2px; }
+.ip-vs-name span { font: 12px var(--font-mono); color: var(--dim); font-weight: 400; }
+.ip-vs-rows { margin-top: 8px; display: grid; gap: 6px; }
+.ip-vs-rows p { font-size: 13.5px; line-height: 1.4; color: var(--body); padding-left: 12px; position: relative; }
+.ip-vs-rows p::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 5px; height: 1px; background: var(--dim); }
+@media (max-width: 720px) {
+  .ip-facts div { grid-template-columns: 1fr; gap: 2px; }
+  .ip-vs { grid-template-columns: 1fr; }
+  .ip-story .st-caps h3 { font-size: 22px; }
+  .ip-story .st-caps li > p:not([class]) { font-size: 14.5px; margin-top: 8px; }
+  .ip-story .st-num { margin-top: 8px; }
+  .ip-facts { margin-top: 10px; gap: 5px; }
+  .ip-facts div { padding-top: 5px; }
+  .ip-facts dd { font-size: 13px; line-height: 1.4; }
+  .ip-gate { margin-top: 8px; }
+  .ip-story .st-num b { display: inline; font-size: 24px; margin: 0 6px 0 0; }
+}
+@media (scripting: none) { .ip-clip { opacity: 1; grid-area: auto; } }

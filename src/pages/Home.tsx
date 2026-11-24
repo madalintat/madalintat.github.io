@@ -10,9 +10,8 @@ import { startCompanion } from "../world/companion";
 import { startWater } from "../world/water";
 import SHEETS from "../content/sprites.json";
 import { startStories } from "../story/engine";
-import { IpporuStory, type StoryData } from "../story/IpporuStory";
+import { IpporuStory } from "../story/IpporuStory";
 import { SpeechStory } from "../story/SpeechStory";
-import demo from "../../public/demo/all-japan-2024.json";
 import "./sea.css";
 
 const S = Object.fromEntries(SCENES.map((s) => [s.id, s])) as Record<SceneId, Scene>;
@@ -200,8 +199,8 @@ export function Home() {
       </section>
 
       {/* ipporu, model by model, then all of it on one match: me on the side, filming */}
-      <div className="sea-under" data-pose="me-record" style={{ "--plate": "url(/sea/harbour.webp)" } as CSSProperties}>
-        <IpporuStory data={demo as unknown as StoryData} />
+      <div className="sea-under" data-pose="hidden" style={{ "--plate": "url(/sea/harbour.webp)" } as CSSProperties}>
+        <IpporuStory />
       </div>
 
       {/* the seaside: rowing out past the fleet, then in */}

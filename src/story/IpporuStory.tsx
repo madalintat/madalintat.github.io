@@ -1,96 +1,96 @@
-import type { CSSProperties } from "react";
+import { useEffect, useRef } from "react";
 import "./story.css";
-import { IPPORU } from "../content/stories";
-import type { DemoData } from "../demo/IpporuDemo";
+import { FENCING, IPPORU, type ModelBeat } from "../content/stories";
 
-type Layers = { wave: number[]; cracks: [number, number][]; maai: [number, number][]; foot: [number, "aka" | "shiro", string][] };
-export type StoryData = DemoData & { layers: Layers };
+/* The engine, one model per beat, pinned while you scroll. Each beat shows its own clip: that model's real output drawn
+   on the same all japan 2024 match. Left: what it does in plain words, then what it is, how it learned, how good it
+   is, and the bar it was set. After the shinai: its ribbon next to the fencing system it learns from.
+   Only the clip on screen plays; the others wait, paused, with their posters. */
 
-// the timeline: 10 units a second, one lane per model
-const X = (t: number) => (t * 10).toFixed(1);
-const W = 790;
-const LANE = { sound: 0, track: 1, feet: 2, flags: 3, strike: 4, ippon: 5 } as const;
-const LH = 34, TOP = 6;
-const y0 = (l: keyof typeof LANE) => TOP + LANE[l] * LH;
-const beat = (id: string) => IPPORU.findIndex((b) => b.id === id);
-const at = (b: number, len = 0.55) => ({ "data-at": (b + 0.08).toFixed(2), "data-to": (b + 0.08 + len).toFixed(2) });
+type Ribbon = { id: "ribbon" };
+type Step = ModelBeat | Ribbon;
+const STEPS: Step[] = IPPORU.flatMap((b): Step[] => (b.id === "shinai" ? [b, { id: "ribbon" }] : [b]));
+const clipOf = (s: Step) => ("clip" in s ? s.clip : "shinai-ribbon");
 
-function Timeline({ d }: { d: StoryData }) {
-  const L = d.layers;
-  const maxW = Math.max(...L.wave);
-  const wave = "M0 " + (y0("sound") + 26) + L.wave.map((v, i) => ` L${(i / 2).toFixed(1)} ${(y0("sound") + 26 - (v / maxW) * 22).toFixed(1)}`).join("");
-  const maai = L.maai.map(([t, v], i) => `${i ? "L" : "M"}${X(t)} ${(y0("track") + 28 - Math.min(1, v / 3) * 24).toFixed(1)}`).join(" ");
-  const strikes = d.events.filter((e) => e.kind === "strike");
-  const flags = d.events.filter((e) => e.kind === "flag");
-  const ippon = d.events.filter((e) => e.kind === "ippon");
+function Gate({ g }: { g: ModelBeat["gate"] }) {
+  const word = g.met === true ? "passed" : g.met === false ? "not yet" : "no bar";
+  return <p className={`ip-gate ${g.met === true ? "yes" : g.met === false ? "no" : "none"}`}><b>{word}</b><span>{g.bar}</span></p>;
+}
+
+function ModelCaption({ b, n }: { b: ModelBeat; n: number }) {
   return (
-    <svg className="ip-time" viewBox={`-74 0 ${W + 80} ${TOP + 6 * LH + 8}`} role="img" aria-label="the match timeline, one lane per model">
-      {(Object.keys(LANE) as (keyof typeof LANE)[]).map((l) => (
-        <g key={l} className="lane" data-lane={l}>
-          <line x1="0" x2={W} y1={y0(l) + 28} y2={y0(l) + 28} />
-          <text x="-10" y={y0(l) + 24} textAnchor="end">{l}</text>
-        </g>
-      ))}
-      <g className="ly ly-sound" {...at(beat("sound"), 0.7)}>
-        <path className="draw" pathLength={1} d={wave} />
-        {L.cracks.map(([t, db]) => <line key={t} className="crack" x1={X(t)} x2={X(t)} y1={y0("sound") + 28} y2={y0("sound") + 28 - Math.min(26, db / 2.6)} />)}
-      </g>
-      <g className="ly ly-track" {...at(beat("track"), 0.7)}>
-        <path className="draw" pathLength={1} d={maai} />
-      </g>
-      <g className="ly ly-feet" {...at(beat("sides"))}>
-        {L.foot.map(([t, side, kind]) => <circle key={t + side} className={`mk ${side}`} cx={X(t)} cy={y0("feet") + 20} r={kind === "fumikomi" ? 5 : 3} />)}
-      </g>
-      <g className="ly ly-flags" {...at(beat("flags"))}>
-        {flags.map((e) => <rect key={e.t} className="mk shiro" x={Number(X(e.t)) - 5} y={y0("flags") + 10} width="10" height="16" />)}
-      </g>
-      <g className="ly ly-strike" {...at(beat("strike"))}>
-        {/* deslop-ignore-next-line 24: a mark on the data timeline, not an icon */}
-        {strikes.map((e) => <circle key={e.t} className={`mk ${e.kind === "strike" ? e.side : ""}`} cx={X(e.t)} cy={y0("strike") + 20} r="6" />)}
-      </g>
-      <g className="ly ly-ippon" {...at(beat("ippon"))}>
-        {ippon.map((e) => (
-          <g key={e.t} className={`ip ${e.kind === "ippon" ? e.side : ""}`}>
-            <line x1={X(e.t)} x2={X(e.t)} y1={y0("sound")} y2={y0("ippon") + 28} />
-            {/* deslop-ignore-next-line 24: a mark on the data timeline, not an icon */}
-            <circle cx={X(e.t)} cy={y0("ippon") + 18} r="9" />
-          </g>
-        ))}
-      </g>
-    </svg>
+    <>
+      <p className="st-step">model {n}</p>
+      <h3>{b.title}</h3>
+      <p>{b.line}</p>
+      {b.num && <p className="st-num"><b>{b.num}</b> {b.of}</p>}
+      <dl className="ip-facts">
+        <div><dt>what it is</dt><dd>{b.kind}</dd></div>
+        <div><dt>how it learned</dt><dd>{b.learned}</dd></div>
+        <div><dt>how good</dt><dd>{b.score}</dd></div>
+      </dl>
+      <Gate g={b.gate} />
+      {b.link && <a href={b.link.href}>{b.link.label}</a>}
+    </>
   );
 }
 
-/** The engine, one model per beat on one match, pinned while you scroll. */
-export function IpporuStory({ data }: { data: StoryData }) {
+function RibbonCaption() {
+  const side = (x: { name: string; year: string; rows: string[] }, us = false) => (
+    <div className={us ? "us" : ""}>
+      <p className="ip-vs-name">{x.name}<span>{x.year}</span></p>
+      <div className="ip-vs-rows">{x.rows.map((r) => <p key={r}>{r}</p>)}</div>
+    </div>
+  );
   return (
-    <section className="st ip-story" aria-label="the ipporu engine, model by model">
+    <>
+      <p className="st-step">the shinai, drawn</p>
+      <h3>a ribbon on every strike, like fencing on tv</h3>
+      <p>the grip, guard and tip points become a ribbon that follows the sword, and a flash where it lands. the idea comes from fencing; the way to get there is new.</p>
+      <div className="ip-vs">{side(FENCING.them)}{side(FENCING.us, true)}</div>
+      <a href={FENCING.them.href}>see the fencing system</a>
+    </>
+  );
+}
+
+export function IpporuStory() {
+  const root = useRef<HTMLElement>(null);
+  // play the clip of the beat on screen, pause the rest
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const sync = () => {
+      const cur = Number(el.dataset.cur ?? 0);
+      el.querySelectorAll<HTMLVideoElement>(".ip-clips video").forEach((v, i) => {
+        if (i === cur && !reduce) { if (v.preload !== "auto") v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
+      });
+    };
+    const mo = new MutationObserver(sync);
+    mo.observe(el, { attributes: true, attributeFilter: ["data-cur"] });
+    return () => mo.disconnect();
+  }, []);
+  let n = 0;
+  return (
+    <section ref={root} className="st ip-story" aria-label="the ipporu engine, model by model">
       <div className="st-stage">
         <i className="st-bar" aria-hidden="true" />
         <ol className="st-caps">
-          {IPPORU.map((b, i) => (
-            <li key={b.id} data-beat={i}>
-              <p className="st-step">{i ? `model ${i}` : "the match"}</p>
-              <h3>{b.title}</h3>
-              <p>{b.line}</p>
-              {b.num && <p className="st-num"><b data-num data-at={i + 0.15} data-to={i + 0.7}>{b.num}</b> {b.of}</p>}
-              {b.link && <a href={b.link.href}>{b.link.label}</a>}
-            </li>
+          {STEPS.map((s, i) => (
+            <li key={s.id} data-beat={i}>{"clip" in s ? <ModelCaption b={s} n={++n} /> : <RibbonCaption />}</li>
           ))}
         </ol>
-        <div className="st-screen">
-          <figure className="ip-frame">
-            <img src="/demo/all-japan-2024.jpg" alt="the match: two kendoka in the first round of the all japan championships 2024" width="960" height="540" />
-            <figcaption>
-              <span className="tag" data-at={beat("sides") + 0.1}><i className="dot aka" />aka</span>
-              <span className="tag" data-at={beat("sides") + 0.1}><i className="dot shiro" />shiro</span>
-            </figcaption>
-          </figure>
-          <Timeline d={data} />
-          <div className="ip-who" data-at={beat("who") + 0.1} style={{ "--who-aka": 57, "--who-base": 58 } as CSSProperties}>
-            <p><span>my model</span><i /><b>57%</b></p>
-            <p><span>always aka</span><i /><b>58%</b></p>
-          </div>
+        <div className="st-screen ip-clips">
+          {STEPS.map((s, i) => (
+            <figure key={s.id} className="ip-clip" data-i={i}>
+              <video muted loop playsInline preload="none" poster={`/models/${clipOf(s)}.jpg`} width={1128} height={520}
+                aria-label={"clip" in s ? `${s.title}, its output on the match` : "the shinai ribbon on an 8-dan ippon"}>
+                <source src={`/models/${clipOf(s)}.webm`} type="video/webm" />
+                <source src={`/models/${clipOf(s)}.mp4`} type="video/mp4" />
+              </video>
+            </figure>
+          ))}
+          <p className="ip-credit">footage: all japan kendo federation public streams, name bars cropped. every overlay is the engine's own output.</p>
         </div>
       </div>
     </section>
