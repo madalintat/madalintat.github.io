@@ -1,209 +1,209 @@
 {
   "agents-board": {
-    "src": "/sea/agents-board.webp",
+    "src": "/sea/agents-board.webp?v=18fe0cf0",
     "n": 40,
     "w": 331,
     "h": 440,
     "fps": 10
   },
   "agents-talk-1": {
-    "src": "/sea/agents-talk-1.webp",
+    "src": "/sea/agents-talk-1.webp?v=3616e330",
     "n": 40,
     "w": 329,
     "h": 440,
     "fps": 10
   },
   "agents-talk-2": {
-    "src": "/sea/agents-talk-2.webp",
+    "src": "/sea/agents-talk-2.webp?v=b92ad267",
     "n": 40,
     "w": 539,
     "h": 440,
     "fps": 10
   },
   "jelly": {
-    "src": "/sea/jelly.webp",
+    "src": "/sea/jelly.webp?v=adf8bf4c",
     "n": 40,
     "w": 117,
     "h": 200,
     "fps": 10
   },
   "kendo-pair-kote": {
-    "src": "/sea/kendo-pair-kote.webp",
+    "src": "/sea/kendo-pair-kote.webp?v=cef26a2d",
     "n": 40,
     "w": 557,
     "h": 460,
     "fps": 10
   },
   "kendo-pair-loop": {
-    "src": "/sea/kendo-pair-loop.webp",
+    "src": "/sea/kendo-pair-loop.webp?v=d9ded626",
     "n": 40,
     "w": 557,
     "h": 460,
     "fps": 10
   },
   "kendo-pair-men": {
-    "src": "/sea/kendo-pair-men.webp",
+    "src": "/sea/kendo-pair-men.webp?v=9f417ce5",
     "n": 60,
     "w": 557,
     "h": 460,
     "fps": 10
   },
   "me-boat-cap": {
-    "src": "/sea/me-boat-cap.webp",
+    "src": "/sea/me-boat-cap.webp?v=0697c40b",
     "n": 40,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-boat-cap-to-me-boat-ready": {
-    "src": "/sea/me-boat-cap-to-me-boat-ready.webp",
+    "src": "/sea/me-boat-cap-to-me-boat-ready.webp?v=6a0df05e",
     "n": 60,
     "w": 539,
     "h": 300,
     "fps": 14
   },
   "me-boat-ready": {
-    "src": "/sea/me-boat-ready.webp",
+    "src": "/sea/me-boat-ready.webp?v=c543ee75",
     "n": 40,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-boat-ready-to-me-dive": {
-    "src": "/sea/me-boat-ready-to-me-dive.webp",
+    "src": "/sea/me-boat-ready-to-me-dive.webp?v=97f38797",
     "n": 40,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-dive": {
-    "src": "/sea/me-dive.webp",
+    "src": "/sea/me-dive.webp?v=dd68a13d",
     "n": 40,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-dive-to-me-scuba": {
-    "src": "/sea/me-dive-to-me-scuba.webp",
+    "src": "/sea/me-dive-to-me-scuba.webp?v=168ac139",
     "n": 60,
     "w": 539,
     "h": 300,
     "fps": 14
   },
   "me-dressed-to-me-boat-cap": {
-    "src": "/sea/me-dressed-to-me-boat-cap.webp",
+    "src": "/sea/me-dressed-to-me-boat-cap.webp?v=a7a5c1cb",
     "n": 60,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-float": {
-    "src": "/sea/me-float.webp",
+    "src": "/sea/me-float.webp?v=507ce5aa",
     "n": 40,
     "w": 380,
     "h": 400,
     "fps": 10
   },
   "me-float-flip": {
-    "src": "/sea/me-float-flip.webp",
+    "src": "/sea/me-float-flip.webp?v=97c6521d",
     "n": 40,
     "w": 460,
     "h": 400,
     "fps": 10
   },
   "me-hammock-orchard": {
-    "src": "/sea/me-hammock-orchard.webp",
+    "src": "/sea/me-hammock-orchard.webp?v=5c9cc72b",
     "n": 40,
     "w": 619,
     "h": 240,
     "fps": 10
   },
   "me-kendo": {
-    "src": "/sea/me-kendo.webp",
+    "src": "/sea/me-kendo.webp?v=678d0d20",
     "n": 40,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-kendo-men-off-to-me-record": {
-    "src": "/sea/me-kendo-men-off-to-me-record.webp",
+    "src": "/sea/me-kendo-men-off-to-me-record.webp?v=856fa3e8",
     "n": 60,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-kendo-rest-to-me-kendo-men-off": {
-    "src": "/sea/me-kendo-rest-to-me-kendo-men-off.webp",
+    "src": "/sea/me-kendo-rest-to-me-kendo-men-off.webp?v=c5e25ccb",
     "n": 60,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-kendo-to-me-kendo-rest": {
-    "src": "/sea/me-kendo-to-me-kendo-rest.webp",
+    "src": "/sea/me-kendo-to-me-kendo-rest.webp?v=e2f4bbd9",
     "n": 60,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-kendo-unarmoured-to-me-dressed": {
-    "src": "/sea/me-kendo-unarmoured-to-me-dressed.webp",
+    "src": "/sea/me-kendo-unarmoured-to-me-dressed.webp?v=4a06549d",
     "n": 80,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-record": {
-    "src": "/sea/me-record.webp",
+    "src": "/sea/me-record.webp?v=97892f3c",
     "n": 40,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-record-to-me-kendo-unarmoured": {
-    "src": "/sea/me-record-to-me-kendo-unarmoured.webp",
+    "src": "/sea/me-record-to-me-kendo-unarmoured.webp?v=ba7ab896",
     "n": 80,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-scuba": {
-    "src": "/sea/me-scuba.webp",
+    "src": "/sea/me-scuba.webp?v=20561db8",
     "n": 40,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-scuba-wave": {
-    "src": "/sea/me-scuba-wave.webp",
+    "src": "/sea/me-scuba-wave.webp?v=64c7c24e",
     "n": 40,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-with-agents": {
-    "src": "/sea/me-with-agents.webp",
+    "src": "/sea/me-with-agents.webp?v=17b2293f",
     "n": 40,
     "w": 412,
     "h": 400,
     "fps": 10
   },
   "whale-doina": {
-    "src": "/sea/whale-doina.webp",
+    "src": "/sea/whale-doina.webp?v=ab0fdc9f",
     "n": 40,
     "w": 663,
     "h": 300,
     "fps": 10
   },
   "whale-radu": {
-    "src": "/sea/whale-radu.webp",
+    "src": "/sea/whale-radu.webp?v=7143b761",
     "n": 40,
     "w": 669,
     "h": 300,
     "fps": 10
   },
   "whale-tudor": {
-    "src": "/sea/whale-tudor.webp",
+    "src": "/sea/whale-tudor.webp?v=13fc4e0a",
     "n": 40,
     "w": 619,
     "h": 300,
