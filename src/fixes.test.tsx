@@ -29,6 +29,10 @@ test("phones keep the notes and cv links in the top bar", () => {
   expect(css("./layout/shell.css")).not.toMatch(/\.bar nav \{ display: none/);
 });
 
-test("the engine chain under the dojo floor is formed without js", () => {
-  expect(css("./pages/home.css")).toMatch(/\.under \{[^}]*--p: 1/);
+test("without javascript every story and scene is laid out flat and fully shown", () => {
+  const block = css("./story/story.css").match(/@media \(scripting: none\) \{([\s\S]*?)\n\}/)?.[1] ?? "";
+  expect(block).toMatch(/\.st \{[^}]*height: auto/);
+  expect(block).toMatch(/\[data-at\][^{]*\{[^}]*opacity: 1/);
+  expect(block).toMatch(/\.st-caps li[^{]*\{[^}]*opacity: 1/);
+  expect(block).toMatch(/stroke-dashoffset: 0/);
 });

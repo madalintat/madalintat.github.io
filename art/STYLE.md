@@ -39,10 +39,15 @@ The accent appears once or twice per plate, never as a field.
 
 ## Every plate
 - No text, letters, numbers, logos or flags with symbols. Screens are dark and blank.
+- No painted birds: the starlings are a live flock drawn in code over the plates.
 - No people with visible faces: figures are seen from behind or in silhouette.
 - No fish that look like cartoons: whales and creatures are drawn with real anatomy, simplified to flat shapes.
 - Wide plates are 16:9; phone plates are 9:16, composed again, not cropped.
 - Leave the upper left third calm (sky or open water) where the headline sits.
+
+## Cut-outs
+Anything that moves (ships, whales, creatures, the bathysphere) is drawn alone on flat chroma green (#00FF00), keyed
+out to a transparent PNG, and laid over an empty background plate, so it can move on its own layer.
 
 ## Making more
 Model: `google/gemini-nano-banana-2.1` on OpenRouter, about $0.04 an image. Prompt with this file's rules plus the

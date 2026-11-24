@@ -45,12 +45,14 @@ function Timeline({ d }: { d: StoryData }) {
         {flags.map((e) => <rect key={e.t} className="mk shiro" x={Number(X(e.t)) - 5} y={y0("flags") + 10} width="10" height="16" />)}
       </g>
       <g className="ly ly-strike" {...at(beat("strike"))}>
+        {/* deslop-ignore-next-line 24: a mark on the data timeline, not an icon */}
         {strikes.map((e) => <circle key={e.t} className={`mk ${e.kind === "strike" ? e.side : ""}`} cx={X(e.t)} cy={y0("strike") + 20} r="6" />)}
       </g>
       <g className="ly ly-ippon" {...at(beat("ippon"))}>
         {ippon.map((e) => (
           <g key={e.t} className={`ip ${e.kind === "ippon" ? e.side : ""}`}>
             <line x1={X(e.t)} x2={X(e.t)} y1={y0("sound")} y2={y0("ippon") + 28} />
+            {/* deslop-ignore-next-line 24: a mark on the data timeline, not an icon */}
             <circle cx={X(e.t)} cy={y0("ippon") + 18} r="9" />
           </g>
         ))}
@@ -85,7 +87,7 @@ export function IpporuStory({ data }: { data: StoryData }) {
             </figcaption>
           </figure>
           <Timeline d={data} />
-          <div className="ip-who" data-at={beat("who") + 0.1} style={{ "--a": 57, "--b": 58 } as CSSProperties}>
+          <div className="ip-who" data-at={beat("who") + 0.1} style={{ "--who-aka": 57, "--who-base": 58 } as CSSProperties}>
             <p><span>my model</span><i /><b>57%</b></p>
             <p><span>always aka</span><i /><b>58%</b></p>
           </div>

@@ -10,5 +10,62 @@
   "deep": {
     "aspect": "16:9",
     "brief": "The deep sea, near the floor of a trench, almost black (--deep and --print). The only light is bioluminescence in --glow: a few jellyfish, a siphonophore chain, small lantern fish, scattered points. On the right, a tall wall of rock shows layered sediment bands, many thin horizontal strata in floor and slate tones, and one single band glows faintly in --aka. On the sea floor at the bottom centre stands a small beacon on a tripod with one warm --lamp light. The upper left third is calm dark water."
+  },
+
+  "sky": {
+    "aspect": "16:9",
+    "brief": "Background plate, nothing moving in it. Dusk over the open sea seen from high above a rocky coast. Sky in five flat bands from stone at the top through warm haze to --aka near the horizon, with two long thin flat clouds lit warm underneath. A low red sun (--aka) half sunk into the horizon on the right, its reflection a column of short flat stone and lamp dashes on the water. On the far left, a dark headland with layered rock faces, a few windswept pine silhouettes and a small white lighthouse with one --lamp light at its top. The sea fills the lower third in flat bands of sea and mid, with many thin stone glints. NO birds, NO ships: they are added later. Richly detailed like a mid-century travel poster, yet calm. The upper left half of the sky is open for a headline."
+  },
+  "sky-phone": {
+    "aspect": "9:16",
+    "brief": "Background plate, nothing moving in it, composed upright for a phone. Dusk over the open sea from high above. Tall sky in six flat bands from stone at the top through warm haze to --aka at the horizon two thirds down, two long thin flat clouds lit warm underneath. A low red sun (--aka) half sunk into the horizon, its reflection a column of short flat dashes. A dark headland with pines and a small white lighthouse with one --lamp light on the lower left edge. The sea in the bottom third in flat bands with thin glints. NO birds, NO ships. The top half is open sky for a headline."
+  },
+  "ships": {
+    "aspect": "16:9",
+    "brief": "Cut-outs on flat chroma green (#00FF00), evenly lit, nothing else on the green: four ships seen side on, spread apart in one row with wide green space between them, each whole and not overlapping. 1) a three-masted tall ship with furled and set sails in stone and street, 2) a small two-masted schooner in slate with one --aka pennant, 3) an old steamship with a single funnel and a thin plume, hull in slate, a row of --lamp portholes, 4) a small fishing boat with a cabin and one lantern. Same flat screen print style, warm rim light on the left edges. No water, no reflections, no shadows on the green."
+  },
+  "harbour": {
+    "aspect": "16:9",
+    "brief": "Background plate. A small seaside town at blue hour on a bay, seen from the water. Along the shore, a row of narrow houses in stone, warm and floor tones with lit --lamp windows, a stone quay with bollards and a few moored boats, a lamppost or two. In the middle of the shore stands a traditional Japanese dojo: a low wooden hall with a dark tiled hipped roof, its sliding paper doors open and glowing --lamp from inside, where two tiny kendoka silhouettes in armour face each other with raised bamboo swords. Hills with pines behind the town, the sky deepening from warm haze to slate with the first stars. Calm water in the foreground with long reflections of the lit windows. The upper left third is calm sky."
+  },
+  "harbour-phone": {
+    "aspect": "9:16",
+    "brief": "Background plate composed upright for a phone. A seaside town at blue hour on a bay, seen from the water. In the lower middle a traditional Japanese dojo: low wooden hall, dark tiled hipped roof, sliding paper doors open and glowing --lamp, two tiny kendoka silhouettes inside facing each other with raised bamboo swords. Narrow houses with lit windows either side, a stone quay, a moored boat, hills with pines. The sky in flat bands from warm haze to slate with first stars fills the top half. Calm water at the bottom with long reflections."
+  },
+  "surface": {
+    "aspect": "16:9",
+    "brief": "Background plate: the sea's surface seen from just below it, the camera looking up and forward. The upper fifth is the underside of the surface, a bright rippled ceiling of flat stone and sea shapes, broken by the last warm light of dusk. Below it, flat shafts of light slant down from the upper left into sea and mid water that darkens in flat bands towards the bottom. A small shoal of silver fish in flat shapes turns in the middle right. A few drifting particles. NO whales. The left third is calm open water."
+  },
+  "deep-water": {
+    "aspect": "16:9",
+    "brief": "Background plate: open water deep under the sea, where the last light fades. The top quarter is mid water with two faint flat light shafts from the upper left; below, flat bands darken through deep to print. Many tiny drifting particles and a few faint --glow specks. NO whales, NO creatures: they are added later. Nothing else in the frame: empty, calm, deep."
+  },
+  "deep-water-phone": {
+    "aspect": "9:16",
+    "brief": "Background plate composed upright for a phone: open water deep under the sea. The top quarter is mid water with two faint flat light shafts from the upper left; below, flat bands darken through deep to print. Tiny drifting particles and a few faint --glow specks. Nothing else: empty, calm, deep."
+  },
+  "whale-doina": {
+    "aspect": "16:9",
+    "brief": "One cut-out on flat chroma green (#00FF00), evenly lit, nothing else on the green: a humpback whale seen side on, swimming to the left, whole body with long pectoral flippers and tail, centred with green space all round. Flat shapes: back in street, a pale stone underside with throat grooves, light warm rim along the top edges. Her markings: the flippers almost entirely pale stone, and a pale scatter of small spots near the tail. No water, no bubbles, no shadow on the green."
+  },
+  "whale-tudor": {
+    "aspect": "16:9",
+    "brief": "One cut-out on flat chroma green (#00FF00), evenly lit, nothing else on the green: a humpback whale seen side on, swimming to the left, whole body with long pectoral flippers and tail, centred with green space all round. Flat shapes: back in slate, darker than his companions, a pale stone underside with throat grooves, warm rim along the top edges. His markings: dark flippers with pale stone tips only, and one long pale scar along his side. No water, no bubbles, no shadow on the green."
+  },
+  "whale-radu": {
+    "aspect": "16:9",
+    "brief": "One cut-out on flat chroma green (#00FF00), evenly lit, nothing else on the green: a humpback whale seen side on, swimming to the left, whole body with long pectoral flippers and tail, centred with green space all round. Flat shapes: back in floor, a pale stone underside with throat grooves, warm rim along the top edges. His markings: half-pale flippers with a dark band, and a white patch on the tail fluke. Slightly smaller and younger than an adult. No water, no bubbles, no shadow on the green."
+  },
+  "bathysphere": {
+    "aspect": "16:9",
+    "brief": "One cut-out on flat chroma green (#00FF00), evenly lit, nothing else on the green: a round deep-sea research sphere hanging from a single cable from above, riveted steel in slate and street with a warm rim on its left edge, three round windows glowing --lamp. Through the biggest window, a tiny lit cabin where three small figures seen from behind work at desks with dark blank screens. Two small floodlights under it cast short flat --lamp beams downwards. Centred with green space all round. No water, no shadow on the green."
+  },
+  "creatures": {
+    "aspect": "16:9",
+    "brief": "Cut-outs on flat chroma green (#00FF00), evenly lit, nothing else on the green, spread apart in a loose grid with wide green space between, none overlapping: three bioluminescent jellyfish of different sizes in --glow and deep tones, one long siphonophore chain, a lantern fish, an anglerfish with a tiny --lamp lure, and a small glowing comb jelly. Real anatomy simplified to flat shapes. No water, no shadow on the green."
+  },
+  "trench": {
+    "aspect": "16:9",
+    "brief": "Background plate: the floor of a deep ocean trench, almost black (deep and print). A tall cliff of layered sediment fills the right half: many thin horizontal strata in floor, slate and street tones, crisp and flat, with one single thin band glowing faintly --aka about two thirds up. The sea floor runs along the bottom, flat and dark, with a few pale rocks. On the floor in the centre stands a small beacon on a tripod with one warm --lamp light and a soft flat circle of light on the ground. A few faint --glow specks drift. The left half is calm dark water."
   }
 }

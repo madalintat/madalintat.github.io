@@ -79,7 +79,7 @@ export function SpeechStory() {
           {/* while you speak: the same wave in 32 ms packets, each written as it lands */}
           <div className="sp-panel sp-stream" data-at={beat("stream") + 0.05} aria-hidden="true">
             <div className="sp-packets">
-              {Array.from({ length: 48 }, (_, i) => <i key={i} data-at={(beat("stream") + 0.05 + (i / 48) * 0.6).toFixed(3)} style={{ "--h": Math.max(0.08, doina[Math.floor((i / 48) * doina.length)] / 100) } as CSSProperties} />)}
+              {Array.from({ length: 48 }, (_, i) => <i key={i} data-at={(beat("stream") + 0.05 + (i / 48) * 0.6).toFixed(3)} style={{ "--amp": Math.max(0.08, doina[Math.floor((i / 48) * doina.length)] / 100) } as CSSProperties} />)}
             </div>
             <p className="sp-lat"><span>last word</span><i data-at={beat("stream") + 0.66} data-to={beat("stream") + 0.9} /><span>final text</span></p>
           </div>

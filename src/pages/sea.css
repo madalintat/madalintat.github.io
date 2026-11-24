@@ -1,0 +1,113 @@
+/* the sea: full-bleed painted scenes, pinned while their words change (story/engine.ts sets .on and data-cur).
+   A box with the plate's own ratio ("the frame") sits over each plate, scaled the way object-fit: cover scales the
+   picture, so anything placed on the art in % stays on the art at every screen size. */
+.sea { background: var(--bg); }
+.sea-scene .st-stage { display: block; padding: 0; overflow: hidden; }
+.plate, .plate img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate img { object-fit: cover; display: block; }
+.frame, .fleet, .pod { position: absolute; left: 50%; top: 50%; width: max(100%, 100svh * 1.7917); aspect-ratio: 1376 / 768; transform: translate(-50%, -50%); pointer-events: none; }
+
+/* the words on a scene: in the calm third the art leaves for them */
+.sea-caps { position: absolute; z-index: 3; left: clamp(20px, 7vw, 120px); top: clamp(92px, 16svh, 170px); width: min(560px, calc(100% - 40px)); }
+.sea-caps li { color: var(--ink); }
+.sea-caps h1 { /* deslop-ignore 11: the h1 is a two-word name, not a sentence */ font-size: clamp(52px, 8.6vw, 132px); line-height: 0.92; letter-spacing: -0.055em; font-weight: 600; margin-top: 14px; }
+.sea-caps h2 { font-size: clamp(36px, 5vw, 72px); line-height: 0.98; letter-spacing: -0.045em; font-weight: 600; margin-top: 12px; text-wrap: balance; }
+.sea-tag { font: 500 var(--size-tag)/1.4 var(--font-mono); letter-spacing: 0.08em; color: var(--soft); }
+/* on the dark scenes the words get a soft shadow, so a light shaft behind them never eats a line */
+.sea-scene:not(.sea-sky) .sea-caps { text-shadow: 0 1px 14px rgba(7, 12, 18, 0.85), 0 0 2px rgba(7, 12, 18, 0.6); }
+.sea-scene:not(.sea-sky) .sea-tag { color: rgba(227, 222, 214, 0.78); }
+.sea-tag b { color: var(--accent); font-weight: 600; margin-right: 8px; }
+.sea-line { font-size: clamp(17px, 1.45vw, 21px); line-height: 1.45; color: var(--body); margin-top: 16px; max-width: 32ch; }
+.sea-facts { display: grid; gap: 4px; margin-top: 22px; }
+.sea-facts div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 14px; align-items: baseline; padding-top: 6px; border-top: 1px solid var(--line); opacity: 0; transform: translateY(8px); transition: opacity 0.4s, transform 0.4s; }
+.sea-facts div.on { opacity: 1; transform: none; }
+.sea-facts dt { font: 600 17px/1.2 var(--font-sans); letter-spacing: -0.02em; }
+.sea-facts dd { font-size: 14.5px; line-height: 1.4; color: var(--body); }
+.sea-links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 22px; font-size: 15px; }
+.sea-links a { border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+
+/* the sky is light: ink words */
+.sea-sky .sea-caps li { --ink: #111318; --body: #2b3140; --soft: #454c5c; --line: rgba(17, 19, 24, 0.16); }
+.sea-sky .sea-caps h1 { max-width: 7ch; }
+.sea-sky [data-beat="0"] .sea-facts { grid-template-columns: repeat(4, auto); gap: 18px; }
+.sea-sky [data-beat="0"] .sea-facts div { border: 0; grid-template-columns: 1fr; gap: 2px; opacity: 1; transform: none; }
+.sea-sky [data-beat="0"] .sea-facts dt { font-size: clamp(20px, 2vw, 28px); }
+.sea-sky [data-beat="0"] .sea-facts dd { font: var(--size-tag)/1.3 var(--font-mono); color: #454c5c; }
+.flock { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+
+/* the fleet: on the horizon, and closer when it is the fleet's turn */
+.fleet { --hz: 70.7%; z-index: 2; }
+.ship { position: absolute; left: calc(var(--x) * 1%); top: var(--hz); width: calc(var(--w) * 1%); transform: translate(-50%, -100%) scale(calc(0.42 + var(--d) * 0.25)); transform-origin: 50% 100%; transition: transform 1.4s cubic-bezier(.2, .8, .2, 1); }
+.ship img { display: block; width: 100%; animation: bob 6s ease-in-out infinite; animation-delay: calc(var(--d) * -4s); }
+.ship figcaption { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, -8px); font: 500 12px var(--font-mono); color: #f7f5f0; background: rgba(17, 19, 24, 0.72); padding: 4px 9px; border-radius: 999px; white-space: nowrap; opacity: 0; transition: opacity 0.4s; }
+.sea-sky[data-cur="1"] .ship { transform: translate(-50%, -96%) scale(calc(0.75 + var(--d) * 0.45)); }
+.sea-sky[data-cur="1"] .ship figcaption.on { opacity: 1; }
+@keyframes bob { 50% { transform: translateY(-2.5%) rotate(-0.6deg); } }
+
+/* the harbour, and the stories told over it */
+.sea-harbour .sea-caps h2 { font-size: clamp(56px, 8vw, 120px); }
+.sea-under .st-stage { background: linear-gradient(rgba(7, 9, 15, 0.84), rgba(7, 9, 15, 0.9)), var(--plate) center / cover no-repeat; }
+.sea-under.deep .st-stage { background: linear-gradient(rgba(7, 12, 18, 0.7), rgba(7, 12, 18, 0.86)), var(--plate) center / cover no-repeat; }
+.together { position: relative; z-index: 2; padding: 12svh var(--gutter) 14svh clamp(64px, 9vw, 140px); background: var(--bg); }
+.together h2 { font-size: clamp(32px, 4vw, 56px); letter-spacing: -0.04em; font-weight: 600; margin: 12px 0 28px; }
+.together .demo { max-width: 1040px; }
+
+/* the whales swim through, each at its own pace */
+.pod { z-index: 2; }
+.whale { position: absolute; left: 0; animation: swim linear infinite; }
+.whale-doina { top: 52%; width: 44%; animation-duration: 70s; animation-delay: -22s; }
+.whale-tudor { top: 34%; width: 30%; animation-duration: 95s; animation-delay: -60s; opacity: 0.85; }
+.whale-radu { top: 66%; width: 24%; animation-duration: 82s; animation-delay: -8s; }
+@keyframes swim { from { transform: translateX(240%) translateY(0); } 50% { transform: translateX(80%) translateY(-6%); } to { transform: translateX(-120%) translateY(0); } }
+.sea-whales .sea-caps h2 { max-width: 11ch; }
+
+/* the deep: the crew's sphere on its cable, the creatures drifting */
+.sphere { position: absolute; z-index: 2; right: 14%; top: -6%; width: min(30vw, 420px); animation: hang 9s ease-in-out infinite; transform-origin: 50% 0; }
+@keyframes hang { 50% { transform: translateY(2.5%) rotate(1.2deg); } }
+.glow { position: absolute; inset: 0; z-index: 1; }
+.critter { position: absolute; animation: drift 14s ease-in-out infinite; opacity: 0.92; }
+.critter.jelly-1 { left: 8%; bottom: 8%; width: 9vw; animation-duration: 17s; }
+.critter.jelly-2 { left: 58%; top: 58%; width: 6vw; animation-duration: 13s; animation-delay: -5s; }
+.critter.jelly-3 { left: 38%; top: 70%; width: 3.5vw; animation-duration: 11s; animation-delay: -2s; }
+.critter.angler { right: 6%; bottom: 10%; width: 12vw; animation-duration: 19s; }
+.critter.lantern { left: 30%; bottom: 22%; width: 9vw; animation-duration: 15s; animation-delay: -7s; }
+.critter.comb { left: 72%; top: 30%; width: 3.5vw; animation-duration: 12s; animation-delay: -3s; }
+@keyframes drift { 50% { transform: translate(1.5vw, -3vh) rotate(3deg); } }
+
+/* the trench: the notebook as layers of rock, one glowing */
+.strata { list-style: none; position: absolute; z-index: 2; right: clamp(20px, 9vw, 160px); bottom: 14svh; width: min(150px, 24vw); display: grid; gap: 3px; }
+.strata li { height: 2px; border-radius: 1px; background: rgba(110, 116, 131, 0.12); }
+.strata li.on { background: rgba(207, 200, 188, 0.3); }
+.strata li.hit { background: var(--aka); height: 5px; box-shadow: 0 0 12px var(--aka); }
+
+/* the floor */
+.sea-floor .sea-links { font-size: clamp(17px, 2vw, 22px); gap: 12px 28px; margin-top: 30px; }
+
+/* the gauge */
+.gauge { position: fixed; left: clamp(10px, 1.6vw, 24px); top: 50%; transform: translateY(-50%); z-index: 15; display: flex; flex-direction: column; gap: 10px; font: var(--size-tag)/1 var(--font-mono); color: var(--soft); mix-blend-mode: difference; }
+.gauge .val { color: #f7f5f0; font-size: 13px; }
+.gauge .rail { --g: 0; width: 1px; height: 160px; background: rgba(247, 245, 240, 0.3); position: relative; }
+.gauge .rail i { position: absolute; left: -3px; top: calc(var(--g) * 100%); width: 7px; height: 1px; background: #f7f5f0; }
+.gauge .name { letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247, 245, 240, 0.7); }
+
+@media (max-width: 720px) {
+  .frame, .fleet, .pod { width: max(100%, 100svh * 0.5581); aspect-ratio: 768 / 1376; }
+  .fleet { --hz: 73.5%; }
+  .ship figcaption { display: none; } /* the list above already names each ship */
+  .sea-caps { top: 84px; }
+  .sea-sky [data-beat="0"] .sea-facts { grid-template-columns: 1fr 1fr; }
+  .whale-doina { width: 90%; } .whale-tudor { width: 60%; } .whale-radu { width: 50%; }
+  .sphere { width: 52vw; right: 4%; top: auto; bottom: 18%; }
+  .critter.jelly-1 { width: 18vw; } .critter.angler { width: 26vw; } .critter.lantern { width: 18vw; } .critter.jelly-2 { width: 12vw; }
+  .critter.jelly-3, .critter.comb { width: 8vw; }
+  .strata { width: 40vw; bottom: 6svh; }
+  .gauge { top: auto; bottom: 12px; transform: none; flex-direction: row; align-items: center; }
+  .gauge .rail { width: 70px; height: 1px; }
+  .gauge .rail i { top: -3px; left: calc(var(--g) * 100%); width: 1px; height: 7px; }
+  .together { padding-left: var(--gutter); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .whale, .ship img, .sphere, .critter { animation: none; }
+  .whale-doina { transform: translateX(80%); } .whale-tudor { transform: translateX(150%); } .whale-radu { transform: translateX(20%); }
+  .sea-facts div { opacity: 1; transform: none; }
+}

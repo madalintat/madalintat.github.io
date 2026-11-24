@@ -7,7 +7,7 @@
 .st-bar { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--accent); transform-origin: left; transform: scaleX(0); }
 
 .st-caps { list-style: none; display: grid; }
-.st-caps li { grid-area: 1 / 1; opacity: 0; transform: translateY(14px); transition: opacity 0.35s var(--ease, ease), transform 0.35s var(--ease, ease); pointer-events: none; }
+.st-caps li { grid-area: 1 / 1; opacity: 0; transform: translateY(14px); transition: opacity 0.35s ease, transform 0.35s ease; pointer-events: none; }
 .st-caps li.on { opacity: 1; transform: none; pointer-events: auto; }
 .st-step { font: var(--size-tag)/1 var(--font-mono); color: var(--accent); letter-spacing: 0.08em; }
 .st-caps h3 { font-size: clamp(28px, 3.4vw, 46px); line-height: 1.02; letter-spacing: -0.04em; font-weight: 600; margin-top: 12px; text-wrap: balance; }
@@ -24,7 +24,7 @@
 .ip-frame figcaption { position: absolute; left: 12px; bottom: 12px; display: flex; gap: 8px; }
 .ip-frame .tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: var(--panel); color: var(--ink); opacity: 0; transition: opacity 0.4s; }
 .ip-frame .tag.on { opacity: 1; }
-.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot { /* deslop-ignore 19: a legend dot is round */ width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 .dot.aka { background: var(--aka); }
 .dot.shiro { background: var(--ink); }
 
@@ -48,8 +48,8 @@
 .ip-who.on { opacity: 1; }
 .ip-who p { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 3rem; gap: 12px; align-items: center; }
 .ip-who i { height: 6px; border-radius: 3px; background: var(--line); position: relative; overflow: hidden; }
-.ip-who i::after { content: ""; position: absolute; inset: 0; background: var(--ink); transform-origin: left; transform: scaleX(calc(var(--a) / 100)); }
-.ip-who p + p i::after { background: var(--soft); transform: scaleX(calc(var(--b) / 100)); }
+.ip-who i::after { content: ""; position: absolute; inset: 0; background: var(--ink); transform-origin: left; transform: scaleX(calc(var(--who-aka) / 100)); }
+.ip-who p + p i::after { background: var(--soft); transform: scaleX(calc(var(--who-base) / 100)); }
 .ip-who b { color: var(--ink); font-variant-numeric: tabular-nums; }
 
 @media (max-width: 900px) {
@@ -80,7 +80,7 @@
 .sp-board b { color: inherit; font-variant-numeric: tabular-nums; text-align: right; }
 
 .sp-packets { display: flex; align-items: center; gap: 3px; height: 120px; }
-.sp-packets i { flex: 1; height: calc(var(--h) * 100%); min-height: 3px; border-radius: 2px; background: var(--line); transition: background 0.2s; }
+.sp-packets i { flex: 1; height: calc(var(--amp) * 100%); min-height: 3px; border-radius: 2px; background: var(--line); transition: background 0.2s; }
 .sp-packets i.on { background: var(--ink); }
 .sp-lat { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; margin-top: 22px; font: var(--size-small) var(--font-mono); color: var(--soft); }
 .sp-lat i { height: 2px; background: var(--accent); transform-origin: left; transform: scaleX(var(--t, 0)); }
@@ -109,4 +109,15 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .sp-panel, .sp-voice, .sp-loop li { grid-area: auto; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 24px; }
+}
+
+/* no javascript: nothing will ever add .on, so every story and scene is laid flat and shown whole */
+@media (scripting: none) {
+  .st { height: auto; }
+  .st-stage { position: relative; height: auto; min-height: 100svh; }
+  .st-caps { position: relative; }
+  .st-caps li, .sp-panel, .sp-voice, .sp-loop li { grid-area: auto; opacity: 1; transform: none; pointer-events: auto; margin-bottom: 28px; }
+  /* !important: these must beat the per-story hiding rules, whatever their specificity */
+  [data-at], .sea-facts div { opacity: 1 !important; transform: none !important; }
+  .draw { stroke-dashoffset: 0 !important; }
 }

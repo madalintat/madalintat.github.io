@@ -15,7 +15,8 @@ import { pathToFileURL } from "node:url";
 const SRC = new URL("../src/", import.meta.url).pathname;
 
 // Set from JavaScript, with setProperty or a style prop, so no stylesheet declares them.
-const FROM_JS = new Set(["--t", "--p", "--at", "--hold"]);
+// set from js or a react style prop: --t/--beats (story engine), --x --w --d (a ship's place), --i (a whale), --plate, --g (the gauge), --who-aka --who-base (the who-struck bars), --amp (a packet)
+const FROM_JS = new Set(["--t", "--p", "--at", "--hold", "--beats", "--x", "--w", "--d", "--i", "--plate", "--g", "--who-aka", "--who-base", "--amp"]);
 
 function* sheets(dir) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
