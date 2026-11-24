@@ -74,7 +74,7 @@ export const work: Work[] = [
     title: "superstarling",
     line: "a workspace where an agent team drafts and you say yes",
     stat: "31 block types",
-    hero: { kind: "image", src: "/work/superstarling-home.webp", alt: "superstarling home: what needs you, drafts to approve, what goes out" },
+    hero: { kind: "image", src: "/work/superstarling-home-dark.jpg", alt: "superstarling home: what needs you, drafts to approve, what goes out" },
     numbers: [
       { value: "31", label: "block types", condition: "pages with markdown shortcuts, a slash menu, history and trash", source: "superstarling-readme" },
       { value: "10", label: "agents on the team", condition: "each with a role; nothing goes out without a yes", source: "superstarling-readme" },
