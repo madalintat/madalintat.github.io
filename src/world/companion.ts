@@ -17,23 +17,32 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
 
   // a change of pose cancels any half-done one: its timer, and the faded-out state it would have undone
   const settle = () => { clearTimeout(timer); root.classList.remove("out", "in"); };
+  // the pose names my place (sea.css): it changes only while I cannot be seen, or with a move that carries me there,
+  // so I never slide or grow on screen half-faded
+  const place = (p: string) => { root.dataset.pose = p; };
   const set = (next: string) => {
-    // "hidden": the scene draws me itself (the lab, with the agents), so the companion steps out
-    if (next === "hidden") { if (pose !== next) { settle(); pose = next; root.dataset.pose = next; } return; }
-    if (next === pose || !sheets[next]) return;
-    // a pose the reader could not see (the phone hides the filming one) has no move out of it worth playing
-    const unseen = getComputedStyle(root).opacity === "0";
+    if (next === pose) return;
+    // "hidden": the scene draws me itself (the dojo, the lab), so the companion steps out where it stands
+    if (next === "hidden") { settle(); pose = next; root.classList.add("away"); return; }
+    if (!sheets[next]) return;
     const from = pose; pose = next;
     preload(sheets[next], ...(REACT[next] && sheets[REACT[next]] ? [sheets[REACT[next]]] : []));
-    root.dataset.pose = next;
     settle();
-    if (reduce || !sp) { sp?.swap(sheets[next]); return; }
-    const move = unseen ? undefined : sheets[`${from}-to-${next}`];
-    if (move) { sp.swap(sheets[next]); sp.react(move); return; } // the move itself is the change
+    // back from hidden: already unseen, so I take my new place and come in there
+    if (from === "hidden" || reduce || !sp) {
+      place(next); sp?.swap(sheets[next]);
+      if (from === "hidden" && !reduce) { root.classList.add("in"); requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("in"))); }
+      root.classList.remove("away");
+      return;
+    }
+    // a move clip plays only between two places of one size (a phone films me smaller than it rows me): otherwise it
+    // would jump as it starts
+    const move = sheets[`${from}-to-${next}`], w = root.offsetWidth;
+    if (move) { place(next); if (Math.abs(root.offsetWidth - w) < 2) { sp.swap(sheets[next]); sp.react(move); return; } place(from); }
     root.classList.add("out");
     timer = window.setTimeout(() => {
       if (!sheets[pose]) return;
-      sp!.swap(sheets[pose]); root.classList.remove("out"); root.classList.add("in");
+      place(pose); sp!.swap(sheets[pose]); root.classList.remove("out"); root.classList.add("in");
       requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("in")));
     }, 260);
   };

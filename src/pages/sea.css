@@ -124,7 +124,10 @@
 
 /* ---------- phones: their own layout. I am bigger and stand at the bottom, out of the words' way ---------- */
 @media (max-width: 720px) {
-  .me { left: auto; right: 2vw; top: auto; bottom: 54px; transform: none; width: var(--pw, 46vw) !important; }
+  /* I stand at the bottom; a closed sheet lifts me onto it (Home sets --lift). My size changes only while I am unseen */
+  .me { left: auto; right: 2vw; top: auto; bottom: calc(10px + env(safe-area-inset-bottom)); width: var(--pw, 46vw) !important; transform: translate3d(0, calc(-1 * var(--lift, 0px)), 0); transition: transform 0.45s var(--ease); }
+  /* words a story brings down to me: I step out until they are gone */
+  .me.yield .me-sprite { opacity: 0; transform: translateY(16px) scale(0.96); pointer-events: none; }
   .swim-doina { width: 120%; } .swim-tudor { width: 80%; } .swim-radu { width: 66%; }
   .sea-sky .sea-caps .hero { margin-top: -18svh; }
 }
@@ -178,32 +181,29 @@
   /* the bottom sheet: the scene gets the screen, the words wait at the bottom until asked for */
   .sea-scene .sea-caps:has(.card), .sea-scene.sea-sky .sea-caps:has(.card), .sea-scene.sea-lab .sea-caps:has(.card) { inset: auto 0 0 0; left: 0; width: auto; }
   .sea-scene .sea-caps li:has(.card), .sea-sky .sea-caps li[data-beat="2"]:has(.card) { align-self: end; justify-self: stretch; margin: 0; max-width: none; }
-  .card { user-select: none; -webkit-user-select: none; }
-  .card-head { cursor: pointer; }
-  html.sheet-open .me { opacity: 0; transition: opacity 0.2s; }
-  .card { width: 100%; border-radius: 16px 16px 0 0; border-width: 1px 0 0; padding: 10px 18px calc(16px + env(safe-area-inset-bottom)); box-shadow: 0 -12px 32px rgba(7, 12, 18, 0.3); touch-action: pan-x; }
-  .card::before { content: ""; display: block; width: 36px; height: 4px; margin: 0 auto 10px; border-radius: 2px; background: rgba(17, 19, 24, 0.18); }
-  .card h2 { font-size: 22px; margin-top: 6px; }
-  .card-line { font-size: 15px; margin-top: 6px; }
-  .card-more { display: none; max-height: 52svh; overflow-y: auto; overscroll-behavior: contain; }
+  /* closed, the card is its kind, its name and two lines; the whole of it is one tap to the sheet with the rest */
+  .card:not(.in-sheet) { width: 100%; border-radius: 16px 16px 0 0; border-width: 1px 0 0; padding: 14px 18px calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 -12px 32px rgba(7, 12, 18, 0.3); user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+  .card.has-more:not(.in-sheet) { cursor: pointer; transition: transform 0.2s var(--ease); }
+  .card.has-more:not(.in-sheet):active { transform: translateY(2px); }
+  .card h2 { font-size: 21px; margin-top: 6px; }
+  .card-line { font-size: 14.5px; margin-top: 5px; }
+  .card:not(.in-sheet) .card-line { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .card:not(.in-sheet) .card-more { display: none; }
   /* the sheet belongs to the screen while its scene holds it: as the scene lets go it slides down and away, instead of
      riding up through the next painting with the page */
   .sea-scene .sea-caps:has(.card) { transition: transform 0.35s cubic-bezier(.2, .8, .2, 1), opacity 0.25s; }
   .sea-scene:is([data-stage="before"], [data-stage="past"]) .sea-caps:has(.card) { transform: translateY(105%); opacity: 0; pointer-events: none; }
-  .card.open .card-more { display: block; }
   .card-stats { grid-template-columns: 1fr 1fr; margin-top: 14px; }
   .card-links { margin-top: 14px; }
   .card .btn { height: 42px; }
   .gauge { display: none; }
-  .me { bottom: 196px; }
 }
 
 .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.card-toggle { display: none; width: 36px; height: 36px; margin: -6px -8px -6px 0; border: 0; border-radius: 6px; background: transparent; color: #2b3140; cursor: pointer; align-items: center; justify-content: center; transition: transform 0.2s; }
-.card.open .card-toggle { transform: rotate(180deg); }
-/* a card with no kind line still keeps its toggle at the right */
-.card-toggle { margin-left: auto; }
-@media (max-width: 720px) { .card-toggle { display: inline-flex; } }
+/* "more": a phone's way into the whole card, a labelled pill, not a bare arrow; kept at the right even with no kind line */
+.card-toggle { display: none; margin: -4px -6px -4px auto; height: 32px; padding: 0 10px 0 12px; gap: 4px; border: 1px solid rgba(17, 19, 24, 0.14); border-radius: 999px; background: #fff; color: #111318; font: 500 13px var(--font-sans); cursor: pointer; align-items: center; flex: none; transition: transform 0.2s var(--ease), background 0.15s; }
+.card-toggle:active { transform: scale(0.95); background: #ece8e0; }
+@media (max-width: 720px) { .card:not(.in-sheet) .card-toggle { display: inline-flex; } }
 @media (scripting: none) { .card-more { display: block !important; } .card-toggle { display: none !important; } }
 
 /* ---------- the dojo: the harbour zooms in on the dojo's doors, then the inside takes over ---------- */
@@ -219,7 +219,7 @@
   .court { left: 0; width: 100%; bottom: 27%; }
 }
 
-.me[data-pose="hidden"] .me-sprite { opacity: 0; transform: translateY(24px) scale(0.94); pointer-events: none; }
+.me.away .me-sprite { opacity: 0; transform: translateY(24px) scale(0.94); pointer-events: none; }
 
 /* the lab's groups: feet on the floor line, the group's own loop (talking, gesturing) */
 /* placed by depth: the far ones stand by the wall and the window, smaller; the near ones on the front of the floor */
@@ -293,16 +293,15 @@
 .hammock { position: absolute; left: 61.4%; top: 56.8%; width: 16.6%; }
 @media (max-width: 720px) {
   .hammock { left: 23%; top: 66%; width: 46%; }
-  /* the phone has no room for me beside the clips: I film off screen there */
-  .me[data-pose="me-record"] { opacity: 0; }
-  .me[data-pose="me-boat-cap"], .me[data-pose="me-boat-ready"] { --pw: 84vw; } .me[data-pose="me-dive"] { --pw: 84vw; } .me[data-pose="me-scuba"] { --pw: 62vw; }
+  /* filming at the foot of the clips; then the boat, the dive and the scuba share one size, as their moves share one
+     frame, so each move ends exactly where the next pose begins */
+  .me[data-pose="me-record"] { --pw: 60vw; }
+  .me:is([data-pose="me-boat-cap"], [data-pose="me-boat-ready"], [data-pose="me-dive"], [data-pose="me-scuba"]) { --pw: 78vw; }
 }
 
 @media (max-width: 720px) {
   /* the phone lab's window is taller and higher on the wall */
   .window { left: 14.5%; top: 31.5%; width: 72%; height: 39%; }
-  /* the boat rows above the closed sheet */
-  .me[data-pose="me-boat-cap"], .me[data-pose="me-boat-ready"] { bottom: 30svh; }
 }
 
 /* phones: the gauge becomes a chip in the empty top-left corner, level with the links, naming where you are */
@@ -318,11 +317,54 @@
   .st .st-caps, .st .st-screen { transition: opacity 0.3s; }
   .st[data-stage="past"] :is(.st-caps:not(:has(.card)), .st-screen) { opacity: 0; }
 }
-/* an open sheet hides me, and I must not catch the taps meant for it */
-html.sheet-open .me .me-sprite { pointer-events: none; }
 /* less motion, or no javascript: each scene is a screen-tall picture with its words laid flat on it, not pinned */
 @media (prefers-reduced-motion: reduce), (scripting: none) {
   .sea-scene .st-stage { position: relative; min-height: 100svh; height: auto; overflow: visible; }
   .sea-scene .sea-caps { position: relative; left: auto; top: auto; margin: 0 auto; padding: 96px var(--gutter) 48px; width: min(760px, 100%); }
   .sea-scene .sea-caps:has(.card) { transform: none !important; opacity: 1 !important; pointer-events: auto !important; }
+}
+
+/* ---------- the sheet (components/Sheet.tsx): a phone's whole card, or a model's rows, over a dimmed page ---------- */
+.bsheet { position: fixed; inset: auto 0 0 0; width: 100%; max-width: none; max-height: 88svh; margin: 0; padding: 0; border: 0; border-radius: 16px 16px 0 0; background: #f7f5f0; color: #111318; box-shadow: 0 -16px 40px rgba(7, 12, 18, 0.35); flex-direction: column; overflow: hidden; text-shadow: none; pointer-events: auto; user-select: text; -webkit-user-select: text; }
+.bsheet[open] { display: flex; animation: sheet-in 0.38s var(--ease); }
+.bsheet::backdrop { background: rgba(7, 9, 15, 0.55); animation: veil-in 0.3s ease; }
+.bsheet.leaving { translate: 0 100%; transition: translate 0.22s cubic-bezier(.4, 0, 1, 1); }
+.bsheet.leaving::backdrop { opacity: 0; transition: opacity 0.22s; }
+.bsheet.dragging { transition: none; }
+.bsheet:not(.dragging) { transition: transform 0.25s var(--ease), translate 0.22s cubic-bezier(.4, 0, 1, 1); }
+@keyframes sheet-in { from { translate: 0 100%; } }
+@keyframes veil-in { from { opacity: 0; } }
+/* the top of the sheet is where it is held: a wide strip, so a thumb finds it */
+.bsheet-grab { flex: none; height: 26px; display: grid; place-items: center; touch-action: none; cursor: grab; }
+.bsheet-handle { width: 40px; height: 5px; border-radius: 3px; background: rgba(17, 19, 24, 0.2); }
+.bsheet-close { position: absolute; top: 12px; right: 12px; z-index: 1; width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 999px; background: #ece8e0; color: #111318; cursor: pointer; transition: transform 0.2s var(--ease); }
+.bsheet-close:active { transform: scale(0.92); }
+.bsheet-body:focus { outline: none; }
+.bsheet-body { overflow-y: auto; overscroll-behavior: contain; padding: 0 0 env(safe-area-inset-bottom); }
+.card.in-sheet { width: 100%; max-height: none; overflow: visible; border: 0; border-radius: 0; box-shadow: none; background: none; padding: 4px 20px 24px; }
+.card.in-sheet .card-kind { padding-right: 48px; min-height: 28px; }
+.card.in-sheet h2 { font-size: 24px; }
+.card.in-sheet .card-line { font-size: 15.5px; }
+.card.in-sheet .card-links .btn { height: 44px; }
+/* in the sheet the numbers are simply there: the scroll that brings them in on the page is not running under it */
+.bsheet [data-at] { opacity: 1; transform: none; }
+/* html stops scrolling under an open sheet, so the pinned scenes hold still behind it */
+html:has(.bsheet[open]) { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { .bsheet[open], .bsheet::backdrop { animation: none; } .bsheet, .bsheet.leaving { transition: none; } }
+
+/* ---------- phones: the fleet's sea comes up the screen, so the boat rows on water and the ships sail beside it ---------- */
+@media (max-width: 720px) {
+  /* the painting and everything on it scale up together from the bottom edge: the empty sky goes off the top */
+  .sea-ships :is(.plate, .water) { transform: scale(1.36); transform-origin: 50% 100%; }
+  .sea-ships .fleet { transform: translate(-50%, -50%) scale(1.36); transform-origin: 50% calc(50% + 50svh); }
+  /* the ships on open water, clear of the cliff and of me */
+  .sea-ships .ship { left: calc(var(--px) * 1%); width: calc(var(--w) * 1.3%); }
+}
+/* the sheet's X sits where a card's kind line is; a card with none keeps its title clear of it */
+.card.in-sheet > h2:first-child { margin-top: 8px; padding-right: 48px; }
+/* the contact card's closed sheet keeps its one button: writing to me is never more than one tap */
+@media (max-width: 720px) {
+  .sea-garden .card:not(.in-sheet) .card-more { display: block; }
+  .sea-garden .card:not(.in-sheet) .card-links { margin-top: 12px; }
+  .sea-garden .card:not(.in-sheet) .card-links .btn:not(.main) { display: none; }
 }

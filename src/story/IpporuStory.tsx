@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { ChevronUp } from "lucide-react";
+import { Sheet } from "../components/Sheet";
 import "./story.css";
 import { FENCING, IPPORU, type ModelBeat } from "../content/stories";
 import { IconFor } from "../components/Card";
@@ -18,21 +20,41 @@ function Gate({ g }: { g: ModelBeat["gate"] }) {
   return <p className={`ip-gate ${g.met === true ? "yes" : g.met === false ? "no" : "none"}`}><b>{word}</b><span>{g.bar}</span></p>;
 }
 
-function ModelCaption({ b, n, facts, toggle }: { b: ModelBeat; n: number; facts: boolean; toggle: () => void }) {
+function Facts({ b }: { b: ModelBeat }) {
+  return (
+    <dl className="ip-facts">
+      <div><dt>what it is</dt><dd>{b.kind}</dd></div>
+      <div><dt>how it learned</dt><dd>{b.learned}</dd></div>
+      <div><dt>how good</dt><dd>{b.score}</dd></div>
+    </dl>
+  );
+}
+
+function ModelCaption({ b, n }: { b: ModelBeat; n: number }) {
+  const [open, setOpen] = useState(false);
+  const mark = <p className="st-model"><IconFor i="ipporu" /><span>{String(n).padStart(2, "0")}</span><b>{b.model}</b></p>;
   return (
     <>
-      <p className="st-model"><IconFor i="ipporu" /><span>{String(n).padStart(2, "0")}</span><b>{b.model}</b></p>
+      {mark}
       <h3>{b.title}</h3>
       <p>{b.line}</p>
       {b.num && <p className="st-num"><b>{b.num}</b> {b.of}</p>}
-      {/* a phone folds the three rows away until asked for: the beat reads as its title, line, number and bar */}
-      <button type="button" className="ip-more" aria-expanded={facts} onClick={toggle}>{facts ? "less" : "how it was made"}</button>
-      <dl className="ip-facts">
-        <div><dt>what it is</dt><dd>{b.kind}</dd></div>
-        <div><dt>how it learned</dt><dd>{b.learned}</dd></div>
-        <div><dt>how good</dt><dd>{b.score}</dd></div>
-      </dl>
+      {/* a desktop shows the three rows; a phone keeps the beat to its title, line, number and bar, and opens the rows
+          as a sheet when asked */}
+      <Facts b={b} />
       <Gate g={b.gate} />
+      <button type="button" className="ip-more" aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)}>
+        <span>how it was made</span><ChevronUp size={15} strokeWidth={1.8} aria-hidden="true" />
+      </button>
+      <Sheet open={open} onClose={() => setOpen(false)} label={`${b.model}: how it was made`}>
+        <div className="ip-sheet">
+          {mark}
+          <h3>{b.title}</h3>
+          <p className="ip-sheet-line">{b.line}</p>
+          <Facts b={b} />
+          <Gate g={b.gate} />
+        </div>
+      </Sheet>
     </>
   );
 }
@@ -57,7 +79,6 @@ function RibbonCaption() {
 
 export function IpporuStory() {
   const root = useRef<HTMLElement>(null);
-  const [facts, setFacts] = useState(false), toggle = () => setFacts((f) => !f);
   // play the clip of the beat on screen, pause the rest
   useEffect(() => {
     const el = root.current;
@@ -85,12 +106,12 @@ export function IpporuStory() {
   }, []);
   let n = 0;
   return (
-    <section ref={root} className="st ip-story" data-facts={facts ? "open" : undefined} aria-label="the ipporu engine, model by model">
+    <section ref={root} className="st ip-story" aria-label="the ipporu engine, model by model">
       <div className="st-stage">
         <i className="st-bar" aria-hidden="true" />
         <ol className="st-caps">
           {STEPS.map((s, i) => (
-            <li key={s.id} data-beat={i}>{"clip" in s ? <ModelCaption b={s} n={++n} facts={facts} toggle={toggle} /> : <RibbonCaption />}</li>
+            <li key={s.id} data-beat={i}>{"clip" in s ? <ModelCaption b={s} n={++n} /> : <RibbonCaption />}</li>
           ))}
         </ol>
         <div className="st-screen ip-clips">

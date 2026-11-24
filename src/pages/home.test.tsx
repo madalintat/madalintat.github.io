@@ -41,3 +41,12 @@ test("contact is one tap away: email in the header and on the floor, the cvs, th
 test("without javascript every scene is already formed", () => {
   expect(html).not.toMatch(/--p:\s*0[;"]/);
 });
+
+test("a phone's sheets open only when asked: none in the prerendered page, and every way in says it opens one", () => {
+  expect(html).not.toContain("bsheet");
+  const ways = html.match(/class="(?:card-toggle|ip-more)"[^>]*/g)!;
+  expect(ways.length).toBeGreaterThanOrEqual(10); // the cards with more, and each model's "how it was made"
+  for (const w of ways) expect(w).toContain('aria-haspopup="dialog"');
+  // the rows the sheet shows are on the page too, for a desktop and for no javascript
+  expect(html.match(/class="ip-facts"/g)!.length).toBe(html.match(/class="ip-more"/g)!.length);
+});

@@ -126,10 +126,10 @@
 .ip-vs-rows p::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 5px; height: 1px; background: var(--dim); }
 @media (max-width: 720px) {
   .ip-facts div { grid-template-columns: 1fr; gap: 2px; }
-  .ip-story:not([data-facts]) .ip-facts { display: none; }
-  .ip-more { display: inline-flex; align-items: center; min-height: 36px; margin-top: 10px; padding: 0 12px; border: 1px solid var(--line); border-radius: 6px; background: none; color: var(--body); font: 500 13px var(--font-sans); cursor: pointer; transition: border-color 0.15s, transform 0.2s var(--ease); }
-  .ip-more:active { transform: scale(0.97); }
-  .ip-more[aria-expanded="true"] { border-color: var(--accent); color: var(--ink); }
+  /* a phone keeps each beat short: the three rows open as a sheet (components/Sheet.tsx) from the button under the bar */
+  .ip-story .ip-facts { display: none; }
+  .ip-more { display: inline-flex; align-items: center; gap: 6px; height: 40px; margin-top: 14px; padding: 0 12px 0 14px; border: 1px solid rgba(247, 245, 240, 0.22); border-radius: 999px; background: rgba(247, 245, 240, 0.08); color: #f7f5f0; font: 500 13.5px var(--font-sans); cursor: pointer; transition: background 0.15s, transform 0.2s var(--ease); -webkit-tap-highlight-color: transparent; }
+  .ip-more:active { transform: scale(0.96); background: rgba(247, 245, 240, 0.16); }
   /* the two rigs side by side even on a phone, small, so the ribbon's beat fits the screen */
   .ip-vs { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
   .ip-vs > div { padding: 9px 10px; }
@@ -158,3 +158,16 @@
 .ip-facts dt { color: rgba(227, 222, 214, 0.62); }
 .ip-credit { color: rgba(227, 222, 214, 0.5); }
 .ip-gate span { color: rgba(227, 222, 214, 0.78); }
+
+/* a model's rows, in the phone's sheet: dark, like the story it opens from */
+.bsheet:has(.ip-sheet) { background: #12151c; color: #f7f5f0; box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.5); }
+.bsheet:has(.ip-sheet) .bsheet-handle { background: rgba(247, 245, 240, 0.28); }
+.bsheet:has(.ip-sheet) .bsheet-close { background: rgba(247, 245, 240, 0.1); color: #f7f5f0; }
+.ip-sheet { --line: rgba(247, 245, 240, 0.14); --body: #e3ded6; --ink: #f7f5f0; padding: 4px 20px 26px; }
+.ip-sheet .st-model { padding-right: 48px; min-height: 28px; }
+.ip-sheet h3 { margin-top: 10px; font-size: 24px; line-height: 1.1; letter-spacing: -0.03em; font-weight: 600; text-wrap: balance; }
+.ip-sheet-line { margin-top: 8px; font-size: 15px; line-height: 1.5; color: #e3ded6; }
+.ip-sheet .ip-facts { margin-top: 16px; gap: 10px; }
+.ip-sheet .ip-facts div { grid-template-columns: 1fr; gap: 3px; padding-top: 10px; }
+.ip-sheet .ip-facts dd { font-size: 14.5px; line-height: 1.5; }
+.ip-sheet .ip-gate { margin-top: 16px; }

@@ -43,10 +43,10 @@ function SeaScene({ s, plate, phone, pose, children, words }: { s: Scene; plate:
 }
 
 const SHIPS = [
-  { img: "ship-4", label: "follow-ups", x: 6, w: 9, d: 0.3 },
-  { img: "ship-3", label: "calls", x: 19, w: 15, d: 0.4 },
-  { img: "ship-1", label: "simulate", x: 31, w: 16, d: 0.9 },
-  { img: "ship-2", label: "channels", x: 59, w: 10, d: 0.55 },
+  { img: "ship-4", label: "follow-ups", x: 6, px: 35, w: 9, d: 0.3 },
+  { img: "ship-3", label: "calls", x: 19, px: 43, w: 15, d: 0.4 },
+  { img: "ship-1", label: "simulate", x: 31, px: 70, w: 16, d: 0.9 },
+  { img: "ship-2", label: "channels", x: 59, px: 77, w: 10, d: 0.55 },
 ];
 // the clouds of the high sky: where, how wide, how fast they rise past the camera
 const CLOUDS = [
@@ -116,6 +116,23 @@ function Water({ mode, horizon = [0.707, 0.735] }: { mode: "surface" | "caustics
   return <canvas ref={ref} className={`water ${mode}`} aria-hidden="true" />;
 }
 
+/** On a phone I stand at the bottom of the screen. A scene's closed sheet lifts me to stand on it; a story's words that
+    reach down to me make me step out until they are gone, so I never cover what is being read. */
+function placeMe(me: HTMLElement, phone: boolean) {
+  let lift = 0, crowded = false;
+  const held = phone ? document.querySelector<HTMLElement>('.st[data-stage="held"]') : null;
+  const on = held?.querySelector<HTMLElement>(".st-caps li.on");
+  const card = on?.querySelector<HTMLElement>(".card");
+  if (card) lift = card.offsetHeight;
+  else if (on) {
+    // the figure fills the middle of its frame: only that part has to stay clear of the words
+    const b = me.querySelector(".me-sprite")!.getBoundingClientRect(), top = b.top + b.height * 0.2, left = b.left + b.width * 0.2;
+    for (const w of on.children) { const r = w.getBoundingClientRect(); if (r.height && r.bottom > top && r.right > left) { crowded = true; break; } }
+  }
+  me.style.setProperty("--lift", `${lift}px`);
+  me.classList.toggle("yield", crowded);
+}
+
 export function Home() {
   const flock = useRef<HTMLCanvasElement>(null), gulls = useRef<HTMLCanvasElement>(null), me = useRef<HTMLDivElement>(null);
   const alt = useRef<HTMLSpanElement>(null), rail = useRef<HTMLElement>(null), name = useRef<HTMLSpanElement>(null);
@@ -139,9 +156,12 @@ export function Home() {
       let cur = named[0];
       for (const s of named) if (s.offsetTop <= mid) cur = s;
       if (name.current && cur) { const ns = cur.dataset.name!.split(","); name.current.textContent = ns[Math.min(ns.length - 1, Number(cur.dataset.cur ?? 0))]; }
+      const phone = innerWidth <= 720;
       let at: HTMLElement | undefined;
       for (const e of posed) { const r = e.getBoundingClientRect(); if (r.top <= innerHeight / 2 && r.bottom > innerHeight / 2) at = e; }
-      if (at && comp) { const list = at.dataset.pose!.split(","); comp.set(list[Math.min(list.length - 1, Number(at.dataset.cur ?? 0))]); }
+      // a part may pose me differently on a phone (data-pose-phone), where there is no room for what a desktop shows
+      if (at && comp) { const list = ((phone && at.dataset.posePhone) || at.dataset.pose!).split(","); comp.set(list[Math.min(list.length - 1, Number(at.dataset.cur ?? 0))]); }
+      if (me.current) placeMe(me.current, phone);
     };
     const ask = () => { if (!raf) raf = requestAnimationFrame(tick); };
     tick();
@@ -150,7 +170,7 @@ export function Home() {
     // a scene can change its beat a frame after the scroll that caused it (the engine wakes it as it comes into
     // view): read the pose again whenever a beat changes, not only on scroll
     const beats = new MutationObserver(ask);
-    for (const e of posed) beats.observe(e, { attributes: true, attributeFilter: ["data-cur"] });
+    for (const e of posed) beats.observe(e, { attributes: true, attributeFilter: ["data-cur", "data-stage"] });
     return () => { stopStories(); stopFlock(); stopGulls(); comp?.stop(); cancelAnimationFrame(raf); beats.disconnect(); removeEventListener("scroll", ask); removeEventListener("resize", ask); };
   }, []);
 
@@ -214,7 +234,7 @@ export function Home() {
       </div>
 
       {/* night into the morning sea: I put the kendo gear away and get into the boat */}
-      <div className="sea-fade to-day" data-pose="me-boat-cap" aria-hidden="true" />
+      <div className="sea-fade to-day" data-pose="me-boat-cap" data-pose-phone="hidden" aria-hidden="true" />
 
       {/* the seaside: rowing out past the fleet, then in */}
       <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat-cap,me-boat-ready"
@@ -226,7 +246,7 @@ export function Home() {
         <canvas ref={gulls} className="gulls" aria-hidden="true" />
         <div className="fleet" aria-hidden="true">
           {SHIPS.map((sh) => (
-            <figure key={sh.img} className="ship" style={{ "--x": sh.x, "--w": sh.w, "--d": sh.d } as CSSProperties}>
+            <figure key={sh.img} className="ship" style={{ "--x": sh.x, "--px": sh.px, "--w": sh.w, "--d": sh.d } as CSSProperties}>
               <img src={`/sea/${sh.img}.webp`} alt="" />
               <figcaption data-at="0.3">{sh.label}</figcaption>
             </figure>
@@ -272,7 +292,7 @@ export function Home() {
       </SeaScene>
 
       {/* the garden that glows: me in a hammock, and the way to write */}
-      <SeaScene s={S.garden} plate="orchard" phone="orchard-phone" pose="hidden" words={<li data-beat={0}><Card s={S.garden} startOpen /></li>}>
+      <SeaScene s={S.garden} plate="orchard" phone="orchard-phone" pose="hidden" words={<li data-beat={0}><Card s={S.garden} /></li>}>
         {/* the hammock is slung between the two apple trees of the painting itself, so it is placed on the painting */}
         <div className="frame"><div className="hammock"><Sprite name="me-hammock-orchard" /></div></div>
         <div className="flies" aria-hidden="true">
