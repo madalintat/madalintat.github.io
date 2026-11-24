@@ -1,0 +1,61 @@
+{
+ "title": "all japan championships 2024",
+ "sub": "1st round, 79 seconds",
+ "source": "https://www.youtube.com/watch?v=-BctO8XF2Gw",
+ "win": [
+  100,
+  195
+ ],
+ "heldOut": false,
+ "dur": 79,
+ "events": [
+  {
+   "kind": "strike",
+   "t": 44.93000000000001,
+   "side": "shiro",
+   "conf": 0.51
+  },
+  {
+   "kind": "ippon",
+   "t": 44.93000000000001,
+   "side": "shiro",
+   "waza": "kote",
+   "letter": "K"
+  },
+  {
+   "kind": "flag",
+   "t": 45,
+   "colour": "white"
+  },
+  {
+   "kind": "strike",
+   "t": 45.610000000000014,
+   "side": "shiro",
+   "conf": 0.79
+  },
+  {
+   "kind": "strike",
+   "t": 60.34,
+   "side": "shiro",
+   "conf": 0.69
+  },
+  {
+   "kind": "flag",
+   "t": 70,
+   "colour": "white"
+  },
+  {
+   "kind": "strike",
+   "t": 70.02000000000001,
+   "side": "shiro",
+   "conf": 0.86
+  },
+  {
+   "kind": "ippon",
+   "t": 70.02000000000001,
+   "side": "shiro",
+   "waza": "kote",
+   "letter": "K"
+  }
+ ]
+}

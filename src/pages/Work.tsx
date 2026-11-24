@@ -6,6 +6,8 @@ import { Film } from "../components/Film";
 import { Chain, FIGURES } from "../figures/Chain";
 import { NotFound } from "./NotFound";
 import type { Work } from "../content/types";
+import { IpporuDemo, type DemoData } from "../demo/IpporuDemo";
+import demo from "../../public/demo/all-japan-2024.json";
 import "./work.css";
 
 function Hero({ w }: { w: Work }) {
@@ -54,6 +56,8 @@ export function WorkPage() {
         </header>
 
         {!film && numbers}
+
+        {w.slug === "ipporu" && <IpporuDemo src="/demo/all-japan-2024.mp4" poster="/demo/all-japan-2024.jpg" data={demo as DemoData} />}
 
         <section>
           <h2>how it works</h2>
