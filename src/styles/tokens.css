@@ -24,4 +24,8 @@
   --radius: 12px;
   --gap: 16px;
   --gutter: clamp(16px, 4vw, 48px);
+  /* one motion for the whole site: things arrive fast and settle slow */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-in: 0.6s;
+  --t-out: 0.3s;
 }
