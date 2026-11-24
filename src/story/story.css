@@ -159,3 +159,16 @@
   .ip-story .st-num b { display: inline; font-size: 24px; margin: 0 6px 0 0; }
 }
 @media (scripting: none) { .ip-clip { opacity: 1; grid-area: auto; } }
+
+/* a model's own name over its beat: its mark, its number, its name; a link when it is public */
+.st-model { display: flex; align-items: center; gap: 8px; font: 500 13px/1.2 var(--font-mono); color: rgba(227, 222, 214, 0.8); letter-spacing: 0.02em; }
+.st-model a { display: inline-flex; align-items: center; gap: 8px; margin: 0; color: inherit; border: 0; padding: 5px 10px 5px 8px; border-radius: 6px; background: rgba(247, 245, 240, 0.08); border: 1px solid rgba(247, 245, 240, 0.16); transition: background 0.15s, border-color 0.15s; }
+.st-model a:hover { background: rgba(247, 245, 240, 0.14); border-color: rgba(247, 245, 240, 0.32); }
+.st-model .ico { width: 16px; height: 16px; flex: none; }
+.st-model img.ico { filter: invert(1); }
+.st-model span { color: var(--accent); }
+.st-model b { color: #f7f5f0; font-weight: 600; }
+/* the labels of a model's facts: quiet, but readable on the dark */
+.ip-facts dt { color: rgba(227, 222, 214, 0.62); }
+.ip-credit { color: rgba(227, 222, 214, 0.5); }
+.ip-gate span { color: rgba(227, 222, 214, 0.78); }

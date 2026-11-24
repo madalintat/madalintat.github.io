@@ -101,3 +101,8 @@ Every image generated for the site, in order, rejects included. Model: `google/g
 | kendoka-aka.mp4 | kendoka-aka, google/veo-3.1-lite, 4s | $0.1200 | review |
 | kendoka-shiro-strike.mp4 | kendoka-shiro, google/veo-3.1-lite, 4s | $0.1200 | review |
 | kendoka-aka-strike.mp4 | kendoka-aka, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-boat-cap-1.png | me-sheet-1.png, me.jpg, me-boat-calm-1.png, surogate-logo.png | $0.0451 | review |
+| agents-board-1.png | vance.png, cross.png | $0.0455 | review |
+| me-boat-cap.mp4 | me-boat-cap, google/veo-3.1-lite, 4s | $0.1200 | review |
+| agents-board.mp4 | agents-board, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-record-to-me-boat-cap.mp4 | me-record → me-boat-cap, google/veo-3.1-lite, 8s | $0.2400 | review |

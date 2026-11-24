@@ -124,14 +124,16 @@
 /* where I am in each scene: left, top, how wide */
 .me[data-pose="me-float"]   { --mx: 74; --my: 46; --mw: 11vw; }
 .me[data-pose="me-kendo"]   { --mx: 40; --my: 56; --mw: 13vw; }
-.me[data-pose="me-record"]  { --mx: 87; --my: 66; --mw: 9vw; }
-.me[data-pose="me-boat"]    { --mx: 52; --my: 66; --mw: 16vw; }
+/* me-record, the move to the boat and me-boat-cap share one crop (the whole move), so the boat lands where it rows */
+.me[data-pose="me-record"]  { --mx: 77; --my: 71; --mw: 15vw; }
+.me[data-pose="me-boat"] { --mx: 44; --my: 64; --mw: 17vw; }
+.me[data-pose="me-boat-cap"] { --mx: 40; --my: 59; --mw: 22vw; }
 .me[data-pose="me-dive"]    { --mx: 42; --my: 40; --mw: 15vw; }
-.me[data-pose="me-scuba"]   { --mx: 56; --my: 62; --mw: 16vw; }
+.me[data-pose="me-scuba"]   { --mx: 66; --my: 72; --mw: 14vw; }
 .me[data-pose="me-laptop"]  { --mx: 72; --my: 58; --mw: 7vw; }
 .me[data-pose="me-hammock"] { --mx: 56; --my: 58; --mw: 20vw; }
 .me[data-pose="me-ready-sky"] { --mx: 82; --my: 12; --mw: 8vw; }
-.me[data-pose="me-boat-ready"] { --mx: 52; --my: 62; --mw: 16vw; }
+.me[data-pose="me-boat-ready"] { --mx: 40; --my: 61; --mw: 16vw; }
 .me[data-pose="me-hammock-orchard"] { --mx: 54; --my: 50; --mw: 28vw; }
 
 /* ---------- the whales, swimming through ---------- */
@@ -249,12 +251,12 @@
 @media (scripting: none) { .card-more { display: block !important; } .card-toggle { display: none !important; } }
 
 /* ---------- the dojo: the harbour zooms in on the dojo's doors, then the inside takes over ---------- */
-.low .zoom { position: absolute; inset: 0; transform-origin: 69% 79%; transform: scale(calc(1 + var(--t, 0) * var(--t, 0) * 3.5)); will-change: transform; }
-.low .inside { position: absolute; inset: 0; opacity: calc((var(--t, 0) - 0.05) * 1.25); }
+.low .zoom { position: absolute; inset: 0; transform-origin: 69% 79%; transform: scale(calc(1 + var(--t, 0) * var(--t, 0) * 1.8)); will-change: transform; }
+.low .inside { position: absolute; inset: 0; opacity: calc((var(--t, 0) - 0.08) * 3); }
 .low .inside:not(.on) { visibility: hidden; }
 /* the court sits right of the card, the two fighters face each other a few steps apart */
-.court { position: absolute; left: 38%; bottom: 9%; width: 46%; height: 58%; }
-.kendoka { position: absolute; bottom: 0; width: 26%; }
+.court { position: absolute; left: 55%; bottom: 8%; width: 42%; height: 62%; }
+.kendoka { position: absolute; bottom: 0; width: 31%; }
 .kendoka.aka { left: 8%; }
 .kendoka.shiro { right: 8%; }
 .sea-caps li.quiet { display: none; }
@@ -268,8 +270,17 @@
 .me[data-pose="hidden"] .me-sprite { opacity: 0; transform: translateY(24px) scale(0.94); pointer-events: none; }
 
 /* the lab's groups: feet on the floor line, the group's own loop (talking, gesturing) */
-.group { position: absolute; bottom: 7%; z-index: 2; }
-@media (max-width: 720px) { .group { bottom: 9%; } .group.agents-talk-1, .group.agents-talk-3 { display: none; } .group.agents-talk-2 { left: 0 !important; width: 50% !important; } .group.me-with-agents { left: 48% !important; width: 52% !important; } }
+/* placed by depth: the far ones stand by the wall and the window, smaller; the near ones on the front of the floor */
+.group { position: absolute; z-index: 2; }
+.group.agents-talk-1 { left: 40%; bottom: 12%; width: 9%; }
+.group.agents-board { left: 64%; bottom: 11%; width: 10.5%; }
+.group.agents-talk-2 { left: 50%; bottom: 2%; width: 16%; z-index: 3; }
+.group.me-with-agents { left: 79%; bottom: 0; width: 15%; z-index: 3; }
+@media (max-width: 720px) {
+  .group.agents-talk-1, .group.agents-talk-2 { display: none; }
+  .group.agents-board { left: 54%; bottom: 23%; width: 27%; }
+  .group.me-with-agents { left: 8%; bottom: 17%; width: 44%; }
+}
 
 /* the orchard: fireflies drifting and blinking */
 .flies { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
@@ -301,6 +312,45 @@
   .me[data-pose="me-float"] { --pw: 24vw; } .me[data-pose="me-ready-sky"] { --pw: 20vw; } .me[data-pose="me-record"] { --pw: 22vw; }
   /* the phone orchard: trunks at a quarter and seven tenths of the width, the hammock slung between them */
   .me[data-pose="me-hammock"], .me[data-pose="me-hammock-orchard"] { top: 60svh; bottom: auto; right: 14vw; --pw: 66vw; }
-  .group { bottom: 34% !important; }
   .sea-ships .sea-caps li[data-beat="1"] { margin-bottom: 56svh; padding: 0 20px; }
+}
+
+/* a card with product screens is wider, so the screens are big enough to read and the numbers sit in one row */
+@media (min-width: 721px) {
+  .card.wide { width: min(700px, calc(100vw - 32px)); }
+  .card.wide .card-stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .card.wide .card-shots a { aspect-ratio: 16 / 9.5; }
+}
+.card-shots a { cursor: zoom-in; }
+
+/* the screen viewer: the picture on a dark veil, a close button, Escape and a click outside close it */
+.viewer { position: fixed; inset: 0; width: 100vw; height: 100svh; max-width: none; max-height: none; margin: 0; padding: clamp(16px, 4vw, 56px); border: 0; background: transparent; display: grid; place-items: center; }
+.viewer:not([open]) { display: none; }
+.viewer::backdrop { background: rgba(7, 9, 15, 0.86); }
+.viewer figure { margin: 0; display: grid; gap: 12px; justify-items: center; max-width: min(1400px, 100%); }
+.viewer img { display: block; max-width: 100%; max-height: calc(100svh - 120px); width: auto; height: auto; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); object-fit: contain; }
+.viewer figcaption { font: 400 14px/1.4 var(--font-sans); color: #e3ded6; text-align: center; }
+.viewer-close { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 8px; border: 1px solid rgba(247, 245, 240, 0.25); background: rgba(17, 19, 24, 0.7); color: #f7f5f0; cursor: pointer; transition: background 0.15s; }
+.viewer-close:hover { background: rgba(17, 19, 24, 0.95); }
+
+/* between chapters the colour of one fades into the next, instead of a hard edge */
+.sea-fade { position: relative; z-index: 2; height: 60svh; pointer-events: none; }
+.sea-fade.to-day { background: linear-gradient(#0a0c12, #2a2f3a 30%, #b9b2a8 75%, #e0d9ce); }
+.sea-fade.to-lab { background: linear-gradient(#0a0f14, #1f3a46 40%, #9fb0b0 78%, #e4e0d7); }
+/* me, swimming past the lab's window on my way in */
+.far-diver { top: 52%; width: 16%; animation-duration: 34s; animation-delay: -6s; opacity: 1; filter: saturate(0.85) brightness(0.8); }
+/* the hammock between the two apple trees, tied to their trunks */
+.hammock { position: absolute; left: 61.4%; top: 56.8%; width: 16.6%; }
+@media (max-width: 720px) {
+  .hammock { left: 23%; top: 66%; width: 46%; }
+  /* the phone has no room for me beside the clips: I film off screen there */
+  .me[data-pose="me-record"] { opacity: 0; }
+  .me[data-pose="me-boat-cap"] { --pw: 60vw; }
+}
+
+@media (max-width: 720px) {
+  /* the phone lab's window is taller and higher on the wall */
+  .window { left: 14.5%; top: 31.5%; width: 72%; height: 39%; }
+  /* the boat rows above the closed sheet */
+  .me[data-pose="me-boat-cap"], .me[data-pose="me-boat-ready"] { bottom: 30svh; }
 }

@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { siGithub, siHuggingface, siX } from "simple-icons";
-import { ArrowUpRight, ChevronUp, FileText, Globe, Link2, Mail, Play, Wrench } from "lucide-react";
-import type { Icon, Scene } from "../content/world";
+import { ArrowUpRight, ChevronUp, FileText, Globe, Link2, Mail, Play, Wrench, X } from "lucide-react";
+import type { Icon, Scene, Shot } from "../content/world";
 
 const brand = (path: string) => <svg viewBox="0 0 24 24" aria-hidden="true" className="ico"><path d={path} fill="currentColor" /></svg>;
 const mark = (src: string) => <img src={src} alt="" aria-hidden="true" className="ico" width={18} height={18} />;
@@ -29,6 +29,29 @@ function Go({ href, className, children }: { href: string; className?: string; c
   return href.startsWith("/") ? <Link to={href} className={className}>{children}</Link> : <a href={href} className={className}>{children}</a>;
 }
 
+/** A product screen, full size, over the page: closes on its button, on Escape (the dialog's own) and on a click
+    outside the picture. A real <dialog>, so focus stays inside it and returns to the thumbnail after. */
+function Viewer({ shot, onClose }: { shot: Shot | null; onClose: () => void }) {
+  const d = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const el = d.current;
+    if (!el) return;
+    if (shot && !el.open) el.showModal();
+    if (!shot && el.open) el.close();
+  }, [shot]);
+  return (
+    <dialog ref={d} className="viewer" onClose={onClose} onClick={(e) => { if (e.target === e.currentTarget) onClose(); }} aria-label={shot?.alt}>
+      {shot && (
+        <figure>
+          <img src={shot.src} alt={shot.alt} />
+          <figcaption>{shot.alt}</figcaption>
+        </figure>
+      )}
+      <button type="button" className="viewer-close" onClick={onClose} aria-label="close"><X size={20} strokeWidth={1.8} aria-hidden="true" /></button>
+    </dialog>
+  );
+}
+
 /** at: the beat this card belongs to, so its tiles come in one after another as it is reached.
     On a phone the card is a bottom sheet: the name and one line, and a tap or a swipe up opens the numbers and links. */
 export function Card({ s, at = 0, startOpen = false }: { s: Scene; at?: number; startOpen?: boolean }) {
@@ -39,6 +62,7 @@ export function Card({ s, at = 0, startOpen = false }: { s: Scene; at?: number; 
   // a sheet the reader opened covers the bottom of the screen: the page steps the character out of its way
   const setOpen = (v: boolean) => { setOpenState(v); document.documentElement.classList.toggle("sheet-open", v); };
   const y0 = useRef<number | null>(null), me = useRef<HTMLDivElement>(null);
+  const [shot, setShot] = useState<Shot | null>(null);
   // once its beat scrolls away, an opened sheet closes and hands the screen back
   useEffect(() => {
     if (!open || startOpen) return;
@@ -51,7 +75,7 @@ export function Card({ s, at = 0, startOpen = false }: { s: Scene; at?: number; 
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
   const more = s.facts.length > 0 || s.links.length > 0 || !!s.built;
   return (
-    <div ref={me} className={`card${open ? " open" : ""}`}
+    <div ref={me} className={`card${s.shots?.length ? " wide" : ""}${open ? " open" : ""}`}
       onPointerDown={(e) => { y0.current = e.clientY; }}
       onPointerUp={(e) => { if (y0.current === null) return; const d = e.clientY - y0.current; y0.current = null; if (d < -28) setOpen(true); else if (d > 28) setOpen(false); }}>
       <div className="card-head" onClick={(e) => { if (more && !(e.target as HTMLElement).closest("button")) setOpen(!open); }}>
@@ -74,7 +98,7 @@ export function Card({ s, at = 0, startOpen = false }: { s: Scene; at?: number; 
           {s.shots && s.shots.length > 0 && (
             <p className="card-shots">
               {s.shots.map((x) => (
-                <a key={x.src} href={x.src} target="_blank" rel="noopener" title={x.alt}>
+                <a key={x.src} href={x.src} title={x.alt} onClick={(e) => { e.preventDefault(); setShot(x); }}>
                   <img src={x.src} alt={x.alt} loading="lazy" decoding="async" width={1000} height={580} />
                 </a>
               ))}
@@ -92,6 +116,7 @@ export function Card({ s, at = 0, startOpen = false }: { s: Scene; at?: number; 
           )}
         </div>
       )}
+      <Viewer shot={shot} onClose={() => setShot(null)} />
     </div>
   );
 }

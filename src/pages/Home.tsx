@@ -41,10 +41,10 @@ function SeaScene({ s, plate, phone, pose, className = "", children, words }: { 
 }
 
 const SHIPS = [
-  { img: "ship-4", label: "follow-ups", x: 12, w: 9, d: 0.3 },
-  { img: "ship-3", label: "calls", x: 30, w: 15, d: 0.4 },
-  { img: "ship-1", label: "simulate", x: 50, w: 16, d: 0.9 },
-  { img: "ship-2", label: "channels", x: 66, w: 10, d: 0.55 },
+  { img: "ship-4", label: "follow-ups", x: 6, w: 9, d: 0.3 },
+  { img: "ship-3", label: "calls", x: 19, w: 15, d: 0.4 },
+  { img: "ship-1", label: "simulate", x: 31, w: 16, d: 0.9 },
+  { img: "ship-2", label: "channels", x: 59, w: 10, d: 0.55 },
 ];
 // the clouds of the high sky: where, how wide, how fast they rise past the camera
 const CLOUDS = [
@@ -54,10 +54,10 @@ const CLOUDS = [
 // what is on this page, in one glance under the name: each line jumps to its chapter (a beat inside a pinned story
 // is one screen of scroll from the story's top)
 const INDEX: { to: string; beat?: number; icon: Icon; name: string; what: string }[] = [
-  { to: "sky", beat: 2, icon: "ipporu", name: "ipporu", what: "an ai that reads kendo, and the home of the sport" },
-  { to: "ships", icon: "github", name: "surogates", what: "ai agents that talk to people, open source" },
+  { to: "sky", beat: 2, icon: "ipporu", name: "ipporu", what: "an ai that reads kendo matches, and the home of the sport" },
+  { to: "ships", icon: "github", name: "surogates", what: "open source ai agents that take calls and chats" },
   { to: "whales", icon: "hf", name: "speech models", what: "romanian speech that runs on a laptop" },
-  { to: "lab", icon: "superstarling", name: "superstarling", what: "an ai team that runs your business" },
+  { to: "lab", icon: "superstarling", name: "superstarling", what: "an ai team for your business and your life" },
 ];
 function go(id: string, beat = 0) {
   const el = document.getElementById(id);
@@ -70,12 +70,10 @@ function go(id: string, beat = 0) {
 // prerendered page and the live one agree.
 const FLIES = Array.from({ length: 26 }, (_, i) => ({ x: (i * 37 + 11) % 97, y: 30 + ((i * 53) % 60), d: -((i * 7) % 13), s: 9 + ((i * 5) % 8) }));
 
-// the lab's people are superstarling's own agents, in small groups, talking; I stand with Quinn and Nash, showing them
-// my laptop. x and w in % of the frame; the groups are drawn feet on the floor line.
-const GROUPS = [
-  { name: "agents-talk-1", x: 39, w: 12 }, { name: "me-with-agents", x: 52, w: 16 },
-  { name: "agents-talk-2", x: 68, w: 16 }, { name: "agents-talk-3", x: 84, w: 15 },
-];
+// the lab's people are superstarling's own agents at work around the room: two talking by the window, three over a
+// sketch, two at the whiteboard sticking up the week's plan, and me with Quinn and Nash, showing them my laptop.
+// Where each stands (and how near, so how big) is in sea.css, in % of the painting.
+const GROUPS = ["agents-talk-1", "agents-board", "agents-talk-2", "me-with-agents"].map((name) => ({ name }));
 const SH = SHEETS as Record<string, Sheet>;
 
 /** A sheet's room in the layout before it loads: its frame's ratio (the frames come in as the thing is reached). */
@@ -156,7 +154,7 @@ export function Home() {
       </div>
 
       {/* the sky: the name alone up high, then the camera comes down onto the dojo by the sea */}
-      <section id="sky" data-scene data-m={S.sky.m} data-name="sky" data-pose="me-float,me-ready-sky,me-record" className="st sea-scene sea-sky">
+      <section id="sky" data-scene data-m={S.sky.m} data-name="sky" data-pose="me-float,hidden,hidden" className="st sea-scene sea-sky">
         <div className="st-stage">
           <div className="cam" data-at="0.1" data-to="1">
             <div className="high">
@@ -169,7 +167,7 @@ export function Home() {
                 <Plate name="harbour" phone="harbour-phone" />
                 <Water mode="surface" horizon={[0.8, 0.78]} />
               </div>
-              <div className="inside" data-at="1.72" data-to="1.98">
+              <div className="inside" data-at="1.5" data-to="1.88">
                 <Plate name="dojo-inside" phone="dojo-inside-phone" />
                 <div className="court">
                   <Sprite name="kendoka-aka" className="kendoka aka" every={AKA_STRIKE} />
@@ -198,13 +196,16 @@ export function Home() {
         </div>
       </section>
 
-      {/* ipporu, model by model, then all of it on one match: me on the side, filming */}
-      <div className="sea-under" data-pose="hidden" style={{ "--plate": "url(/sea/harbour.webp)" } as CSSProperties}>
+      {/* ipporu, model by model: me at the side of the court, filming the match the models read */}
+      <div className="sea-under" data-pose="me-record" style={{ "--plate": "url(/sea/harbour.webp)" } as CSSProperties}>
         <IpporuStory />
       </div>
 
+      {/* night into the morning sea: I put the kendo gear away and get into the boat */}
+      <div className="sea-fade to-day" data-pose="me-boat-cap" aria-hidden="true" />
+
       {/* the seaside: rowing out past the fleet, then in */}
-      <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat,me-boat-ready" className="sea-ships"
+      <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat-cap,me-boat-ready" className="sea-ships"
         words={<>
           <li data-beat={0}><Card s={S.ships} /></li>
           <li data-beat={1}><p className="sea-tag"><b>0 m</b> the surface</p><h2>and then, in.</h2></li>
@@ -237,6 +238,9 @@ export function Home() {
         <SpeechStory />
       </div>
 
+      {/* up from the deep into the lab: the sea goes on behind its window, and I swim past it on the way in */}
+      <div className="sea-fade to-lab" data-pose="hidden" aria-hidden="true" />
+
       {/* the lab: superstarling, its agents at work and talking, me among them; the sea outside the window; then the notebook */}
       <SeaScene s={S.lab} plate="lab-v3" phone="lab-v3-phone" pose="hidden" className="sea-lab"
         words={<>
@@ -249,15 +253,16 @@ export function Home() {
             <div className="far far-whale"><Sprite name="whale-tudor" /></div>
             <div className="far far-jelly"><Sprite name="jelly" /></div>
             <img className="far far-lantern" src="/sea/lantern.webp" alt="" />
+            <div className="far far-diver"><Sprite name="me-scuba" /></div>
           </div>
-          {GROUPS.map((g) => (
-            <div key={g.name} className={`group ${g.name}`} style={{ left: `${g.x}%`, width: `${g.w}%` }}><Sprite name={g.name} /></div>
-          ))}
+          {GROUPS.map((g) => <div key={g.name} className={`group ${g.name}`}><Sprite name={g.name} /></div>)}
         </div>
       </SeaScene>
 
       {/* the garden that glows: me in a hammock, and the way to write */}
-      <SeaScene s={S.garden} plate="orchard" phone="orchard-phone" pose="me-hammock-orchard" className="sea-garden" words={<li data-beat={0}><Card s={S.garden} startOpen /></li>}>
+      <SeaScene s={S.garden} plate="orchard" phone="orchard-phone" pose="hidden" className="sea-garden" words={<li data-beat={0}><Card s={S.garden} startOpen /></li>}>
+        {/* the hammock is slung between the two apple trees of the painting itself, so it is placed on the painting */}
+        <div className="frame"><div className="hammock"><Sprite name="me-hammock-orchard" /></div></div>
         <div className="flies" aria-hidden="true">
           {FLIES.map((f, i) => <i key={i} style={{ left: `${f.x}%`, top: `${f.y}%`, animationDelay: `${f.d}s, ${f.d / 2}s`, animationDuration: `${f.s}s, ${f.s / 3}s` }} />)}
         </div>

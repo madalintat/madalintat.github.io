@@ -24,7 +24,7 @@ export const SCENES: Scene[] = [
     id: "sky", m: 3000, name: "sky",
     tag: "applied ai researcher · builder · romania",
     title: "mădălin tatarciuc",
-    line: "i train small ai models that do one job very well, then engineer and ship the product around them, and grow it.",
+    line: "i train small ai models that do one job well, and build the products around them.",
     facts: [], links: [],
   },
   {
@@ -45,8 +45,8 @@ export const SCENES: Scene[] = [
   {
     id: "ships", m: 0, name: "the fleet", icon: "github",
     tag: "surogates · open source at invergent",
-    title: "surogates: agents that talk to people",
-    line: "invergent's open source runtime for ai agents. i built the parts that put an agent in front of real people: it answers phone calls in romanian, works in discord, teams and a website widget, and gets tested on fake channels first.",
+    title: "surogates: ai agents on the phone and in chat",
+    line: "invergent's open source platform for running ai agents. i built the parts where an agent meets a customer: it picks up phone calls in romanian, answers in discord, teams and a website chat, and is tested on simulated channels before it goes live.",
     facts: [
       { k: "336", text: "files i created, across 11 parts" },
       { k: "phone", text: "agents answer real calls, on my romanian speech" },
@@ -96,8 +96,8 @@ export const SCENES: Scene[] = [
   {
     id: "lab", m: -4000, name: "the lab", icon: "superstarling",
     tag: "superstarling inc · my company",
-    title: "superstarling: an ai team for your business",
-    line: "you ask once: \u201cget the night balm launch ready for thursday\u201d. ten specialist agents write, design, plan, sell and publish it on your pages and calendar, and nothing goes out until you say yes.",
+    title: "superstarling: an ai team for your business and your life",
+    line: "one ai team for the shop and for your own week. you ask once, \u201cget the night balm launch ready for thursday\u201d, and ten specialist agents write, design, plan and publish it on your pages and calendar. nothing goes out until you say yes.",
     facts: [
       { k: "10", text: "agents, led by starling" },
       { k: "1,200+", text: "server tests" },

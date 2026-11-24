@@ -1,16 +1,23 @@
 {
+  "agents-board": {
+    "src": "/sea/agents-board.webp",
+    "n": 40,
+    "w": 331,
+    "h": 440,
+    "fps": 10
+  },
   "agents-talk-1": {
     "src": "/sea/agents-talk-1.webp",
     "n": 40,
-    "w": 240,
-    "h": 320,
+    "w": 329,
+    "h": 440,
     "fps": 10
   },
   "agents-talk-2": {
     "src": "/sea/agents-talk-2.webp",
     "n": 40,
-    "w": 392,
-    "h": 320,
+    "w": 539,
+    "h": 440,
     "fps": 10
   },
   "agents-talk-3": {
@@ -76,11 +83,18 @@
     "h": 300,
     "fps": 10
   },
+  "me-boat-cap": {
+    "src": "/sea/me-boat-cap.webp",
+    "n": 40,
+    "w": 582,
+    "h": 400,
+    "fps": 10
+  },
   "me-boat-ready": {
     "src": "/sea/me-boat-ready.webp",
     "n": 40,
-    "w": 490,
-    "h": 300,
+    "w": 654,
+    "h": 400,
     "fps": 10
   },
   "me-boat-to-me-dive": {
@@ -100,22 +114,22 @@
   "me-dive": {
     "src": "/sea/me-dive.webp",
     "n": 40,
-    "w": 554,
-    "h": 300,
+    "w": 738,
+    "h": 400,
     "fps": 10
   },
   "me-float": {
     "src": "/sea/me-float.webp",
     "n": 40,
-    "w": 285,
-    "h": 300,
+    "w": 380,
+    "h": 400,
     "fps": 10
   },
   "me-float-flip": {
     "src": "/sea/me-float-flip.webp",
     "n": 40,
-    "w": 345,
-    "h": 300,
+    "w": 460,
+    "h": 400,
     "fps": 10
   },
   "me-hammock": {
@@ -128,8 +142,8 @@
   "me-hammock-orchard": {
     "src": "/sea/me-hammock-orchard.webp",
     "n": 40,
-    "w": 568,
-    "h": 220,
+    "w": 619,
+    "h": 240,
     "fps": 10
   },
   "me-hammock-wave": {
@@ -177,29 +191,36 @@
   "me-record": {
     "src": "/sea/me-record.webp",
     "n": 40,
-    "w": 315,
-    "h": 300,
+    "w": 582,
+    "h": 400,
     "fps": 10
+  },
+  "me-record-to-me-boat-cap": {
+    "src": "/sea/me-record-to-me-boat-cap.webp",
+    "n": 80,
+    "w": 582,
+    "h": 400,
+    "fps": 16
   },
   "me-scuba": {
     "src": "/sea/me-scuba.webp",
     "n": 40,
-    "w": 493,
-    "h": 300,
+    "w": 657,
+    "h": 400,
     "fps": 10
   },
   "me-scuba-wave": {
     "src": "/sea/me-scuba-wave.webp",
     "n": 40,
-    "w": 511,
-    "h": 300,
+    "w": 681,
+    "h": 400,
     "fps": 10
   },
   "me-with-agents": {
     "src": "/sea/me-with-agents.webp",
     "n": 40,
-    "w": 309,
-    "h": 300,
+    "w": 412,
+    "h": 400,
     "fps": 10
   },
   "person1": {
@@ -240,22 +261,22 @@
   "whale-doina": {
     "src": "/sea/whale-doina.webp",
     "n": 40,
-    "w": 530,
-    "h": 240,
+    "w": 928,
+    "h": 420,
     "fps": 10
   },
   "whale-radu": {
     "src": "/sea/whale-radu.webp",
     "n": 40,
-    "w": 535,
-    "h": 240,
+    "w": 936,
+    "h": 420,
     "fps": 10
   },
   "whale-tudor": {
     "src": "/sea/whale-tudor.webp",
     "n": 40,
-    "w": 495,
-    "h": 240,
+    "w": 866,
+    "h": 420,
     "fps": 10
   }
 }

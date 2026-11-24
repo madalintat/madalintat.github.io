@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./story.css";
 import { FENCING, IPPORU, type ModelBeat } from "../content/stories";
+import { IconFor } from "../components/Card";
 
 /* The engine, one model per beat, pinned while you scroll. Each beat shows its own clip: that model's real output drawn
    on the same all japan 2024 match. Left: what it does in plain words, then what it is, how it learned, how good it
@@ -20,7 +21,7 @@ function Gate({ g }: { g: ModelBeat["gate"] }) {
 function ModelCaption({ b, n }: { b: ModelBeat; n: number }) {
   return (
     <>
-      <p className="st-step">model {n}</p>
+      <p className="st-model"><IconFor i="ipporu" /><span>{String(n).padStart(2, "0")}</span><b>{b.model}</b></p>
       <h3>{b.title}</h3>
       <p>{b.line}</p>
       {b.num && <p className="st-num"><b>{b.num}</b> {b.of}</p>}
@@ -44,7 +45,7 @@ function RibbonCaption() {
   );
   return (
     <>
-      <p className="st-step">the shinai, drawn</p>
+      <p className="st-model"><IconFor i="ipporu" /><span>the shinai, drawn</span><b>shinai ribbon</b></p>
       <h3>a ribbon on every strike, like fencing on tv</h3>
       <p>the grip, guard and tip points become a ribbon that follows the sword, and a flash where it lands. the idea comes from fencing; the way to get there is new.</p>
       <div className="ip-vs">{side(FENCING.them)}{side(FENCING.us, true)}</div>

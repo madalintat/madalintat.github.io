@@ -2,6 +2,8 @@ import { useRef, useState, type CSSProperties } from "react";
 import { SPEECH } from "../content/stories";
 import waves from "../content/voicewaves.json";
 import { PlayIcon, PauseIcon } from "../components/icons";
+import { IconFor } from "../components/Card";
+import { ArrowUpRight } from "lucide-react";
 import "./story.css";
 
 const VOICES = [
@@ -54,10 +56,10 @@ export function SpeechStory() {
         <ol className="st-caps">
           {SPEECH.map((b, i) => (
             <li key={b.id} data-beat={i}>
-              <p className="st-step">{`model ${i + 1}`}</p>
+              <p className="st-model"><a href={b.href} target="_blank" rel="noopener"><IconFor i="hf" /><span>{String(i + 1).padStart(2, "0")}</span><b>{b.model}</b><ArrowUpRight size={14} strokeWidth={1.8} aria-hidden="true" /></a></p>
               <h3>{b.title}</h3>
               <p>{b.line}</p>
-              {b.num && <p className="st-num"><b data-num data-at={i + 0.15} data-to={i + 0.7}>{b.num}</b> {b.of}</p>}
+              {b.num && <p className="st-num"><b data-num data-at={i + 0.02} data-to={i + 0.22}>{b.num}</b> {b.of}</p>}
               {b.link && <a href={b.link.href}>{b.link.label}</a>}
             </li>
           ))}
