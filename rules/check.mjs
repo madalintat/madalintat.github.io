@@ -8,8 +8,11 @@ const steps = [
   ["links", "node rules/links.mjs"],
   ["tests", "npx vitest run"],
 ];
+// in ci the slop tools and voicecheck live only on the owner's machine: those steps run locally
+const LOCAL_ONLY = new Set(["slop, source", "copy"]);
 let failed = [];
 for (const [name, cmd] of steps) {
+  if (process.env.CI && LOCAL_ONLY.has(name)) { console.log(`skip  ${name} (local only)`); continue; }
   try {
     const out = execSync(cmd, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
     if (name.startsWith("slop") && !out.includes("No slop signals")) throw Object.assign(new Error(), { stdout: out });
