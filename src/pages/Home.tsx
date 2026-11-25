@@ -157,11 +157,14 @@ export function Home() {
     tick();
     addEventListener("scroll", ask, { passive: true });
     addEventListener("resize", ask);
+    // a beat's words fade in after it changes, and while they fade they do not count as read: look again once a fade
+    // ends, so I step aside even when the reader has stopped scrolling
+    addEventListener("transitionend", ask);
     // a scene can change its beat a frame after the scroll that caused it (the engine wakes it as it comes into
     // view): read the pose again whenever a beat changes, not only on scroll
     const beats = new MutationObserver(ask);
     for (const e of posed) beats.observe(e, { attributes: true, attributeFilter: ["data-cur", "data-stage"] });
-    return () => { stopStories(); stopFlock(); stopGulls(); comp?.stop(); cancelAnimationFrame(raf); beats.disconnect(); removeEventListener("scroll", ask); removeEventListener("resize", ask); };
+    return () => { stopStories(); stopFlock(); stopGulls(); comp?.stop(); cancelAnimationFrame(raf); beats.disconnect(); removeEventListener("scroll", ask); removeEventListener("resize", ask); removeEventListener("transitionend", ask); };
   }, []);
 
   return (

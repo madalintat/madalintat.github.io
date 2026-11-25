@@ -12,11 +12,12 @@ const VOICES = [
   { name: "tudor", wer: "1.75%" },
   { name: "radu", wer: "1.66%" },
 ] as const;
-// fleurs romanian, word error rate, from the jackrabbit card: lower is better
+// fleurs romanian (883 clips), from the jackrabbit card: every model through the same runner on one rtx 5090.
+// wer lower is better; speed is how many times faster than real time
 const BOARD = [
-  { name: "jackrabbit 110m", wer: 5.69, mine: true },
-  { name: "canary 1b v2", wer: 5.95 },
-  { name: "whisper large-v3", wer: 8.42 },
+  { name: "jackrabbit 110m", wer: 5.69, size: "116m", speed: "2,531×", mine: true },
+  { name: "canary 1b v2", wer: 5.95, size: "1b", speed: "853×" },
+  { name: "whisper large-v3", wer: 8.42, size: "1.55b", speed: "102×" },
 ];
 const beat = (id: string) => SPEECH.findIndex((b) => b.id === id);
 
@@ -60,6 +61,7 @@ export function SpeechStory() {
               <h3>{b.title}</h3>
               <p>{b.line}</p>
               {b.num && <p className="st-num"><b data-num data-at={i + 0.02} data-to={i + 0.22}>{b.num}</b> {b.of}</p>}
+              {b.slips && <p className="st-slips"><span>where it slips</span> {b.slips}</p>}
             </li>
           ))}
         </ol>
@@ -69,13 +71,15 @@ export function SpeechStory() {
             <svg className="sp-wave" viewBox={`0 0 ${doina.length * 2} 80`} preserveAspectRatio="none" aria-hidden="true">
               <path className="draw" pathLength={1} d={path(doina)} data-at={beat("asr") + 0.05} data-to={beat("asr") + 0.6} />
             </svg>
-            <ul className="sp-board" aria-label="word error rate on fleurs romanian, lower is better">
+            <ul className="sp-board" aria-label="fleurs romanian: word error rate (lower is better), size, and speed">
+              <li className="sp-head" aria-hidden="true"><span /><span>words wrong</span><span>size</span><span>speed</span></li>
               {BOARD.map((r) => (
                 <li key={r.name} className={r.mine ? "mine" : ""} style={{ "--w": r.wer / 9 } as CSSProperties}>
-                  <span>{r.name}</span><i /><b>{r.wer.toFixed(2)}%</b>
+                  <span>{r.name}</span><i /><b>{r.wer.toFixed(2)}%</b><em>{r.size}</em><em>{r.speed}</em>
                 </li>
               ))}
             </ul>
+            <p className="sp-src">fleurs romanian, 883 clips. every model through the same code on one rtx 5090; speed is times faster than real time.</p>
           </div>
           {/* while you speak: the same wave in 32 ms packets, each written as it lands */}
           <div className="sp-panel sp-stream" data-at={beat("stream") + 0.05} aria-hidden="true">

@@ -52,7 +52,14 @@
 .sp-wave { width: 100%; height: 120px; }
 .sp-wave .draw { fill: none; stroke: var(--ink); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--t, 0)); vector-effect: non-scaling-stroke; }
 .sp-board { list-style: none; display: grid; gap: 10px; margin-top: 26px; }
-.sp-board li { display: grid; grid-template-columns: 10rem minmax(0, 1fr) 4rem; gap: 14px; align-items: center; color: var(--soft); font-size: 14px; }
+.sp-board li { display: grid; grid-template-columns: 10rem minmax(0, 1fr) 4rem 3.5rem 4.5rem; gap: 14px; align-items: center; color: var(--soft); font-size: 14px; }
+.sp-board em { font: var(--size-small) var(--font-mono); font-style: normal; text-align: right; font-variant-numeric: tabular-nums; }
+.sp-board .sp-head { font: var(--size-small) var(--font-mono); color: var(--soft); }
+.sp-board .sp-head span:nth-child(2) { grid-column: 2 / 4; }
+.sp-board .sp-head span:nth-child(n + 4) { text-align: right; }
+.sp-src { margin-top: 16px; font: var(--size-small) var(--font-mono); color: var(--soft); max-width: 60ch; }
+.st-slips { margin-top: 14px; font-size: 14px; color: var(--soft); max-width: 40ch; }
+.st-slips span { font: var(--size-small) var(--font-mono); color: var(--ink); margin-right: 4px; }
 .sp-board i { height: 8px; border-radius: 4px; background: var(--line); position: relative; overflow: hidden; }
 .sp-board i::after { content: ""; position: absolute; inset: 0; background: var(--soft); transform-origin: left; transform: scaleX(var(--w)); }
 .sp-board li.mine { color: var(--ink); }
@@ -78,7 +85,7 @@
 .sp-voice span { font: var(--size-small) var(--font-mono); color: var(--soft); text-align: right; }
 
 @media (max-width: 900px) {
-  .sp-board li { grid-template-columns: 7.5rem minmax(0, 1fr) 3.5rem; font-size: 13px; }
+  .sp-board li { grid-template-columns: 6.6rem minmax(0, 1fr) 3.2rem 2.8rem 3.6rem; gap: 8px; font-size: 12.5px; }
   .sp-wave, .sp-packets { height: 80px; }
 }
 @media (prefers-reduced-motion: reduce) {

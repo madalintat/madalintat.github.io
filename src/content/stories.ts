@@ -3,7 +3,9 @@
 
 export type Beat = { id: string; title: string; line: string; num?: string; of?: string;
   /** the model's own name, and where it lives when it is public */
-  model?: string; href?: string };
+  model?: string; href?: string;
+  /** where it still goes wrong, from the model's own card */
+  slips?: string };
 /** One model of the engine: its clip on the same match, and three plain lines on what it is, how it learned, how good it is.
     gate: the bar it was set before it ran, and whether it passed. */
 export type ModelBeat = Beat & { clip: string; kind: string; learned: string; score: string; gate: { bar: string; met: boolean | null } };
@@ -77,7 +79,15 @@ export const FENCING = {
 
 // romanian speech: the models one at a time, then the loop they make together
 export const SPEECH: Beat[] = [
-  { id: "asr", model: "jackrabbit-110m-ro", href: "https://huggingface.co/surogate/jackrabbit-110m-ro", title: "hearing", line: "jackrabbit turns romanian speech into text, small enough for a cpu.", num: "5.69%", of: "wer on fleurs. whisper large-v3: 8.42%" },
-  { id: "stream", model: "jackrabbit-110m-ro-streaming", href: "https://huggingface.co/surogate/jackrabbit-110m-ro-streaming", title: "while you speak", line: "the streaming one writes as you talk, in 32 ms packets, then reads the whole sentence again when you pause.", num: "0.72", of: "s from your last word to the final text" },
-  { id: "voices", model: "amami-357m-ro", href: "https://huggingface.co/surogate/amami-357m-ro", title: "three voices", line: "amami speaks romanian in three voices from one model, in real time on a laptop. press play on each.", num: "2.02%", of: "wer when whisper reads them back" },
+  { id: "asr", model: "jackrabbit-110m-ro", href: "https://huggingface.co/surogate/jackrabbit-110m-ro", title: "hearing",
+    line: "jackrabbit writes down what people say in romanian. it gets fewer words wrong than openai's whisper large-v3 at a fourteenth of its size, so it runs on an ordinary cpu.",
+    num: "5.69%", of: "of words wrong on fleurs, the standard test. whisper large-v3: 8.42%",
+    slips: "numbers, acronyms and rare names. phone audio and heavy noise are not measured yet." },
+  { id: "stream", model: "jackrabbit-110m-ro-streaming", href: "https://huggingface.co/surogate/jackrabbit-110m-ro-streaming", title: "while you speak",
+    line: "the live one writes as you talk, 32 ms of sound at a time, then rereads the sentence when you pause and fixes it. that is what lets a phone agent answer without an awkward wait.",
+    num: "0.72 s", of: "from your last word to the final text" },
+  { id: "voices", model: "amami-357m-ro", href: "https://huggingface.co/surogate/amami-357m-ro", title: "three voices",
+    line: "amami turns text into romanian speech, in three voices from one model, about as fast as it talks on a macbook air. it reads numbers, dates and ibans. press play on each.",
+    num: "2.02%", of: "of words misheard when whisper transcribes it back. elevenlabs: 1.35%, facebook mms: 6.53%",
+    slips: "some long codes and rare foreign names; about 1 in 200 two-sentence inputs drops the second sentence." },
 ];
