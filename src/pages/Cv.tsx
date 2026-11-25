@@ -10,7 +10,7 @@ export function CvPage() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const v: CvVersion = mounted && params.get("v") === "builder" ? "builder" : "research";
-  const print = params.get("print") === "1";
+  const print = mounted && params.get("print") === "1";
   const c = cv[v];
   const sheet = (
     <article className="sheet">

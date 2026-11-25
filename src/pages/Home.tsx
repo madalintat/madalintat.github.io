@@ -61,6 +61,17 @@ const INDEX: { to: string; beat?: number; icon: Icon; name: string; what: string
   { to: "whales", icon: "hf", name: "speech models", what: "romanian speech recognition, better than whisper at 14x smaller" },
   { to: "lab", icon: "superstarling", name: "superstarling", what: "my company: an ai team i use myself, turning into a product" },
 ];
+/** Between two scenes, the chapter the scroll is turning to: its number, its mark and its name, drawn in as it comes up. */
+function Turn({ to }: { to: (typeof INDEX)[number]["to"] }) {
+  const i = INDEX.findIndex((x) => x.to === to), x = INDEX[i];
+  return (
+    <p className="turn">
+      <span className="turn-n"><i /><b>{String(i + 1).padStart(2, "0")}</b><i /></span>
+      <span className="turn-name"><IconFor i={x.icon} />{x.name}</span>
+      <span className="turn-what">{x.what}</span>
+    </p>
+  );
+}
 function go(id: string, beat = 0) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -183,7 +194,7 @@ export function Home() {
         <div className="st-stage">
           <div className="cam" data-at="0.1" data-to="1">
             <div className="high">
-              {CLOUDS.map((c) => <img key={c.n} className="cloud" src={`/sea/cloud-${c.n}.webp`} alt="" style={{ left: `${c.x}%`, top: `${c.y}%`, width: `${c.w}%`, "--k": c.k } as CSSProperties} />)}
+              {CLOUDS.map((c) => <img key={c.n} className="cloud" src={PLATE(`cloud-${c.n}`)} alt="" style={{ left: `${c.x}%`, top: `${c.y}%`, width: `${c.w}%`, "--k": c.k } as CSSProperties} />)}
               <canvas ref={flock} className="flock" aria-hidden="true" />
             </div>
             <div className="low">
@@ -225,7 +236,7 @@ export function Home() {
       </div>
 
       {/* night into the morning sea: the do and the tare come off, I change, leave the gear and step into the boat */}
-      <div className="sea-fade to-day" data-pose="hidden" aria-hidden="true" />
+      <div className="sea-fade to-day" data-pose="hidden" aria-hidden="true"><Turn to="ships" /></div>
 
       {/* the seaside: rowing out past the fleet, then in */}
       <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat-cap,me-boat-ready"
@@ -238,7 +249,7 @@ export function Home() {
         <div className="fleet" aria-hidden="true">
           {SHIPS.map((sh) => (
             <figure key={sh.img} className="ship" style={{ "--x": sh.x, "--px": sh.px, "--w": sh.w, "--d": sh.d } as CSSProperties}>
-              <img src={`/sea/${sh.img}.webp`} alt="" />
+              <img src={PLATE(sh.img)} alt="" />
               <figcaption data-at="0.3">{sh.label}</figcaption>
             </figure>
           ))}
@@ -262,7 +273,7 @@ export function Home() {
       </div>
 
       {/* up from the deep into the lab: the sea goes on behind its window */}
-      <div className="sea-fade to-lab" data-pose="hidden" aria-hidden="true" />
+      <div className="sea-fade to-lab" data-pose="hidden" aria-hidden="true"><Turn to="lab" /></div>
 
       {/* the lab: superstarling, its agents at work and talking, me among them; the sea outside the window */}
       <SeaScene s={S.lab} plate="lab-v3" phone="lab-v3-phone" pose="hidden"
@@ -273,7 +284,7 @@ export function Home() {
           <div className="window">
             <div className="far far-whale"><Sprite name="whale-tudor" /></div>
             <div className="far far-jelly"><Sprite name="jelly" /></div>
-            <img className="far far-lantern" src="/sea/lantern.webp" alt="" />
+            <img className="far far-lantern" src={PLATE("lantern")} alt="" />
           </div>
           {GROUPS.map((g) => <div key={g.name} className={`group ${g.name}`}><Sprite name={g.name} /></div>)}
         </div>

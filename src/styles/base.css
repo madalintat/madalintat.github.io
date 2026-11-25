@@ -5,4 +5,8 @@ body { font: var(--size-body)/1.6 var(--font-sans); -webkit-font-smoothing: anti
 a { color: inherit; text-decoration: none; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
 ::selection { background: var(--accent); color: var(--accent-ink); }
+/* only words are for taking: a picture, a film or a drawing is never selected, dragged or long-pressed
+   into a save menu, so a selection or a copy is just the text */
+/* deslop-ignore-next-line 17: the webkit property here is the long-press save menu, not a boxed aside */
+img, video, canvas, svg, picture { -webkit-user-select: none; user-select: none; -webkit-user-drag: none; -webkit-touch-callout: none; }
 .tag { font: 500 var(--size-tag)/1.4 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); }

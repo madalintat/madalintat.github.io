@@ -10,7 +10,7 @@ import { readdirSync } from "node:fs";
 const fonts = readdirSync(D + "assets").filter((f) => /^(inter-latin-wght|inter-latin-ext-wght|jetbrains-mono-latin-wght)-normal-.*\.woff2$/.test(f));
 const preload = fonts.map((f) => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin />`).join("\n    ");
 const template = readFileSync(D + "index.html", "utf8").replace("<!--head-->", `${preload}\n    <!--head-->`);
-const page = (url, meta) => template.replace("<!--head-->", head(url, meta)).replace("<!--app-->", render(url));
+const page = (url, meta) => template.replace("<!--head-->", () => head(url, meta)).replace("<!--app-->", () => render(url));
 
 const all = routes();
 for (const [url, meta] of Object.entries(all)) {

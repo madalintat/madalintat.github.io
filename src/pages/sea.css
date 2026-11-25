@@ -1,7 +1,8 @@
 /* the sea: full-bleed painted scenes, pinned while their words change (story/engine.ts sets .on and data-cur).
    A box with the plate's own ratio ("the frame") sits over each plate, scaled the way object-fit: cover scales the
    picture, so anything placed on the art in % stays on the art at every screen size. */
-.sea { background: var(--bg); }
+/* the pale light each dusk fade ends on, which the scene after it arrives out of */
+.sea { background: var(--bg); --dawn-day: #e0d9ce; --dawn-lab: #e4e0d7; }
 .sea-scene .st-stage { display: block; padding: 0; overflow: hidden; }
 .plate, .plate img { position: absolute; inset: 0; width: 100%; height: 100%; }
 .plate img { object-fit: cover; display: block; }
@@ -93,10 +94,11 @@
    move ends exactly where the next pose begins. One width for the whole chain, so I never grow or shrink mid-move;
    only my place changes from scene to scene, and that slides */
 .me:is([data-pose="me-kendo"], [data-pose="me-record"], [data-pose^="me-seiza"], [data-pose="me-dressed"], [data-pose^="me-boat"], [data-pose="me-dive"], [data-pose="me-scuba"]) { --mw: 24vw; }
-/* in the dojo I kneel on its floor (.ip-floor, story.css: its top 88.5% down), under the match and clear of the words.
-   my frame is 24vw wide, so 13.36vw tall, and my knees are 93.2% down it: the frame's top is the floor less 12.45vw */
+/* in the dojo I kneel down in its floor band (.ip-floor, story.css: its top 88.5% down), 6svh below the floor's edge so I
+   stay under the match and its footage line and clear of the words. my frame is 24vw wide, so 13.36vw tall, and my knees
+   are 93.2% down it: the frame's top is 94.5svh less 12.45vw. on phones the page flows, so I stand on the edge itself */
 @media (min-width: 721px) {
-  .me:is([data-pose="me-kendo"], [data-pose="me-record"], [data-pose^="me-seiza"], [data-pose="me-dressed"]) { --mx: 58; transform: translate3d(58vw, calc(88.5svh - 12.45vw), 0); }
+  .me:is([data-pose="me-kendo"], [data-pose="me-record"], [data-pose^="me-seiza"], [data-pose="me-dressed"]) { --mx: 58; transform: translate3d(58vw, calc(94.5svh - 12.45vw), 0); }
 }
 .me[data-pose^="me-boat"] { --mx: 34; --my: 52; }
 .me[data-pose="me-dive"]    { --mx: 30; --my: 30; }
@@ -241,7 +243,7 @@
 @keyframes blink { 0%, 60% { opacity: 0.15; } 100% { opacity: 1; } }
 
 /* paintings, clouds, sprites and the character are scenery: a double click must never select or drag them */
-.plate, .plate img, .cloud, .sprite, .me, .flock, .flies, .cue, .group, .court, .window, .zoom, .inside, canvas { user-select: none; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: transparent; }
+.plate, .sprite, .me, .flock, .flies, .cue, .group, .court, .window, .zoom, .inside { user-select: none; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: transparent; }
 ::selection { background: #111318; color: #f7f5f0; }
 
 /* the index under the name: four plain lines, what each thing is, each one a jump to its chapter */
@@ -284,8 +286,8 @@
 /* between chapters the colour of one fades into the next, instead of a hard edge */
 .sea-fade { position: relative; z-index: 2; height: 60svh; pointer-events: none; }
 @media (max-width: 720px) { .sea-fade { height: 38svh; } }
-.sea-fade.to-day { background: linear-gradient(#0a0c12, #2a2f3a 30%, #b9b2a8 75%, #e0d9ce); }
-.sea-fade.to-lab { background: linear-gradient(#0a0f14, #1f3a46 40%, #9fb0b0 78%, #e4e0d7); }
+.sea-fade.to-day { background: linear-gradient(#0a0c12, #2a2f3a 30%, #b9b2a8 75%, var(--dawn-day)); }
+.sea-fade.to-lab { background: linear-gradient(#0a0f14, #1f3a46 40%, #9fb0b0 78%, var(--dawn-lab)); }
 /* the lab's warm floor to the garden's dusk: the walk home */
 .sea-fade.to-garden { height: 90svh; background: linear-gradient(#a98a6d, #6f6a63 45%, #415362); overflow: hidden; }
 /* the path home at dusk, and me walking it: drawn in the band, so my feet stay on the ground as it scrolls */
@@ -371,3 +373,36 @@ html:has(.bsheet[open]) { overflow: hidden; }
   .sea-garden .card:not(.in-sheet) .card-links { margin-top: 12px; }
   .sea-garden .card:not(.in-sheet) .card-links .btn:not(.main) { display: none; }
 }
+
+/* ---------- turning from one chapter to the next: the story behind fades into the dark it sits on, the next chapter's name comes
+   up in the dark between, and its scene zooms in as it arrives, its top edge melting out of the dusk instead of a seam ---------- */
+.turn { position: absolute; left: 50%; top: 30%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 10px; width: min(560px, calc(100% - 2 * var(--gutter))); text-align: center; color: var(--ink); }
+.turn-n { display: flex; align-items: center; gap: 14px; width: 100%; font: 600 var(--size-small)/1 var(--font-mono); letter-spacing: 0.14em; color: var(--accent); }
+.turn-n i { flex: 1; height: 1px; background: color-mix(in srgb, var(--ink) 26%, transparent); transform-origin: right; }
+.turn-n i:last-child { transform-origin: left; }
+.turn-name { display: inline-flex; align-items: center; gap: 12px; font-size: clamp(26px, 3vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+.turn-name .ico { width: 0.78em; height: 0.78em; flex: none; }
+.turn-name img.ico { filter: invert(1); }
+.turn-what { font-size: 15px; line-height: 1.5; color: color-mix(in srgb, var(--ink) 80%, transparent); max-width: 40ch; text-wrap: balance; }
+@media (max-width: 720px) { .turn { top: 26%; } .turn-what { font-size: 14px; } }
+
+@supports (animation-timeline: view()) {
+  /* without scripts the stories lie flat and are read in place, so nothing fades or zooms on them */
+  @media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+    .turn { animation: turn-in linear both; animation-timeline: view(); animation-range: entry 10% cover 45%; }
+    .turn-n i { animation: turn-rule linear both; animation-timeline: view(); animation-range: entry 25% cover 50%; }
+    .sea-under .st-stage { animation: fade-out linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
+    .sea-ships { --dusk: var(--dawn-day); }
+    .sea-lab { --dusk: var(--dawn-lab); }
+    .sea-scene:is(.sea-ships, .sea-lab) > .st-stage { view-timeline: --arrive; }
+    .sea-scene:is(.sea-ships, .sea-lab) > .st-stage::after { content: ""; position: absolute; inset: 0 0 auto; z-index: 20; height: 34%; pointer-events: none; background: linear-gradient(var(--dusk), transparent); animation: fade-out linear both; animation-timeline: --arrive; animation-range: entry 40% entry 100%; }
+    /* the zoom in is for the pinned desktop stage; on phones the stage is several screens tall, so it only melts in */
+    @media (min-width: 721px) {
+      .sea-scene:is(.sea-ships, .sea-lab) > .st-stage { animation: scene-in linear both; animation-timeline: --arrive; animation-range: entry 0% entry 100%; transform-origin: 50% 0; }
+    }
+  }
+}
+@keyframes turn-in { from { opacity: 0; translate: 0 28px; scale: 0.96; } to { opacity: 1; translate: 0 0; scale: 1; } }
+@keyframes turn-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes fade-out { to { opacity: 0; } }
+@keyframes scene-in { from { scale: 1.1; } to { scale: 1; } }
