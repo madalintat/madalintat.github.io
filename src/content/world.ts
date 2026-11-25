@@ -24,10 +24,11 @@ export const SCENES: Scene[] = [
     id: "harbour", m: 0, name: "the harbour", icon: "ipporu",
     tag: "ipporu · product and research, built alone",
     title: "ipporu: the home of kendo, and the models that watch it",
-    line: "every kendoka gets a record and a film room. underneath, video models i trained to watch a match the way a referee does: the strike, the flags, the ippon.",
+    line: "where kendoka learn and get better: a record of every match, a film room to study your own fights and others', and a coach that answers from your matches. underneath, video models i trained to read a match the way a referee does.",
     facts: [
-      { k: "177", text: "matches where the engine's ippons agree with the official record" },
       { k: "433", text: "kendoka with an account" },
+      { k: "1,746", text: "following ipporu on instagram" },
+      { k: "177", text: "matches where the engine's ippons agree with the official record" },
     ],
     built: "i built the site and every kendoka's record, and trained the video models that run under it.",
     shots: [{ src: "/work/shots/ipporu-home.webp", alt: "ipporu.com, the home of kendo" }, { src: "/work/shots/ipporu-record.webp", alt: "a kendoka's page on ipporu: every match and who scored each ippon" }],
@@ -89,9 +90,9 @@ export const SCENES: Scene[] = [
   },
   {
     id: "lab", m: -4000, name: "the lab", icon: "superstarling",
-    tag: "superstarling inc · my company · in development",
-    title: "superstarling: ten ai agents that market a small business",
-    line: "one ai team for the shop and for your own week. you ask once, \u201cget the night balm launch ready for thursday\u201d, and ten specialist agents write, design, plan and publish it on your pages and calendar. nothing goes out until you say yes.",
+    tag: "superstarling inc · my company · in my own use, product next",
+    title: "superstarling: an ai team i run my own work with",
+    line: "for now i run my own work with it; next it becomes a product for small shops. you ask once, \u201cget the night balm launch ready for thursday\u201d, and ten specialist agents write, design, plan and publish it on your pages and calendar. nothing goes out until you say yes.",
     facts: [
       { k: "you ask", text: "one sentence; starling splits it across the team" },
       { k: "they make", text: "the posts, the emails, the pages and the plan for the week" },
