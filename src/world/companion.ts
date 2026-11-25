@@ -1,6 +1,7 @@
 /* Me, the character who goes down the page with the reader: one layer over the scenes, in the pose of the scene under
-   the middle of the screen (Home picks it from [data-pose]). A pose is a looping sprite (sprite.ts); a new pose lifts
-   the old one away and drops the new one in, and where clips of the moves between them exist they play in order first.
+   the middle of the screen (Home picks it from [data-pose]). A pose is a looping sprite (sprite.ts); where clips of
+   the moves between two poses exist they play in order (the armour coming off, the dive), and otherwise I go up in a
+   cloud of bubbles, the one I dive into scuba through, and come out of it in the new pose.
    The pointer near me tilts me a little towards it, in 3D; a touch or a hover plays my reaction for the scene (a wave,
    a strike, a somersault) and I go back to what I was doing. With less motion asked for: still frames, no tilt. */
 import { sprite, preload, type Sheet, type Sprite } from "./sprite";
@@ -9,6 +10,8 @@ export type Sheets = Record<string, Sheet>;
 // what each pose does when it is touched
 const REACT: Record<string, string> = { "me-float": "me-float-flip", "me-scuba": "me-scuba-wave" };
 const MOVE_SPEED = 1.5;
+// the bubbles sheet (art/bubbles.sh) is thickest at its 10th frame: the pose changes under it there
+const COVER_FRAME = 9;
 
 /** The shortest run of moves from pose a to pose b, read off the sheets' names ("me-record-to-me-kendo-unarmoured"),
     so I get from one place to the next through every step between: the shinai down, the kote, the men; then the do,
@@ -29,6 +32,13 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let pose = root.dataset.pose ?? "me-float", busy = false, sp: Sprite | null = null, timer = 0;
   if (sheets[pose]) sp = sprite(el, sheets[pose]);
+  // the cloud rests on its first frame, which is empty (fps 0 holds it there), and plays through once for a change
+  const bubbles = sheets.bubbles, cloudEl = root.querySelector<HTMLElement>(".me-bubbles");
+  const cloud = bubbles && cloudEl ? sprite(cloudEl, { ...bubbles, fps: 0 }) : null;
+  const coverMs = bubbles ? (COVER_FRAME * 1000) / bubbles.fps : 0;
+  // a cloud's ticket and start: a later change rides the cloud already playing if it has not thinned out yet
+  let puff = 0, puffAt = -Infinity;
+  const clear = () => { puff++; puffAt = -Infinity; if (cloud && bubbles) cloud.swap({ ...bubbles, fps: 0 }); };
 
   const route = (a: string, b: string) => routeOf(Object.keys(sheets), a, b);
   // a run of moves plays one after another; a new pose voids the run (its ticket) wherever it has got to
@@ -40,18 +50,22 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
     step(0);
   };
 
-  // a change of pose cancels any half-done one: its timer, its run of moves, and the faded-out state it would undo
-  const settle = () => { clearTimeout(timer); run++; moving = false; root.classList.remove("out", "in"); };
-  // the pose names my place (sea.css): it changes only while I cannot be seen, or with a move that carries me there,
-  // so I never slide or grow on screen half-faded
-  const place = (p: string) => { root.dataset.pose = p; };
+  // a change of pose cancels any half-done one: its timer and its run of moves
+  const settle = () => { clearTimeout(timer); run++; moving = false; };
+  // the pose names my place (sea.css). I am put there at once, never slid: it changes only while I cannot be seen
+  // (hidden, faded, under the bubbles) or between two poses with the same place
+  const place = (p: string) => {
+    if (root.dataset.pose === p) return;
+    root.classList.add("jump"); root.dataset.pose = p;
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("jump")));
+  };
   /** next: a pose, or "entry>pose": coming in from hidden I appear as the entry and move from there (in armour, then
       the gear comes off one piece at a time until I am filming) */
   const set = (want: string) => {
     const [entry, next] = want.includes(">") ? want.split(">") : ["", want];
     if (next === pose) return;
     // "hidden": the scene draws me itself (the dojo, the lab), so the companion steps out where it stands
-    if (next === "hidden") { settle(); pose = next; root.classList.add("away"); return; }
+    if (next === "hidden") { settle(); clear(); pose = next; root.classList.add("away"); return; }
     if (!sheets[next]) return;
     if (entry && pose === "hidden" && sheets[entry] && !reduce) set(entry);
     const from = pose; pose = next;
@@ -69,15 +83,15 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
     const keys = route(from, next), w = root.offsetWidth;
     if (keys?.length) {
       place(next);
-      if (Math.abs(root.offsetWidth - w) < 2) { preload(...keys.map((k) => sheets[k])); sp.swap(sheets[next]); play(keys); return; }
+      if (Math.abs(root.offsetWidth - w) < 2) { clear(); preload(...keys.map((k) => sheets[k])); sp.swap(sheets[next]); play(keys); return; }
       place(from);
     }
-    root.classList.add("out");
-    timer = window.setTimeout(() => {
-      if (!sheets[pose]) return;
-      place(pose); sp!.swap(sheets[pose]); root.classList.remove("out"); root.classList.add("in");
-      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("in")));
-    }, 260);
+    // no clip for it: the bubbles, and the pose and place change under their thickest
+    if (!cloud) { place(next); sp.swap(sheets[next]); return; }
+    moving = true;
+    const since = performance.now() - puffAt;
+    if (since >= coverMs) { const c = ++puff; puffAt = performance.now(); cloud.react(bubbles!, () => { if (c === puff) moving = false; }); }
+    timer = window.setTimeout(() => { if (sheets[pose]) { place(pose); sp!.swap(sheets[pose]); } }, since < coverMs ? coverMs - since : coverMs);
   };
 
   const touch = () => {
@@ -97,5 +111,5 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
   el.addEventListener("pointerenter", touch);
   el.addEventListener("click", touch);
   addEventListener("pointermove", near, { passive: true });
-  return { set, stop() { sp?.stop(); clearTimeout(timer); clearInterval(idle); removeEventListener("pointermove", near); } };
+  return { set, stop() { sp?.stop(); cloud?.stop(); clearTimeout(timer); clearInterval(idle); removeEventListener("pointermove", near); } };
 }

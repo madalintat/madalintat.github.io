@@ -20,6 +20,13 @@
     "h": 440,
     "fps": 10
   },
+  "bubbles": {
+    "src": "/sea/bubbles.webp?v=9606efca",
+    "n": 25,
+    "w": 539,
+    "h": 300,
+    "fps": 16
+  },
   "jelly": {
     "src": "/sea/jelly.webp?v=adf8bf4c",
     "n": 40,
@@ -132,15 +139,8 @@
     "h": 300,
     "fps": 10
   },
-  "me-kendo-to-me-sageto": {
-    "src": "/sea/me-kendo-to-me-sageto.webp?v=ba48c33b",
-    "n": 70,
-    "w": 539,
-    "h": 300,
-    "fps": 10
-  },
   "me-record": {
-    "src": "/sea/me-record.webp?v=a9156899",
+    "src": "/sea/me-record.webp?v=88069818",
     "n": 40,
     "w": 539,
     "h": 300,
@@ -148,13 +148,6 @@
   },
   "me-record-to-me-seiza-do-off": {
     "src": "/sea/me-record-to-me-seiza-do-off.webp?v=ca59c7a8",
-    "n": 80,
-    "w": 539,
-    "h": 300,
-    "fps": 10
-  },
-  "me-sageto-to-me-seiza-bogu": {
-    "src": "/sea/me-sageto-to-me-seiza-bogu.webp?v=1c85e9c3",
     "n": 80,
     "w": 539,
     "h": 300,
@@ -174,30 +167,9 @@
     "h": 300,
     "fps": 10
   },
-  "me-seiza-bogu-to-me-seiza-kote-off": {
-    "src": "/sea/me-seiza-bogu-to-me-seiza-kote-off.webp?v=890a5e7a",
-    "n": 60,
-    "w": 539,
-    "h": 300,
-    "fps": 10
-  },
   "me-seiza-do-off-to-me-seiza-unarmoured": {
     "src": "/sea/me-seiza-do-off-to-me-seiza-unarmoured.webp?v=b32c1d6e",
     "n": 80,
-    "w": 539,
-    "h": 300,
-    "fps": 10
-  },
-  "me-seiza-kote-off-to-me-seiza-men-off": {
-    "src": "/sea/me-seiza-kote-off-to-me-seiza-men-off.webp?v=0cc5fda0",
-    "n": 80,
-    "w": 539,
-    "h": 300,
-    "fps": 10
-  },
-  "me-seiza-men-off-to-me-record": {
-    "src": "/sea/me-seiza-men-off-to-me-record.webp?v=ac812e04",
-    "n": 60,
     "w": 539,
     "h": 300,
     "fps": 10

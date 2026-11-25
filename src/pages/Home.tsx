@@ -138,13 +138,21 @@ function placeMe(me: HTMLElement, phone: boolean) {
   const card = phone ? held?.querySelector<HTMLElement>(".st-caps li.on .card") : null;
   if (card) lift = card.offsetHeight;
   // the figure fills the middle of its frame: only that part has to stay clear of what is being read, which is any
-  // story's words and charts on screen, also a story's still sliding in (a hidden beat's are see-through, so skipped)
-  const b = me.querySelector(".me-sprite")!.getBoundingClientRect();
+  // story's words and charts on screen, also a story's still sliding in (a hidden beat's are see-through, so skipped).
+  // My place is .me itself, which never moves for this, so the test is always made where I would stand
+  const b = me.getBoundingClientRect();
   const box = { top: b.top + b.height * 0.2, bottom: b.bottom - b.height * 0.2, left: b.left + b.width * 0.2, right: b.right - b.width * 0.2 };
   const read = [...document.querySelectorAll<HTMLElement>(".st-caps li.on > :not(.card)"), ...document.querySelectorAll<HTMLElement>(".st-screen > *")];
   const crowded = !card && read.some((w) => overlaps(w.getBoundingClientRect(), box) && Number(getComputedStyle(w).opacity) > 0.1);
   me.style.setProperty("--lift", `${lift}px`);
-  me.classList.toggle("yield", crowded);
+  // crowded, I do not vanish: I go small into the top left corner, beside the menu, and come back when it clears
+  if (crowded && b.width) {
+    const s = Math.min(1, (phone ? Math.min(130, innerWidth * 0.32) : 170) / b.width);
+    me.style.setProperty("--dx", `${12 - b.left - (b.width * (1 - s)) / 2}px`);
+    me.style.setProperty("--dy", `${6 - b.top - (b.height * (1 - s)) / 2}px`);
+    me.style.setProperty("--ds", String(s));
+  }
+  me.classList.toggle("dock", crowded);
 }
 
 export function Home() {
@@ -186,7 +194,7 @@ export function Home() {
 
       {/* me, going down the page with the reader */}
       <div className="me" ref={me} data-pose="me-float">
-        <div className="me-tilt">{SH["me-float"] && <div className="sprite me-sprite" role="img" aria-label="mădălin, drawn as a character; touch him" style={firstFrame(SH["me-float"])} />}</div>
+        <div className="me-tilt">{SH["me-float"] && <div className="sprite me-sprite" role="img" aria-label="mădălin, drawn as a character; touch him" style={firstFrame(SH["me-float"])} />}<div className="sprite me-bubbles" aria-hidden="true" /></div>
       </div>
 
       {/* the sky: the name alone up high, then the camera comes down onto the dojo by the sea */}

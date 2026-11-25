@@ -80,12 +80,19 @@
 /* ---------- me ---------- */
 /* deslop-ignore-next-line 26: not a hover. I travel to my place in the next scene, a long move on purpose, transform only */
 .me { --mx: 68; --my: 34; position: fixed; z-index: 12; left: 0; top: 0; width: var(--mw, 17vw); pointer-events: none; transform: translate3d(calc(var(--mx) * 1vw), calc(var(--my) * 1svh), 0); transition: transform 1.1s cubic-bezier(.2,.8,.2,1), width 1.1s cubic-bezier(.2,.8,.2,1); perspective: 900px; }
-.me-tilt { transition: transform 0.6s cubic-bezier(.2,.8,.2,1); transform-style: preserve-3d; animation: breathe 5s ease-in-out infinite; }
-.me-sprite { width: 100%; pointer-events: auto; cursor: pointer; transition: opacity 0.26s, transform 0.26s, filter 0.3s; filter: drop-shadow(0 14px 18px rgba(7, 12, 18, 0.28)); }
-.me.out .me-sprite { opacity: 0; transform: translateY(-36px) scale(0.92) rotate(-4deg); }
+.me-tilt { position: relative; transition: transform 0.6s cubic-bezier(.2,.8,.2,1), translate 0.6s cubic-bezier(.2,.8,.2,1), scale 0.6s cubic-bezier(.2,.8,.2,1); transform-style: preserve-3d; }
+/* the bubble cloud I change pose in: a little wider than me, centred on me, so it hides the whole of me at its thickest */
+.me-bubbles { position: absolute; left: -10%; top: 58%; width: 120%; translate: 0 -50%; pointer-events: none; }
+/* the breath is on the sprite, not on .me-tilt, whose translate is my dock */
+.me-sprite { animation: breathe 5s ease-in-out infinite; width: 100%; pointer-events: auto; cursor: pointer; transition: opacity 0.26s, transform 0.26s, filter 0.3s; filter: drop-shadow(0 14px 18px rgba(7, 12, 18, 0.28)); }
+/* a change of place is a jump, never a slide (companion.ts place) */
+.me.jump { transition: none; }
 .me.in .me-sprite { opacity: 0; transform: translateY(36px) scale(0.94); transition: none; }
 /* words or a chart a story brings onto me: I step out until they are gone */
-.me.yield .me-sprite { opacity: 0; transform: translateY(16px) scale(0.96); pointer-events: none; }
+/* docked: where words cover my place, small in the top left corner (Home.tsx placeMe sets where that is from me) */
+.me.dock .me-tilt { translate: var(--dx) var(--dy); scale: var(--ds); }
+/* small in the corner I may sit over a card's links as it slides away: clicks go through me to them */
+.me.dock .me-sprite { pointer-events: none; }
 .me.acting .me-sprite { filter: drop-shadow(0 14px 18px rgba(7, 12, 18, 0.28)) drop-shadow(0 0 22px rgba(255, 215, 168, 0.35)); }
 @keyframes breathe { 50% { translate: 0 -1.2%; } }
 /* where I am in each scene: left, top, how wide */
@@ -217,6 +224,7 @@
 }
 
 .me.away .me-sprite { opacity: 0; transform: translateY(24px) scale(0.94); pointer-events: none; }
+.me.away .me-bubbles { opacity: 0; }
 
 /* the lab's groups: feet on the floor line, the group's own loop (talking, gesturing) */
 /* placed by depth: the far ones stand by the wall and the window, smaller; the near ones on the front of the floor */

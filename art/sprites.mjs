@@ -22,3 +22,6 @@ for (const name of clips) {
   console.log(`${name.padEnd(24)} ${n} frames ${w}x${h} ${kb}`);
 }
 writeFileSync(OUT, JSON.stringify(Object.fromEntries(Object.entries(all).sort()), null, 2) + "\n");
+// hand edits over two sheets, redone whenever their clip is: the shinai put away while I film, the bubbles cut from the dive
+if (clips.includes("me-record")) execFileSync("./art/no-shinai.sh", { stdio: "inherit" });
+if (clips.includes("me-dive-to-me-scuba")) execFileSync("./art/bubbles.sh", { stdio: "inherit" });
