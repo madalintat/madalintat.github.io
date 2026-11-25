@@ -55,8 +55,8 @@ export const cv: Record<CvVersion, Cv> = {
         heading: "Experience",
         items: [
           { ...INVERGENT, bullets: [
-            ["Speech recognition", "built jackrabbit-110m-ro alone, Romanian ASR at 5.69% WER on FLEURS: ahead of Whisper large-v3 at a fourteenth of its size, with a streaming variant for live calls."],
-            ["Text-to-speech", "built amami-357m-ro alone, three Romanian voices in one model, running natively on CPU, CUDA and Metal."],
+            ["Speech recognition", "led jackrabbit-110m-ro, Romanian ASR at 5.69% WER on FLEURS: ahead of Whisper large-v3 at a fourteenth of its size, with a streaming variant for live calls."],
+            ["Text-to-speech", "led amami-357m-ro, three Romanian voices in one model, running natively on CPU, CUDA and Metal."],
             ["Data and evaluation", "collected and cleaned the Romanian speech corpus, with one normaliser so every run stays comparable."],
             ["Training", "built the terminal dashboard to launch, monitor and compare training runs (including GRPO with an LLM judge) on cloud GPUs."],
             ["Agents", "built the parts of Surogates where an agent meets a customer: phone calls over SIP on my own speech models, Discord, Teams, WhatsApp and website chat, and a simulator where an AI plays the customer before an agent goes live."],
@@ -111,7 +111,7 @@ export const cv: Record<CvVersion, Cv> = {
         heading: "Experience",
         items: [
           { ...INVERGENT, bullets: [
-            ["Speech", "built Surogate's Romanian models alone: jackrabbit-110m-ro (5.69% WER on FLEURS, ahead of Whisper large-v3) and amami-357m-ro, three voices in one model."],
+            ["Speech", "led Surogate's Romanian models: jackrabbit-110m-ro (5.69% WER on FLEURS, ahead of Whisper large-v3) and amami-357m-ro, three voices in one model."],
             ["Agents", "built the parts of Surogates where an agent meets a customer: phone calls, Discord, Teams, WhatsApp and website chat, a simulator for testing, and the Studio pages that set them up."],
           ] },
           ...EARLIER,

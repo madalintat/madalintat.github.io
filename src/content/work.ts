@@ -62,7 +62,7 @@ export const work: Work[] = [
         body: "the voices adapt nvidia's 357M magpie tts. doina, tudor and radu live in one checkpoint, so switching voice costs nothing. it reads numbers, dates and ibans. a native c++ build runs it on cpu, cuda and metal with no pytorch, about real time on an 8 gb m3.",
       },
     ],
-    mine: "built both alone at invergent: data, training recipes, evaluation and the cpu runtimes. the models are invergent's and public under cc-by-nc-4.0.",
+    mine: "led both at invergent: data, training recipes, evaluation and the cpu runtimes. the models are invergent's and public under cc-by-nc-4.0.",
     limits: [
       "streaming finals trail offline by 1.34 points on FLEURS.",
       "the voice numbers use a recogniser as the judge, so they inherit its errors.",
