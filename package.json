@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "node rules/css-tokens.mjs && tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs && vitest run scripts",
+    "build": "node rules/css-tokens.mjs && node scripts/plate-hashes.mjs && tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs && vitest run scripts",
     "test": "vitest run",
     "check": "node rules/check.mjs",
     "lint": "oxlint",

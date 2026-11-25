@@ -28,24 +28,24 @@
     "fps": 10
   },
   "kendo-pair-kote": {
-    "src": "/sea/kendo-pair-kote.webp?v=cef26a2d",
+    "src": "/sea/kendo-pair-kote.webp?v=a7a9b3b1",
     "n": 40,
-    "w": 557,
-    "h": 460,
+    "w": 587,
+    "h": 400,
     "fps": 10
   },
   "kendo-pair-loop": {
-    "src": "/sea/kendo-pair-loop.webp?v=d9ded626",
+    "src": "/sea/kendo-pair-loop.webp?v=e711ce34",
     "n": 40,
-    "w": 557,
-    "h": 460,
+    "w": 587,
+    "h": 400,
     "fps": 10
   },
   "kendo-pair-men": {
-    "src": "/sea/kendo-pair-men.webp?v=9f417ce5",
+    "src": "/sea/kendo-pair-men.webp?v=787cdb55",
     "n": 60,
-    "w": 557,
-    "h": 460,
+    "w": 587,
+    "h": 400,
     "fps": 10
   },
   "me-boat-cap": {
@@ -91,15 +91,8 @@
     "fps": 14
   },
   "me-dressed": {
-    "src": "/sea/me-dressed.webp?v=0cf553b7",
+    "src": "/sea/me-dressed.webp?v=f4887b48",
     "n": 10,
-    "w": 539,
-    "h": 300,
-    "fps": 10
-  },
-  "me-dressed-to-me-boat-cap": {
-    "src": "/sea/me-dressed-to-me-boat-cap.webp?v=1906cc77",
-    "n": 60,
     "w": 539,
     "h": 300,
     "fps": 10
@@ -119,7 +112,7 @@
     "fps": 10
   },
   "me-gear-only-to-me-dressed": {
-    "src": "/sea/me-gear-only-to-me-dressed.webp?v=37573fc4",
+    "src": "/sea/me-gear-only-to-me-dressed.webp?v=a225e23c",
     "n": 80,
     "w": 539,
     "h": 300,
@@ -139,22 +132,29 @@
     "h": 300,
     "fps": 10
   },
-  "me-kendo-to-me-seiza-bogu": {
-    "src": "/sea/me-kendo-to-me-seiza-bogu.webp?v=b158408e",
-    "n": 60,
+  "me-kendo-to-me-sageto": {
+    "src": "/sea/me-kendo-to-me-sageto.webp?v=ba48c33b",
+    "n": 70,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-record": {
-    "src": "/sea/me-record.webp?v=f4d4cdac",
+    "src": "/sea/me-record.webp?v=a9156899",
     "n": 40,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-record-to-me-seiza-do-off": {
-    "src": "/sea/me-record-to-me-seiza-do-off.webp?v=24fa0114",
+    "src": "/sea/me-record-to-me-seiza-do-off.webp?v=ca59c7a8",
+    "n": 80,
+    "w": 539,
+    "h": 300,
+    "fps": 10
+  },
+  "me-sageto-to-me-seiza-bogu": {
+    "src": "/sea/me-sageto-to-me-seiza-bogu.webp?v=1c85e9c3",
     "n": 80,
     "w": 539,
     "h": 300,
@@ -175,43 +175,43 @@
     "fps": 10
   },
   "me-seiza-bogu-to-me-seiza-kote-off": {
-    "src": "/sea/me-seiza-bogu-to-me-seiza-kote-off.webp?v=f73512ba",
+    "src": "/sea/me-seiza-bogu-to-me-seiza-kote-off.webp?v=890a5e7a",
     "n": 60,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-seiza-do-off-to-me-seiza-unarmoured": {
-    "src": "/sea/me-seiza-do-off-to-me-seiza-unarmoured.webp?v=5b77b4ba",
+    "src": "/sea/me-seiza-do-off-to-me-seiza-unarmoured.webp?v=b32c1d6e",
     "n": 80,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-seiza-kote-off-to-me-seiza-men-off": {
-    "src": "/sea/me-seiza-kote-off-to-me-seiza-men-off.webp?v=18b156c1",
+    "src": "/sea/me-seiza-kote-off-to-me-seiza-men-off.webp?v=0cc5fda0",
     "n": 80,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-seiza-men-off-to-me-record": {
-    "src": "/sea/me-seiza-men-off-to-me-record.webp?v=a5efa9f1",
+    "src": "/sea/me-seiza-men-off-to-me-record.webp?v=ac812e04",
     "n": 60,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-seiza-unarmoured": {
-    "src": "/sea/me-seiza-unarmoured.webp?v=967c787d",
+    "src": "/sea/me-seiza-unarmoured.webp?v=f2364435",
     "n": 10,
     "w": 539,
     "h": 300,
     "fps": 10
   },
   "me-seiza-unarmoured-to-me-gear-only": {
-    "src": "/sea/me-seiza-unarmoured-to-me-gear-only.webp?v=59d16ff3",
-    "n": 60,
+    "src": "/sea/me-seiza-unarmoured-to-me-gear-only.webp?v=39ffefd0",
+    "n": 80,
     "w": 539,
     "h": 300,
     "fps": 10

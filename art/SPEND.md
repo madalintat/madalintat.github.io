@@ -178,3 +178,22 @@ Every image generated for the site, in order, rejects included. Model: `google/g
 | me-dressed-to-me-boat-cap.mp4 | me-dressed → me-boat-cap, google/veo-3.1-lite, 6s | $0.1800 | review |
 | me-seiza-do-off-to-me-seiza-unarmoured.mp4 | me-seiza-do-off → me-seiza-unarmoured, google/veo-3.1-lite, 8s | $0.2400 | review |
 | me-gear-only-to-me-dressed.mp4 | me-gear-only → me-dressed, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-sageto-1.png | me-kendo-1.png | $0.0411 | review |
+| me-sageto-2.png | me-kendo-1.png | $0.0403 | review |
+| me-kendo-to-me-sageto.mp4 | me-kendo → me-sageto, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-kendo-to-me-sageto.mp4 | me-kendo → me-sageto, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-sageto-to-me-seiza-bogu.mp4 | me-sageto → me-seiza-bogu, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-sageto-to-me-seiza-bogu.mp4 | me-sageto → me-seiza-bogu, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-seiza-bogu-to-me-seiza-kote-off.mp4 | me-seiza-bogu → me-seiza-kote-off, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-seiza-unarmoured-to-me-gear-only.mp4 | me-seiza-unarmoured → me-gear-only, google/veo-3.1-lite, 8s | $0.2400 | review |
+| kendo-pair-9.png | kendo-pair-0.png | $0.0418 | review |
+| kendo-pair-10.png | kendo-pair-0.png | $0.0410 | review |
+| kendo-pair-kote.mp4 | kendo-pair, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendo-pair-loop.mp4 | kendo-pair, google/veo-3.1-lite, 4s | $0.1200 | review |
+| kendo-pair-men.mp4 | kendo-pair, google/veo-3.1-lite, 6s | $0.1800 | review |
+| kendo-pair-men.mp4 | kendo-pair, google/veo-3.1-lite, 6s | $0.1800 | review |
+| kendo-pair-kote.mp4 | kendo-pair, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-kendo-to-me-sageto.mp4 | me-kendo → me-sageto, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-sonkyo-1.png | me-kendo-1.png | $0.0463 | review |
+| me-sonkyo-2.png | me-kendo-1.png, me-sonkyo-1.png | $0.0425 | review |
+| me-kendo-to-me-sageto.mp4 | me-kendo → me-sageto, google/veo-3.1-lite, 8s | $0.2400 | review |

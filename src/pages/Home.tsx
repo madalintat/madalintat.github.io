@@ -1,4 +1,5 @@
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import plates from "../content/plates.json";
 import { Link } from "react-router-dom";
 import { TopBar } from "../layout/Shell";
 import { Card, IconFor } from "../components/Card";
@@ -17,7 +18,8 @@ const S = Object.fromEntries(SCENES.map((s) => [s.id, s])) as Record<SceneId, Sc
 
 /** A painted plate behind a scene: its own upright picture on a phone, never a crop. Loaded as its scene nears. */
 // the plates are cached for a week (public/_headers): a new paint of one gets a new address, so no phone keeps the old
-const PLATE = (name: string) => `/sea/${name}.webp?v=2`;
+// each plate addressed by a hash of its bytes (scripts/plate-hashes.mjs), so a repainted one is never served stale
+const PLATE = (name: string) => `/sea/${name}.webp?v=${(plates as Record<string, string>)[name] ?? "1"}`;
 function Plate({ name, phone }: { name: string; phone?: string }) {
   return (
     <picture className="plate">

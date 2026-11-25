@@ -206,12 +206,12 @@
 .low .inside { position: absolute; inset: 0; opacity: calc((var(--t, 0) - 0.08) * 3); }
 .low .inside:not(.on) { visibility: hidden; }
 /* the court: one clip with both fighters, so every strike lands; aka nearer the camera, shiro a step deeper */
-.court { position: absolute; left: 52%; width: 47%; bottom: 1%; }
+.court { position: absolute; left: 54.5%; width: 43%; bottom: 1%; }
 .court::after { /* deslop-ignore 06: a contact shadow under the feet, not atmosphere */ content: ""; position: absolute; left: 8%; right: 8%; bottom: -1%; height: 5%; background: radial-gradient(closest-side, rgba(10, 8, 6, 0.4), transparent); }
 .sea-caps li.quiet { display: none; }
 @media (max-width: 720px) {
   .low .zoom { transform-origin: 70% 76%; }
-  .court { left: 0; width: 100%; bottom: 27%; }
+  .court { left: 3%; width: 94%; bottom: 27%; }
 }
 
 .me.away .me-sprite { opacity: 0; transform: translateY(24px) scale(0.94); pointer-events: none; }

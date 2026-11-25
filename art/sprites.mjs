@@ -8,7 +8,7 @@ import { createHash } from "node:crypto";
 const FPS = 10;
 // how tall a frame is kept, by what it is: enough for a 2x phone at the size the page shows it, no more
 // the chain from the armour to the scuba is drawn on the full video frame, so 300 tall is the size a phone shows it at
-const height = (n) => /^me-(kendo|seiza|gear|record|dressed|boat|dive|scuba)/.test(n) ? 300 : n.startsWith("me-hammock") ? 240 : n.startsWith("me-") ? 400 : n.startsWith("whale") ? 420 : n.startsWith("person") ? 240 : n.startsWith("kendo") ? 400 : n.startsWith("agents") ? 440 : 200;
+const height = (n) => /^me-(kendo|sageto|seiza|gear|record|dressed|boat|dive|scuba)/.test(n) ? 300 : n.startsWith("me-hammock") ? 240 : n.startsWith("me-") ? 400 : n.startsWith("whale") ? 420 : n.startsWith("person") ? 240 : n.startsWith("kendo") ? 400 : n.startsWith("agents") ? 440 : 200;
 const OUT = "src/content/sprites.json";
 const all = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};
 const want = process.argv.slice(2);
