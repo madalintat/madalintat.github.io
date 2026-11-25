@@ -9,7 +9,7 @@ import { SCENES, EMAIL } from "./content/world";
 export const SITE = "https://cetusian.com";
 type Meta = { title: string; description: string };
 
-const HOME: Meta = { title: "mădălin tatarciuc · applied ai researcher and engineer", description: "i train small ai models and ship the products around them: ipporu, the home of kendo and the models that watch it; romanian speech models that beat whisper large-v3 at 14 times smaller; superstarling, an ai team for your business and your life." };
+const HOME: Meta = { title: "mădălin tatarciuc · applied ai researcher and engineer", description: "applied ai researcher and engineer in romania, open to remote. i train small ai models and build the products around them: romanian speech recognition that beats whisper large-v3 at 14 times smaller, video models under ipporu, where kendoka learn and improve, and voice agents that take calls in romanian." };
 
 export function routes(): Record<string, Meta> {
   const r: Record<string, Meta> = { "/": HOME };
@@ -26,7 +26,7 @@ const SAME = [CONTACT.github, CONTACT.hf, CONTACT.linkedin, CONTACT.x].map((h) =
 // who this is and what he made, for search engines and ai answer engines: one graph, on every page
 function graph() {
   const me = { "@type": "Person", "@id": `${SITE}/#me`, name: "Mădălin Tatarciuc", alternateName: "Madalin Tatarciuc", url: SITE, email: `mailto:${EMAIL}`,
-    jobTitle: "Applied AI researcher and builder", nationality: "Romanian", homeLocation: { "@type": "Country", name: "Romania" }, sameAs: SAME,
+    jobTitle: "Applied AI researcher and engineer", nationality: "Romanian", homeLocation: { "@type": "Country", name: "Romania" }, sameAs: SAME,
     knowsAbout: ["speech recognition", "text to speech", "computer vision", "video models", "small language models", "AI agents", "model evaluation", "full stack engineering", "product design", "growth"] };
   const made = SCENES.filter((s) => s.line && s.id !== "sky" && s.id !== "garden").map((s) => ({
     "@type": s.id === "harbour" || s.id === "lab" ? "SoftwareApplication" : "CreativeWork", name: s.title, description: s.line,
@@ -37,7 +37,7 @@ function graph() {
 
 /** The same facts as the page, as plain text for ai assistants (llmstxt.org). */
 export function llms() {
-  const out = ["# Mădălin Tatarciuc", "", "> Applied AI researcher and builder from Romania. He trains small, specialized AI models and engineers, ships and grows the products around them.", ""];
+  const out = ["# Mădălin Tatarciuc", "", "> Applied AI researcher and engineer from Romania. He trains small, specialized AI models and engineers, ships and grows the products around them.", ""];
   for (const s of SCENES) {
     if (s.id === "sky" || s.id === "surface") continue;
     out.push(`## ${s.title}`, "");
