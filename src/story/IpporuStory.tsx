@@ -14,6 +14,9 @@ type Ribbon = { id: "ribbon" };
 type Step = ModelBeat | Ribbon;
 const STEPS: Step[] = IPPORU.flatMap((b): Step[] => (b.id === "shinai" ? [b, { id: "ribbon" }] : [b]));
 const clipOf = (s: Step) => ("clip" in s ? s.clip : "shinai-ribbon");
+// where I am while each beat is read, on the dojo floor under it: filming the match, then the do and tare come off
+// (the strike), and I go out and come back dressed (who struck); the boat waits for the sea
+const POSES = STEPS.map((s) => (s.id === "who" ? "me-dressed" : ["strike", "ippon"].includes(s.id) ? "me-seiza-unarmoured" : "me-kendo>me-record")).join(",");
 
 function Gate({ g }: { g: ModelBeat["gate"] }) {
   const word = g.met === true ? "passed" : g.met === false ? "not yet" : "no bar";
@@ -106,9 +109,10 @@ export function IpporuStory() {
   }, []);
   let n = 0;
   return (
-    <section ref={root} className="st ip-story" aria-label="the ipporu engine, model by model">
+    <section ref={root} className="st ip-story" data-pose={POSES} aria-label="the ipporu engine, model by model">
       <div className="st-stage">
         <i className="st-bar" aria-hidden="true" />
+        <i className="ip-floor" aria-hidden="true" />
         <ol className="st-caps">
           {STEPS.map((s, i) => (
             <li key={s.id} data-beat={i}>{"clip" in s ? <ModelCaption b={s} n={++n} /> : <RibbonCaption />}</li>

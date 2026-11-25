@@ -5,7 +5,7 @@
 export type Fact = { k?: string; text: string };
 export type Icon = "hf" | "github" | "x" | "ipporu" | "superstarling" | "mail" | "cv" | "play" | "linkedin" | "web";
 export type Link = { label: string; href: string; icon?: Icon };
-export type SceneId = "sky" | "ships" | "harbour" | "surface" | "whales" | "bench" | "lab" | "notebook" | "garden";
+export type SceneId = "sky" | "ships" | "harbour" | "surface" | "whales" | "bench" | "lab" | "garden";
 export type Shot = { src: string; alt: string };
 /** built: one plain line on how it is engineered, so the card says what it does, what it proved, and how it is made. */
 export type Scene = { id: SceneId; m: number; name: string; tag?: string; icon?: Icon; title: string; line?: string; facts: Fact[]; links: Link[]; built?: string; shots?: Shot[] };
@@ -29,7 +29,7 @@ export const SCENES: Scene[] = [
       { k: "433", text: "kendoka with an account" },
       { k: "1,746", text: "following ipporu on instagram" },
     ],
-    built: "python on fly.io, sqlite streamed to storage by litestream, video models on modal gpus, a record collected from about 400 public sources, 338 test files.",
+    built: "i built the site and every kendoka's record, and trained the video models that run under it.",
     shots: [{ src: "/work/shots/ipporu-home.webp", alt: "ipporu.com, the home of kendo" }, { src: "/work/shots/ipporu-record.webp", alt: "a kendoka's page on ipporu: every match and who scored each ippon" }],
     links: [{ label: "how the models work", href: "/work/ipporu", icon: "play" }, { label: "ipporu.com", href: "https://ipporu.com", icon: "ipporu" }],
   },
@@ -93,21 +93,13 @@ export const SCENES: Scene[] = [
     title: "superstarling: an ai team for your business and your life",
     line: "one ai team for the shop and for your own week. you ask once, \u201cget the night balm launch ready for thursday\u201d, and ten specialist agents write, design, plan and publish it on your pages and calendar. nothing goes out until you say yes.",
     facts: [
-      { k: "10", text: "agents, led by starling" },
-      { k: "1,200+", text: "server tests" },
-      { k: "20", text: "characters in its style bible, drawn for every season" },
+      { k: "you ask", text: "one sentence; starling splits it across the team" },
+      { k: "they make", text: "the posts, the emails, the pages and the plan for the week" },
+      { k: "you say yes", text: "nothing is published or sent before you approve it" },
     ],
-    built: "node 24 with node:http and node:sqlite, react 19, a python publishing service with a real browser and sealed sign-ins, 31 block types, 1,200+ server tests.",
+    built: "i designed and built all of it: the app, the agents, and the service that publishes for you.",
     shots: [{ src: "/work/shots/superstarling-app.webp", alt: "superstarling's home: what needs you, drafts to approve, what goes out today" }, { src: "/work/shots/superstarling-shop-done.webp", alt: "sol's shop after one ask: the launch drafted, a sunday off" }],
     links: [{ label: "the project", href: "/work/superstarling", icon: "superstarling" }],
-  },
-  {
-    id: "notebook", m: -4000, name: "the lab",
-    tag: "research notebook",
-    title: "how i work: 105 experiments, each with a gate",
-    line: "every experiment is written down before it runs, with the number it has to beat. when a result turns out wrong, i say so in public and take it back.",
-    facts: [{ k: "76% → 57%", text: "who struck, once the labels came from the referees' flags. i took the 76% back" }],
-    links: [{ label: "how the models work", href: "/work/ipporu/", icon: "play" }, { label: "notes", href: "/notes/" }],
   },
   {
     id: "garden", m: 380, name: "the orchard",

@@ -8,6 +8,7 @@ import { sprite, preload, type Sheet, type Sprite } from "./sprite";
 export type Sheets = Record<string, Sheet>;
 // what each pose does when it is touched
 const REACT: Record<string, string> = { "me-float": "me-float-flip", "me-scuba": "me-scuba-wave" };
+const MOVE_SPEED = 1.5;
 
 /** The shortest run of moves from pose a to pose b, read off the sheets' names ("me-record-to-me-kendo-unarmoured"),
     so I get from one place to the next through every step between: the shinai down, the kote, the men; then the do,
@@ -34,7 +35,8 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
   let run = 0, moving = false;
   const play = (keys: string[]) => {
     const t = ++run; moving = true;
-    const step = (i: number) => { if (t !== run) return; if (i === keys.length) { moving = false; return; } sp!.react(sheets[keys[i]], () => step(i + 1)); };
+    // a move plays at 1.5x: the clips are drawn slow, and each has to finish inside the beat that asked for it
+    const step = (i: number) => { if (t !== run) return; if (i === keys.length) { moving = false; return; } const k = sheets[keys[i]]; sp!.react({ ...k, fps: k.fps * MOVE_SPEED }, () => step(i + 1)); };
     step(0);
   };
 

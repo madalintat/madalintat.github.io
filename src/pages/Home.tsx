@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { TopBar } from "../layout/Shell";
 import { Card, IconFor } from "../components/Card";
 import { SCENES, type Icon, type Scene, type SceneId } from "../content/world";
-import { depthAt } from "../world/progress";
 import { startFlock } from "../world/flock";
 import { sprite, preload, type Sheet } from "../world/sprite";
 import { startCompanion } from "../world/companion";
@@ -15,7 +14,6 @@ import { SpeechStory } from "../story/SpeechStory";
 import "./sea.css";
 
 const S = Object.fromEntries(SCENES.map((s) => [s.id, s])) as Record<SceneId, Scene>;
-const metres = (m: number) => `${m > 0 ? "+" : m < 0 ? "−" : ""}${Math.abs(m).toLocaleString("en").replace(",", " ")} m`;
 
 /** A painted plate behind a scene: its own upright picture on a phone, never a crop. Loaded as its scene nears. */
 // the plates are cached for a week (public/_headers): a new paint of one gets a new address, so no phone keeps the old
@@ -118,44 +116,37 @@ function Water({ mode, horizon = [0.707, 0.735] }: { mode: "surface" | "caustics
 
 /** On a phone I stand at the bottom of the screen. A scene's closed sheet lifts me to stand on it; a story's words that
     reach down to me make me step out until they are gone, so I never cover what is being read. */
+type Box = { top: number; bottom: number; left: number; right: number };
+/** Two boxes share some of the screen (a box with no height, a word not laid out, shares none). */
+export const overlaps = (a: Box, b: Box) => a.bottom > a.top && a.top < b.bottom && a.bottom > b.top && a.left < b.right && a.right > b.left;
 function placeMe(me: HTMLElement, phone: boolean) {
-  let lift = 0, crowded = false;
-  const held = phone ? document.querySelector<HTMLElement>('.st[data-stage="held"]') : null;
-  const on = held?.querySelector<HTMLElement>(".st-caps li.on");
-  const card = on?.querySelector<HTMLElement>(".card");
+  let lift = 0;
+  const held = document.querySelector<HTMLElement>('.st[data-stage="held"]');
+  const card = phone ? held?.querySelector<HTMLElement>(".st-caps li.on .card") : null;
   if (card) lift = card.offsetHeight;
-  else if (on) {
-    // the figure fills the middle of its frame: only that part has to stay clear of the words
-    const b = me.querySelector(".me-sprite")!.getBoundingClientRect(), top = b.top + b.height * 0.2, left = b.left + b.width * 0.2;
-    for (const w of on.children) { const r = w.getBoundingClientRect(); if (r.height && r.bottom > top && r.right > left) { crowded = true; break; } }
-  }
+  // the figure fills the middle of its frame: only that part has to stay clear of what is being read, which is any
+  // story's words and charts on screen, also a story's still sliding in (a hidden beat's are see-through, so skipped)
+  const b = me.querySelector(".me-sprite")!.getBoundingClientRect();
+  const box = { top: b.top + b.height * 0.2, bottom: b.bottom - b.height * 0.2, left: b.left + b.width * 0.2, right: b.right - b.width * 0.2 };
+  const read = [...document.querySelectorAll<HTMLElement>(".st-caps li.on > :not(.card)"), ...document.querySelectorAll<HTMLElement>(".st-screen > *")];
+  const crowded = !card && read.some((w) => overlaps(w.getBoundingClientRect(), box) && Number(getComputedStyle(w).opacity) > 0.1);
   me.style.setProperty("--lift", `${lift}px`);
   me.classList.toggle("yield", crowded);
 }
 
 export function Home() {
   const flock = useRef<HTMLCanvasElement>(null), gulls = useRef<HTMLCanvasElement>(null), me = useRef<HTMLDivElement>(null);
-  const alt = useRef<HTMLSpanElement>(null), rail = useRef<HTMLElement>(null), name = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const stopStories = startStories();
     const stopFlock = flock.current ? startFlock(flock.current) : () => {};
     const stopGulls = gulls.current ? startFlock(gulls.current, { count: 26, ink: "#f7f5f0", far: "rgba(247,245,240,.6)" }) : () => {};
     const comp = me.current ? startCompanion(me.current, SH) : null;
-    // the depth gauge and my pose: both read off what is under the middle of the screen
-    const scenes = [...document.querySelectorAll<HTMLElement>("[data-scene]")], named = [...document.querySelectorAll<HTMLElement>(".sea [data-name]")];
+    // my pose: read off what is under the middle of the screen
     const posed = [...document.querySelectorAll<HTMLElement>("[data-pose]")].filter((e) => e !== me.current);
     let raf = 0;
     const tick = () => {
       raf = 0;
-      const mid = scrollY + innerHeight / 2;
-      const marks = scenes.map((s) => [s.offsetTop + s.offsetHeight / 2, Number(s.dataset.m)] as [number, number]);
-      if (alt.current) alt.current.textContent = metres(depthAt(marks, mid));
-      if (rail.current) rail.current.style.setProperty("--g", String(Math.min(1, scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight))));
-      // the chapter's name: the last named part above the middle; a part may name each of its beats ("sky,the dojo")
-      let cur = named[0];
-      for (const s of named) if (s.offsetTop <= mid) cur = s;
-      if (name.current && cur) { const ns = cur.dataset.name!.split(","); name.current.textContent = ns[Math.min(ns.length - 1, Number(cur.dataset.cur ?? 0))]; }
       const phone = innerWidth <= 720;
       let at: HTMLElement | undefined;
       for (const e of posed) { const r = e.getBoundingClientRect(); if (r.top <= innerHeight / 2 && r.bottom > innerHeight / 2) at = e; }
@@ -176,11 +167,6 @@ export function Home() {
   return (
     <div className="sea">
       <TopBar home />
-      <div className="gauge" aria-hidden="true">
-        <span className="val" ref={alt}>+3 000 m</span>
-        <span className="rail" ref={rail}><i /></span>
-        <span className="name" ref={name}>sky</span>
-      </div>
 
       {/* me, going down the page with the reader */}
       <div className="me" ref={me} data-pose="me-float">
@@ -234,7 +220,7 @@ export function Home() {
       </div>
 
       {/* night into the morning sea: the do and the tare come off, I change, leave the gear and step into the boat */}
-      <div className="sea-fade to-day" data-pose="me-boat-cap" aria-hidden="true" />
+      <div className="sea-fade to-day" data-pose="hidden" aria-hidden="true" />
 
       {/* the seaside: rowing out past the fleet, then in */}
       <SeaScene s={S.ships} plate="sky" phone="sky-phone" pose="me-boat-cap,me-boat-ready"
@@ -270,26 +256,29 @@ export function Home() {
         <SpeechStory />
       </div>
 
-      {/* up from the deep into the lab: the sea goes on behind its window, and I swim past it on the way in */}
+      {/* up from the deep into the lab: the sea goes on behind its window */}
       <div className="sea-fade to-lab" data-pose="hidden" aria-hidden="true" />
 
-      {/* the lab: superstarling, its agents at work and talking, me among them; the sea outside the window; then the notebook */}
+      {/* the lab: superstarling, its agents at work and talking, me among them; the sea outside the window */}
       <SeaScene s={S.lab} plate="lab-v3" phone="lab-v3-phone" pose="hidden"
         words={<>
           <li data-beat={0}><Card s={S.lab} /></li>
-          <li data-beat={1}><Card s={S.notebook} at={1} />
-          </li>
         </>}>
         <div className="frame">
           <div className="window">
             <div className="far far-whale"><Sprite name="whale-tudor" /></div>
             <div className="far far-jelly"><Sprite name="jelly" /></div>
             <img className="far far-lantern" src="/sea/lantern.webp" alt="" />
-            <div className="far far-diver"><Sprite name="me-scuba" /></div>
           </div>
           {GROUPS.map((g) => <div key={g.name} className={`group ${g.name}`}><Sprite name={g.name} /></div>)}
         </div>
       </SeaScene>
+
+      {/* out of the lab at dusk, the laptop under my arm, the long way home to the garden */}
+      <div className="sea-fade to-garden" data-pose="hidden" aria-hidden="true">
+        <i className="path" />
+        <div className="walker"><Sprite name="me-walk-home" /></div>
+      </div>
 
       {/* the garden that glows: me in a hammock, and the way to write */}
       <SeaScene s={S.garden} plate="orchard" phone="orchard-phone" pose="hidden" words={<li data-beat={0}><Card s={S.garden} /></li>}>

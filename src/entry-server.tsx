@@ -28,7 +28,7 @@ function graph() {
   const me = { "@type": "Person", "@id": `${SITE}/#me`, name: "Mădălin Tatarciuc", alternateName: "Madalin Tatarciuc", url: SITE, email: `mailto:${EMAIL}`,
     jobTitle: "Applied AI researcher and builder", nationality: "Romanian", homeLocation: { "@type": "Country", name: "Romania" }, sameAs: SAME,
     knowsAbout: ["speech recognition", "text to speech", "computer vision", "video models", "small language models", "AI agents", "model evaluation", "full stack engineering", "product design", "growth"] };
-  const made = SCENES.filter((s) => s.line && s.id !== "sky" && s.id !== "garden" && s.id !== "notebook").map((s) => ({
+  const made = SCENES.filter((s) => s.line && s.id !== "sky" && s.id !== "garden").map((s) => ({
     "@type": s.id === "harbour" || s.id === "lab" ? "SoftwareApplication" : "CreativeWork", name: s.title, description: s.line,
     ...(s.id === "harbour" || s.id === "lab" ? { applicationCategory: s.id === "harbour" ? "SportsApplication" : "BusinessApplication" } : {}),
     url: s.links.find((l) => l.href.startsWith("http"))?.href ?? `${SITE}/`, creator: { "@id": `${SITE}/#me` } }));

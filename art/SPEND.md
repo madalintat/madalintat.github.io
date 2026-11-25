@@ -125,3 +125,56 @@ Every image generated for the site, in order, rejects included. Model: `google/g
 | me-kendo-rest-to-me-kendo-men-off.mp4 | me-kendo-rest → me-kendo-men-off, google/veo-3.1-lite, 6s | $0.1800 | review |
 | me-kendo-unarmoured-to-me-dressed.mp4 | me-kendo-unarmoured → me-dressed, google/veo-3.1-lite, 8s | $0.2400 | review |
 | me-dressed-to-me-boat-cap.mp4 | me-dressed → me-boat-cap, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-boat-gear-1.png | me-sheet-1.png, me.jpg, me-boat-ready-1.png, me-scuba-1.png | $0.0461 | review |
+| me-seiza-bogu-1.png | me-sheet-1.png, me.jpg, me-kendo-1.png, me-kendo-rest-1.png | $0.0460 | review |
+| me-seiza-kote-off-1.png | me-sheet-1.png, me.jpg, me-seiza-bogu-1.png, me-kendo-rest-1.png | $0.0450 | review |
+| me-dive-5.png | me-sheet-1.png, me.jpg, me-scuba-1.png | $0.0441 | review |
+| me-seiza-men-off-1.png | me-sheet-1.png, me.jpg, me-seiza-kote-off-1.png, me-kendo-men-off-1.png | $0.0461 | review |
+| me-walk-home-1.png | me-sheet-1.png, me.jpg, me-hammock-orchard-1.png, me-with-agents-1.png | $0.0454 | review |
+| me-record-7.png | me-sheet-1.png, me.jpg, me-seiza-men-off-1.png, me-kendo-men-off-1.png | $0.0457 | review |
+| me-seiza-do-off-1.png | me-sheet-1.png, me.jpg, me-record-7.png, me-seiza-men-off-1.png | $0.0458 | review |
+| me-seiza-unarmoured-1.png | me-sheet-1.png, me.jpg, me-seiza-do-off-1.png, me-kendo-unarmoured-1.png | $0.0468 | review |
+| me-dressed-4.png | me-sheet-1.png, me.jpg, me-seiza-unarmoured-1.png, me-boat-cap-1.png, surogate-logo.png | $0.0486 | review |
+| me-seiza-men-off-2.png | me-sheet-1.png, me.jpg, me-seiza-kote-off-1.png, me-kendo-men-off-1.png | $0.0459 | review |
+| me-record-8.png | me-sheet-1.png, me.jpg, me-seiza-men-off-2.png | $0.0443 | review |
+| me-seiza-do-off-2.png | me-sheet-1.png, me.jpg, me-seiza-men-off-2.png, me-record-8.png | $0.0455 | review |
+| me-seiza-unarmoured-2.png | me-sheet-1.png, me.jpg, me-seiza-do-off-2.png | $0.0449 | review |
+| me-dressed-5.png | me-sheet-1.png, me.jpg, me-seiza-unarmoured-2.png, me-boat-cap-1.png, surogate-logo.png | $0.0487 | review |
+| me-seiza-unarmoured-3.png | me-seiza-unarmoured-2.png | $0.0418 | review |
+| me-record-9.png | me-record-8.png, me-seiza-unarmoured-3.png | $0.0440 | review |
+| me-seiza-do-off-3.png | me-seiza-do-off-2.png, me-seiza-unarmoured-3.png | $0.0427 | review |
+| me-seiza-men-off-3.png | me-seiza-men-off-2.png, me-seiza-unarmoured-3.png | $0.0429 | review |
+| me-dressed-6.png | me-dressed-5.png, me-seiza-unarmoured-3.png | $0.0428 | review |
+| me-record.mp4 | me-record, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-kendo-to-me-seiza-bogu.mp4 | me-kendo → me-seiza-bogu, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-seiza-unarmoured-to-me-dressed.mp4 | me-seiza-unarmoured → me-dressed, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-boat-ready-to-me-boat-gear.mp4 | me-boat-ready → me-boat-gear, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-seiza-kote-off-2.png | me-seiza-kote-off-1.png, bogu-seiza-row.jpg, bogu-men-kote.jpg | $0.0438 | review |
+| me-seiza-men-off-4.png | me-seiza-men-off-3.png, me-seiza-kote-off-2.png, bogu-seiza-row.jpg | $0.0449 | review |
+| me-record-10.png | me-record-9.png, me-seiza-men-off-4.png | $0.0434 | review |
+| me-seiza-do-off-4.png | me-seiza-men-off-4.png, bogu-tare-do.jpg | $0.0428 | review |
+| me-seiza-unarmoured-5.png | me-seiza-do-off-4.png, bogu-tare-do.jpg | $0.0433 | review |
+| me-dressed-7.png | me-seiza-unarmoured-3.png, me-seiza-unarmoured-5.png, me-dressed-6.png, surogate-logo.png | $0.0459 | review |
+| me-seiza-men-off-5.png | me-seiza-men-off-4.png, bogu-seiza-row.jpg | $0.0421 | review |
+| me-record-11.png | me-record-10.png, me-seiza-men-off-5.png | $0.0436 | review |
+| me-seiza-do-off-5.png | me-seiza-men-off-5.png | $0.0421 | review |
+| me-seiza-unarmoured-6.png | me-seiza-do-off-5.png, bogu-tare-do.jpg | $0.0445 | review |
+| me-dressed-8.png | me-dressed-7.png, me-seiza-unarmoured-6.png | $0.0429 | review |
+| me-seiza-unarmoured-7.png | me-seiza-unarmoured-6.png | $0.0404 | review |
+| me-dressed-9.png | me-dressed-8.png, me-seiza-unarmoured-7.png | $0.0430 | review |
+| me-dressed-10.png | me-dressed-9.png, me-seiza-unarmoured-7.png | $0.0426 | review |
+| me-seiza-kote-off-to-me-seiza-men-off.mp4 | me-seiza-kote-off → me-seiza-men-off, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-seiza-bogu-to-me-seiza-kote-off.mp4 | me-seiza-bogu → me-seiza-kote-off, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-record-to-me-seiza-do-off.mp4 | me-record → me-seiza-do-off, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-seiza-unarmoured-to-me-dressed.mp4 | me-seiza-unarmoured → me-dressed, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-record.mp4 | me-record, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-seiza-men-off-to-me-record.mp4 | me-seiza-men-off → me-record, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-seiza-do-off-to-me-seiza-unarmoured.mp4 | me-seiza-do-off → me-seiza-unarmoured, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-dressed-to-me-boat-cap.mp4 | me-dressed → me-boat-cap, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-walk-home.mp4 | me-walk-home, google/veo-3.1-lite, 4s | $0.1200 | review |
+| me-gear-only-1.png | me-seiza-unarmoured-1.png | $0.0397 | review |
+| me-dressed-11.png | me-gear-only-1.png, me-dressed-10.png | $0.0425 | review |
+| me-seiza-unarmoured-to-me-gear-only.mp4 | me-seiza-unarmoured → me-gear-only, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-dressed-to-me-boat-cap.mp4 | me-dressed → me-boat-cap, google/veo-3.1-lite, 6s | $0.1800 | review |
+| me-seiza-do-off-to-me-seiza-unarmoured.mp4 | me-seiza-do-off → me-seiza-unarmoured, google/veo-3.1-lite, 8s | $0.2400 | review |
+| me-gear-only-to-me-dressed.mp4 | me-gear-only → me-dressed, google/veo-3.1-lite, 8s | $0.2400 | review |

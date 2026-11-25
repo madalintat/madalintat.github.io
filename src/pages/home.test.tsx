@@ -9,8 +9,8 @@ const html = renderToString(<MemoryRouter><Home /></MemoryRouter>);
 const text = html.replace(/<[^>]+>/g, " ");
 
 test("the dive runs from the sky to the floor, in order, each scene with its depth", () => {
-  expect(SCENES.map((l) => l.id)).toEqual(["sky", "harbour", "ships", "surface", "whales", "bench", "lab", "notebook", "garden"]);
-  const shown = SCENES.filter((l) => !["harbour", "bench", "notebook"].includes(l.id)); // beats inside the sky, the whales and the lab
+  expect(SCENES.map((l) => l.id)).toEqual(["sky", "harbour", "ships", "surface", "whales", "bench", "lab", "garden"]);
+  const shown = SCENES.filter((l) => !["harbour", "bench"].includes(l.id)); // beats inside the sky, the whales and the lab
   const at = shown.map((l) => html.indexOf(`id="${l.id}"`));
   expect(at.every((x, i) => x > 0 && (i === 0 || x > at[i - 1]))).toBe(true);
   for (const l of shown) expect(html).toMatch(new RegExp(`id="${l.id}"[^>]*data-m="${l.m}"`));
@@ -24,7 +24,7 @@ test("every picture the page asks for is in public/", () => {
 
 test("the page opens on the name, and the proof is on it", () => {
   expect(html).toMatch(/<h1[^>]*>mădălin tatarciuc<\/h1>/);
-  for (const s of ["5.69%", "of 182 strikes found", "105 experiments"]) expect(text).toContain(s); // the proof lives in the stories below
+  for (const s of ["5.69%", "of 182 strikes found", "nothing is published or sent before you approve it"]) expect(text).toContain(s); // the proof lives in the stories below
 });
 
 test("titles are lowercase, copy has no em dash, no commit counts, no stale or retracted numbers", () => {
@@ -49,4 +49,12 @@ test("a phone's sheets open only when asked: none in the prerendered page, and e
   for (const w of ways) expect(w).toContain('aria-haspopup="dialog"');
   // the rows the sheet shows are on the page too, for a desktop and for no javascript
   expect(html.match(/class="ip-facts"/g)!.length).toBe(html.match(/class="ip-more"/g)!.length);
+});
+
+test("I step aside only from words that are really on me: the name far below me in the sky does not hide me", async () => {
+  const { overlaps } = await import("./Home");
+  const me = { top: 62, bottom: 160, left: 290, right: 384 };
+  expect(overlaps({ top: 300, bottom: 900, left: 20, right: 370 }, me)).toBe(false); // the hero, under me
+  expect(overlaps({ top: 120, bottom: 200, left: 20, right: 370 }, me)).toBe(true);
+  expect(overlaps({ top: 0, bottom: 0, left: 0, right: 400 }, me)).toBe(false);
 });

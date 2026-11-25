@@ -37,21 +37,11 @@
 .sea-under .st-stage { background: linear-gradient(rgba(7, 9, 15, 0.84), rgba(7, 9, 15, 0.9)), var(--plate) center / cover no-repeat; }
 .sea-under.deep .st-stage { background: linear-gradient(rgba(7, 12, 18, 0.7), rgba(7, 12, 18, 0.86)), var(--plate) center / cover no-repeat; }
 
-/* the gauge */
-.gauge { position: fixed; left: clamp(10px, 1.6vw, 24px); top: 50%; transform: translateY(-50%); z-index: 15; display: flex; flex-direction: column; gap: 10px; font: var(--size-tag)/1 var(--font-mono); color: var(--soft); mix-blend-mode: difference; }
-.gauge .val { color: #f7f5f0; font-size: 13px; }
-.gauge .rail { --g: 0; width: 1px; height: 160px; background: rgba(247, 245, 240, 0.3); position: relative; }
-.gauge .rail i { position: absolute; left: -3px; top: calc(var(--g) * 100%); width: 7px; height: 1px; background: #f7f5f0; }
-.gauge .name { letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247, 245, 240, 0.7); }
-
 @media (max-width: 720px) {
   .frame, .fleet, .pod { width: max(100%, 100svh * 0.5581); aspect-ratio: 768 / 1376; }
   .fleet { --hz: 73.5%; }
   .ship figcaption { display: none; } /* the list above already names each ship */
   .sea-caps { top: 84px; }
-  .gauge { top: auto; bottom: 12px; transform: none; flex-direction: row; align-items: center; }
-  .gauge .rail { width: 70px; height: 1px; }
-  .gauge .rail i { top: -3px; left: calc(var(--g) * 100%); width: 1px; height: 7px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ship img, .swim, .cloud, .far { animation: none !important; }
@@ -93,16 +83,24 @@
 .me-sprite { width: 100%; pointer-events: auto; cursor: pointer; transition: opacity 0.26s, transform 0.26s, filter 0.3s; filter: drop-shadow(0 14px 18px rgba(7, 12, 18, 0.28)); }
 .me.out .me-sprite { opacity: 0; transform: translateY(-36px) scale(0.92) rotate(-4deg); }
 .me.in .me-sprite { opacity: 0; transform: translateY(36px) scale(0.94); transition: none; }
+/* words or a chart a story brings onto me: I step out until they are gone */
+.me.yield .me-sprite { opacity: 0; transform: translateY(16px) scale(0.96); pointer-events: none; }
 .me.acting .me-sprite { filter: drop-shadow(0 14px 18px rgba(7, 12, 18, 0.28)) drop-shadow(0 0 22px rgba(255, 215, 168, 0.35)); }
 @keyframes breathe { 50% { translate: 0 -1.2%; } }
 /* where I am in each scene: left, top, how wide */
 .me[data-pose="me-float"]   { --mx: 74; --my: 46; --mw: 11vw; }
 /* from filming to scuba every pose and every move between them is the full video frame (one shared crop), so each
-   move ends exactly where the next pose begins; the widths are the frame's, the figure fills about half of it */
-.me:is([data-pose="me-kendo"], [data-pose="me-record"]) { --mx: 75; --my: 71; --mw: 18vw; }
-.me[data-pose="me-boat-cap"], .me[data-pose="me-boat-ready"] { --mx: 34; --my: 55; --mw: 28vw; }
-.me[data-pose="me-dive"]    { --mx: 30; --my: 28; --mw: 30vw; }
-.me[data-pose="me-scuba"]   { --mx: 63; --my: 66; --mw: 19vw; }
+   move ends exactly where the next pose begins. One width for the whole chain, so I never grow or shrink mid-move;
+   only my place changes from scene to scene, and that slides */
+.me:is([data-pose="me-kendo"], [data-pose="me-record"], [data-pose^="me-seiza"], [data-pose="me-dressed"], [data-pose^="me-boat"], [data-pose="me-dive"], [data-pose="me-scuba"]) { --mw: 24vw; }
+/* in the dojo I kneel on its floor (.ip-floor, story.css: its top 88.5% down), under the match and clear of the words.
+   my frame is 24vw wide, so 13.36vw tall, and my knees are 93.2% down it: the frame's top is the floor less 12.45vw */
+@media (min-width: 721px) {
+  .me:is([data-pose="me-kendo"], [data-pose="me-record"], [data-pose^="me-seiza"], [data-pose="me-dressed"]) { --mx: 58; transform: translate3d(58vw, calc(88.5svh - 12.45vw), 0); }
+}
+.me[data-pose^="me-boat"] { --mx: 34; --my: 52; }
+.me[data-pose="me-dive"]    { --mx: 30; --my: 30; }
+.me[data-pose="me-scuba"]   { --mx: 60; --my: 70; }
 .me[data-pose="me-hammock-orchard"] { --mx: 54; --my: 50; --mw: 28vw; }
 
 /* ---------- the whales, swimming through ---------- */
@@ -126,8 +124,6 @@
 @media (max-width: 720px) {
   /* I stand at the bottom; a closed sheet lifts me onto it (Home sets --lift). My size changes only while I am unseen */
   .me { left: auto; right: 2vw; top: auto; bottom: calc(10px + env(safe-area-inset-bottom)); width: var(--pw, 46vw) !important; transform: translate3d(0, calc(-1 * var(--lift, 0px)), 0); transition: transform 0.45s var(--ease); }
-  /* words a story brings down to me: I step out until they are gone */
-  .me.yield .me-sprite { opacity: 0; transform: translateY(16px) scale(0.96); pointer-events: none; }
   .swim-doina { width: 120%; } .swim-tudor { width: 80%; } .swim-radu { width: 66%; }
   .sea-sky .sea-caps .hero { margin-top: -18svh; }
 }
@@ -196,7 +192,6 @@
   .card-stats { grid-template-columns: 1fr 1fr; margin-top: 14px; }
   .card-links { margin-top: 14px; }
   .card .btn { height: 42px; }
-  .gauge { display: none; }
 }
 
 .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -224,14 +219,18 @@
 /* the lab's groups: feet on the floor line, the group's own loop (talking, gesturing) */
 /* placed by depth: the far ones stand by the wall and the window, smaller; the near ones on the front of the floor */
 .group { position: absolute; z-index: 2; }
-.group.agents-talk-1 { left: 40%; bottom: 12%; width: 9%; }
-.group.agents-board { left: 64%; bottom: 11%; width: 10.5%; }
+/* each group stands on the floor: a soft shadow where its feet meet it, so nobody hangs pasted on the painting */
+/* deslop-ignore-next-line 06 19: a contact shadow on the floor (an ellipse), not a gradient for atmosphere */
+.group::before { content: ""; position: absolute; z-index: -1; left: 4%; right: 4%; bottom: -2.5%; height: 7%; border-radius: 50%; background: radial-gradient(closest-side, rgba(28, 20, 12, 0.42), rgba(28, 20, 12, 0)); }
+.group.agents-talk-1 { left: 40%; bottom: 5%; width: 10%; }
+.group.agents-board { left: 63%; bottom: 4%; width: 11%; }
 .group.agents-talk-2 { left: 50%; bottom: 2%; width: 16%; z-index: 3; }
 .group.me-with-agents { left: 79%; bottom: 0; width: 15%; z-index: 3; }
 @media (max-width: 720px) {
   .group.agents-talk-1, .group.agents-talk-2 { display: none; }
-  .group.agents-board { left: 54%; bottom: 23%; width: 27%; }
-  .group.me-with-agents { left: 8%; bottom: 17%; width: 44%; }
+  /* both groups stand on the painting's floor, where it meets the wall (78% down): the same ground, the same line */
+  .group.agents-board { left: 56%; bottom: 20%; width: 25%; }
+  .group.me-with-agents { left: 8%; bottom: 20%; width: 42%; }
 }
 
 /* the orchard: fireflies drifting and blinking */
@@ -287,15 +286,28 @@
 @media (max-width: 720px) { .sea-fade { height: 38svh; } }
 .sea-fade.to-day { background: linear-gradient(#0a0c12, #2a2f3a 30%, #b9b2a8 75%, #e0d9ce); }
 .sea-fade.to-lab { background: linear-gradient(#0a0f14, #1f3a46 40%, #9fb0b0 78%, #e4e0d7); }
+/* the lab's warm floor to the garden's dusk: the walk home */
+.sea-fade.to-garden { height: 90svh; background: linear-gradient(#a98a6d, #6f6a63 45%, #415362); overflow: hidden; }
+/* the path home at dusk, and me walking it: drawn in the band, so my feet stay on the ground as it scrolls */
+.to-garden .path { position: absolute; inset: auto 0 0 0; height: 22%; background: linear-gradient(#3a4651, #2c363f); box-shadow: 0 -1px 0 rgba(255, 236, 210, 0.18); }
+/* deslop-ignore-next-line 26: a walk across the band, not a hover; transform only */
+.to-garden .walker { position: absolute; bottom: 19%; left: 0; height: 34%; aspect-ratio: 208 / 400; animation: walk-by 26s linear infinite; }
+.to-garden .walker .sprite { height: 100%; width: auto; }
+/* deslop-ignore-next-line 06 19: the same contact shadow, under my feet on the path */
+.to-garden .walker::before { content: ""; position: absolute; z-index: -1; left: 10%; right: 10%; bottom: -3%; height: 6%; border-radius: 50%; background: radial-gradient(closest-side, rgba(10, 14, 18, 0.5), rgba(10, 14, 18, 0)); }
+@keyframes walk-by { from { transform: translateX(-30vw); } to { transform: translateX(110vw); } }
+@media (max-width: 720px) { .sea-fade.to-garden { height: 64svh; } .to-garden .walker { height: 32%; animation-duration: 16s; } }
+@media (prefers-reduced-motion: reduce) { .to-garden .walker { animation: none; transform: translateX(40vw); } }
 /* me, swimming past the lab's window on my way in */
-.far-diver { top: 52%; width: 16%; animation-duration: 34s; animation-delay: -6s; opacity: 1; filter: saturate(0.85) brightness(0.8); }
 /* the hammock between the two apple trees, tied to their trunks */
 .hammock { position: absolute; left: 61.4%; top: 56.8%; width: 16.6%; }
 @media (max-width: 720px) {
   .hammock { left: 23%; top: 66%; width: 46%; }
   /* from the armour to the scuba every pose shares one size, as their moves share one frame, so each move ends exactly
      where the next pose begins: filming at the foot of the clips, then the boat, the dive, the scuba */
-  .me:is([data-pose="me-kendo"], [data-pose="me-record"], [data-pose="me-boat-cap"], [data-pose="me-boat-ready"], [data-pose="me-dive"], [data-pose="me-scuba"]) { --pw: 78vw; }
+  .me:is([data-pose="me-kendo"], [data-pose="me-record"], [data-pose^="me-seiza"], [data-pose="me-dressed"], [data-pose="me-boat-cap"], [data-pose="me-boat-ready"], [data-pose="me-dive"], [data-pose="me-scuba"]) { --pw: 78vw; }
+  /* the dojo floor is the bottom 9% (story.css); 78vw wide, my knees sit 2.95vw above my frame's bottom */
+  .me:is([data-pose="me-kendo"], [data-pose="me-record"], [data-pose^="me-seiza"], [data-pose="me-dressed"]) { bottom: calc(9svh - 2.95vw); }
 }
 
 @media (max-width: 720px) {
@@ -303,14 +315,6 @@
   .window { left: 14.5%; top: 31.5%; width: 72%; height: 39%; }
 }
 
-/* phones: the gauge becomes a chip in the empty top-left corner, level with the links, naming where you are */
-@media (max-width: 720px) {
-  .gauge { display: flex !important; position: fixed; left: 16px; top: 17px; bottom: auto; transform: none; mix-blend-mode: normal; flex-direction: row; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border-radius: 8px; background: #f7f5f0; border: 1px solid rgba(17, 19, 24, 0.12); box-shadow: 0 6px 18px rgba(7, 12, 18, 0.18); color: #454c5c; }
-  .gauge .rail { display: none; }
-  .gauge .val { display: none; } /* the metres stay on desktop: a phone has room only for the name beside the links */
-  .gauge .name { color: #111318; letter-spacing: 0.08em; font-size: 11px; white-space: nowrap; }
-}
-@media (max-width: 380px) { .gauge { left: 12px; padding: 0 9px; } .gauge .name { letter-spacing: 0.04em; } }
 /* phones, with motion: a story's words fade as its stage lets go, instead of scrolling up under the top bar */
 @media (max-width: 720px) and (prefers-reduced-motion: no-preference) {
   .st .st-caps, .st .st-screen { transition: opacity 0.3s; }
