@@ -32,13 +32,15 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let pose = root.dataset.pose ?? "me-float", busy = false, sp: Sprite | null = null, timer = 0;
   if (sheets[pose]) sp = sprite(el, sheets[pose]);
-  // the cloud rests on its first frame, which is empty (fps 0 holds it there), and plays through once for a change
+  // the cloud rests on its first frame, which is empty (fps 0 holds it there), and plays through once for a change.
+  // It is made the first time it is needed, so its sheet is not part of the page's first load
   const bubbles = sheets.bubbles, cloudEl = root.querySelector<HTMLElement>(".me-bubbles");
-  const cloud = bubbles && cloudEl ? sprite(cloudEl, { ...bubbles, fps: 0 }) : null;
+  let cloudSp: Sprite | null = null;
+  const cloud = () => (cloudSp ??= bubbles && cloudEl ? sprite(cloudEl, { ...bubbles, fps: 0 }) : null);
   const coverMs = bubbles ? (COVER_FRAME * 1000) / bubbles.fps : 0;
   // a cloud's ticket and start: a later change rides the cloud already playing if it has not thinned out yet
   let puff = 0, puffAt = -Infinity;
-  const clear = () => { puff++; puffAt = -Infinity; if (cloud && bubbles) cloud.swap({ ...bubbles, fps: 0 }); };
+  const clear = () => { puff++; puffAt = -Infinity; if (cloudSp && bubbles) cloudSp.swap({ ...bubbles, fps: 0 }); };
 
   const route = (a: string, b: string) => routeOf(Object.keys(sheets), a, b);
   // a run of moves plays one after another; a new pose voids the run (its ticket) wherever it has got to
@@ -70,6 +72,8 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
     if (entry && pose === "hidden" && sheets[entry] && !reduce) set(entry);
     const from = pose; pose = next;
     // what this pose may do next loads now: its reaction, and the first step of every move out of it
+    // past the sky the cloud may be needed at any change: its sheet loads now, in the background
+    if (bubbles && next !== "me-float") preload(bubbles);
     preload(sheets[next], ...[REACT[next], ...Object.keys(sheets).filter((k) => k.startsWith(`${next}-to-`))].filter((k) => k && sheets[k]).map((k) => sheets[k]));
     settle();
     // back from hidden: already unseen, so I take my new place and come in there
@@ -87,10 +91,11 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
       place(from);
     }
     // no clip for it: the bubbles, and the pose and place change under their thickest
-    if (!cloud) { place(next); sp.swap(sheets[next]); return; }
+    const c = cloud();
+    if (!c) { place(next); sp.swap(sheets[next]); return; }
     moving = true;
     const since = performance.now() - puffAt;
-    if (since >= coverMs) { const c = ++puff; puffAt = performance.now(); cloud.react(bubbles!, () => { if (c === puff) moving = false; }); }
+    if (since >= coverMs) { const ticket = ++puff; puffAt = performance.now(); c.react(bubbles!, () => { if (ticket === puff) moving = false; }); }
     timer = window.setTimeout(() => { if (sheets[pose]) { place(pose); sp!.swap(sheets[pose]); } }, since < coverMs ? coverMs - since : coverMs);
   };
 
@@ -111,5 +116,5 @@ export function startCompanion(root: HTMLElement, sheets: Sheets) {
   el.addEventListener("pointerenter", touch);
   el.addEventListener("click", touch);
   addEventListener("pointermove", near, { passive: true });
-  return { set, stop() { sp?.stop(); cloud?.stop(); clearTimeout(timer); clearInterval(idle); removeEventListener("pointermove", near); } };
+  return { set, stop() { sp?.stop(); cloudSp?.stop(); clearTimeout(timer); clearInterval(idle); removeEventListener("pointermove", near); } };
 }

@@ -9,10 +9,14 @@
    Two kinds:
      .st         pinned: the scroll is the clock, one screen of scroll a beat; [data-beat] captions change with it
      .st-play    played on the clock once half of it is on screen, data-beats long, held at its end
+   A pinned story follows the scroll a little behind, easing to it over about a tenth of a second, so a wheel's
+   100px steps play as one glide instead of jumps; the scroll itself is never taken over.
    With less motion asked for, every story is drawn at its end. One loop, only while a story is on screen. */
 import { sceneProgress } from "../world/progress";
 
 const clamp = (x: number, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+// how quickly a pinned story catches up with the scroll: the gap closes by 1 - e^(-dt/EASE_MS) each frame
+const EASE_MS = 90;
 
 type Part = { el: HTMLElement; at: number; to: number | null; text: string | null; num: number | null; unit: string; dec: number; on: boolean | null; t: number; n: string };
 
@@ -60,7 +64,8 @@ export function startStories(): () => void {
     root.style.setProperty("--beats", String(beats));
     return { root, caps, beats, list: parts(root), bar: root.querySelector<HTMLElement>(".st-bar"), cur: -1, u: -1, seen: false, stage: "" };
   });
-  const paint = (s: (typeof pinned)[number], force = false) => {
+  /** Draws a story at the scroll; eased, it moves only part of the way there and says whether it has arrived. */
+  const paint = (s: (typeof pinned)[number], force = false, k = 1): boolean => {
     let u = s.beats;
     if (!reduce) {
       const r = s.root.getBoundingClientRect();
@@ -70,16 +75,27 @@ export function startStories(): () => void {
       const stage = r.top > 1 ? "before" : r.bottom < innerHeight - 1 ? "past" : "held";
       if (stage !== s.stage) { s.stage = stage; s.root.dataset.stage = stage; }
     }
-    if (!force && Math.abs(u - s.u) < 0.0005) return;
-    s.u = u;
+    if (!force && Math.abs(u - s.u) < 0.0005) return true;
+    // a jump of more than a beat (a link to a chapter, coming back to a story) is taken at once, not played through
+    const arrived = force || k >= 1 || s.u < 0 || Math.abs(u - s.u) < 0.002 || Math.abs(u - s.u) > 1;
+    u = s.u = arrived ? u : s.u + (u - s.u) * k;
     draw(s.list, u);
     const cur = Math.min(s.beats - 1, Math.floor(u));
     if (cur !== s.cur) { s.cur = cur; s.caps.forEach((c, i) => c.classList.toggle("on", i === cur)); s.root.dataset.cur = String(cur); }
     if (s.bar) s.bar.style.transform = `scaleX(${(u / s.beats).toFixed(4)})`;
+    return arrived;
   };
   if (pinned.length) {
-    let ticking = 0;
-    const frame = () => { ticking = 0; for (const s of pinned) if (s.seen || reduce) paint(s); };
+    let ticking = 0, last = 0;
+    const frame = (now: number) => {
+      ticking = 0;
+      // the first frame after a rest eases as one 60th of a second, not as the whole rest
+      const k = reduce ? 1 : 1 - Math.exp(-Math.min(50, last ? now - last : 16) / EASE_MS);
+      let busy = false;
+      for (const s of pinned) if ((s.seen || reduce) && !paint(s, false, k)) busy = true;
+      last = busy ? now : 0;
+      if (busy) ticking = requestAnimationFrame(frame);
+    };
     const ask = () => { if (!ticking) ticking = requestAnimationFrame(frame); };
     const io = new IntersectionObserver((es) => { for (const e of es) pinned.find((s) => s.root === e.target)!.seen = e.isIntersecting; ask(); }, { rootMargin: "200px 0px" });
     pinned.forEach((s) => io.observe(s.root));
