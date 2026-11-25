@@ -9,7 +9,7 @@ import { SCENES, EMAIL } from "./content/world";
 export const SITE = "https://cetusian.com";
 type Meta = { title: string; description: string };
 
-const HOME: Meta = { title: "mădălin tatarciuc · applied ai researcher and builder", description: "i train small ai models and ship the products around them: ipporu, the home of kendo and the models that watch it; romanian speech models that beat whisper large-v3 at 14 times smaller; superstarling, an ai team for your business and your life." };
+const HOME: Meta = { title: "mădălin tatarciuc · applied ai researcher and engineer", description: "i train small ai models and ship the products around them: ipporu, the home of kendo and the models that watch it; romanian speech models that beat whisper large-v3 at 14 times smaller; superstarling, an ai team for your business and your life." };
 
 export function routes(): Record<string, Meta> {
   const r: Record<string, Meta> = { "/": HOME };
@@ -65,7 +65,7 @@ export function head(url: string, m: Meta) {
     `<meta name="theme-color" content="#07090f" />`,
     `<meta property="og:type" content="${url === "/" ? "profile" : "article"}" />`,
     `<meta property="og:site_name" content="Mădălin Tatarciuc" />`,
-    `<meta property="og:image:alt" content="Mădălin Tatarciuc, applied ai researcher and builder" />`,
+    `<meta property="og:image:alt" content="Mădălin Tatarciuc, applied ai researcher and engineer" />`,
     `<meta name="twitter:title" content="${esc(m.title)}" />`,
     `<meta name="twitter:description" content="${esc(m.description)}" />`,
     `<meta name="twitter:creator" content="@cetusian" />`,

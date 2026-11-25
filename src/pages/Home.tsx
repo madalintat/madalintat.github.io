@@ -54,10 +54,10 @@ const CLOUDS = [
 // what is on this page, in one glance under the name: each line jumps to its chapter (a beat inside a pinned story
 // is one screen of scroll from the story's top)
 const INDEX: { to: string; beat?: number; icon: Icon; name: string; what: string }[] = [
-  { to: "sky", beat: 2, icon: "ipporu", name: "ipporu", what: "the home of kendo, and the models that watch it" },
-  { to: "ships", icon: "github", name: "surogate", what: "open source ai agents, from the gpu to the phone call" },
-  { to: "whales", icon: "hf", name: "speech models", what: "romanian speech that runs on a laptop" },
-  { to: "lab", icon: "superstarling", name: "superstarling", what: "an ai team for your business and your life" },
+  { to: "sky", beat: 2, icon: "ipporu", name: "ipporu", what: "a kendo platform, and video models i trained to referee a match" },
+  { to: "ships", icon: "github", name: "surogate", what: "my job at invergent: ai agents that take calls in romanian" },
+  { to: "whales", icon: "hf", name: "speech models", what: "romanian speech recognition, better than whisper at 14x smaller" },
+  { to: "lab", icon: "superstarling", name: "superstarling", what: "my company: ten ai agents that market a small business" },
 ];
 function go(id: string, beat = 0) {
   const el = document.getElementById(id);

@@ -59,7 +59,7 @@
 .sea-sky .sea-caps li { --ink: #f7f5f0; --body: #e3ded6; --soft: rgba(247, 245, 240, 0.75); --line: rgba(247, 245, 240, 0.2); }
 .sea-sky .sea-caps .hero { --ink: #111318; --body: #2b3140; --soft: #454c5c; place-self: center; text-align: center; max-width: 880px; padding: 0 20px; margin-top: -6svh; }
 .sea-sky .sea-caps .hero h1 { max-width: none; font-size: clamp(46px, 7.6vw, 118px); margin-top: 10px; }
-.sea-sky .sea-caps .hero .sea-line { margin: 14px auto 0; max-width: 30ch; font-size: clamp(17px, 1.6vw, 22px); }
+.sea-sky .sea-caps .hero .sea-line { margin: 14px auto 0; max-width: 40ch; text-wrap: balance; font-size: clamp(17px, 1.6vw, 22px); }
 /* the scroll hint: a hairline with a drop sliding down it */
 .cue { position: relative; display: block; width: 1px; height: 64px; margin: 40px auto 0; background: rgba(17, 19, 24, 0.18); overflow: hidden; }
 .cue::after { content: ""; position: absolute; left: -1px; top: -12px; width: 3px; height: 12px; border-radius: 2px; background: #e0563a; animation: cue 2.2s cubic-bezier(.6, 0, .3, 1) infinite; }
@@ -143,7 +143,7 @@
 .gulls { position: absolute; inset: 0 0 35% 0; width: 100%; height: 65%; z-index: 2; pointer-events: none; }
 
 /* ---------- the cards: a scene's words on a solid surface, readable over any painting ---------- */
-.hero-kind { font: 500 15px var(--font-sans); color: #454c5c; }
+.hero-kind { font: 500 15px var(--font-sans); color: #454c5c; text-wrap: balance; }
 .card { width: min(480px, calc(100vw - 32px)); max-height: calc(100svh - 112px); overflow-y: auto; scrollbar-width: none; background: #f7f5f0; color: #111318; border: 1px solid rgba(17, 19, 24, 0.1); border-radius: 8px; padding: 22px 22px 20px; box-shadow: 0 18px 40px rgba(7, 12, 18, 0.28); text-shadow: none; }
 .card-kind { display: flex; align-items: center; gap: 8px; font: 500 13px var(--font-sans); color: #454c5c; }
 .card .ico { width: 18px; height: 18px; flex: none; }
@@ -245,7 +245,7 @@
 ::selection { background: #111318; color: #f7f5f0; }
 
 /* the index under the name: four plain lines, what each thing is, each one a jump to its chapter */
-.hero-index { margin: 28px auto 0; display: grid; gap: 6px; width: min(560px, 100%); text-align: left; }
+.hero-index { margin: 28px auto 0; display: grid; gap: 6px; width: min(660px, 100%); text-align: left; }
 .hero-index a { display: grid; grid-template-columns: 18px 128px 1fr; align-items: center; gap: 10px; padding: 9px 14px; border-radius: 8px; background: #f7f5f0; border: 1px solid rgba(17, 19, 24, 0.1); color: #111318; text-decoration: none; font: 400 14.5px/1.35 var(--font-sans); box-shadow: 0 4px 14px rgba(7, 12, 18, 0.08); transition: border-color 0.15s, background 0.15s, transform 0.2s var(--ease); }
 .hero-index a:hover { border-color: rgba(17, 19, 24, 0.32); background: #fff; }
 .hero-index .ico { width: 18px; height: 18px; }

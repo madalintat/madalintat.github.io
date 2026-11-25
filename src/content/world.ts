@@ -15,9 +15,9 @@ export const EMAIL = "madalintat@gmail.com";
 export const SCENES: Scene[] = [
   {
     id: "sky", m: 3000, name: "sky",
-    tag: "applied ai researcher · builder · romania",
+    tag: "ai researcher and engineer · romania · remote",
     title: "mădălin tatarciuc",
-    line: "i train small ai models that do one job well, and build the products around them.",
+    line: "i train small ai models that do one job well, and build the products that put them to work.",
     facts: [], links: [],
   },
   {
@@ -26,8 +26,8 @@ export const SCENES: Scene[] = [
     title: "ipporu: the home of kendo, and the models that watch it",
     line: "every kendoka gets a record and a film room. underneath, video models i trained to watch a match the way a referee does: the strike, the flags, the ippon.",
     facts: [
+      { k: "177", text: "matches where the engine's ippons agree with the official record" },
       { k: "433", text: "kendoka with an account" },
-      { k: "1,746", text: "following ipporu on instagram" },
     ],
     built: "i built the site and every kendoka's record, and trained the video models that run under it.",
     shots: [{ src: "/work/shots/ipporu-home.webp", alt: "ipporu.com, the home of kendo" }, { src: "/work/shots/ipporu-record.webp", alt: "a kendoka's page on ipporu: every match and who scored each ippon" }],
@@ -37,7 +37,7 @@ export const SCENES: Scene[] = [
     id: "ships", m: 0, name: "the fleet", icon: "github",
     tag: "surogate · my job at invergent",
     title: "surogate: ai agents, from the gpu to the phone call",
-    line: "invergent's open source stack for ai agents a company runs itself: it trains and serves the models, and runs the agents on top. i started on the gpus, with a training dashboard and the romanian speech models, then built where an agent meets a customer: phone calls in romanian, discord, teams, whatsapp and a website chat, and a simulator where an ai plays the customer before the agent goes live.",
+    line: "at invergent i built the romanian speech models and the part where an ai agent meets a customer: phone calls in romanian, discord, teams, whatsapp and a website chat, and a simulator where an ai plays the customer before an agent goes live. surogate is invergent's open source stack that trains, serves and runs those agents.",
     facts: [
       { k: "training", text: "a terminal dashboard to launch, watch and compare runs on cloud gpus" },
       { k: "phone", text: "agents that answer and make calls in romanian, hearing with my speech model" },
@@ -89,8 +89,8 @@ export const SCENES: Scene[] = [
   },
   {
     id: "lab", m: -4000, name: "the lab", icon: "superstarling",
-    tag: "superstarling inc · my company",
-    title: "superstarling: an ai team for your business and your life",
+    tag: "superstarling inc · my company · in development",
+    title: "superstarling: ten ai agents that market a small business",
     line: "one ai team for the shop and for your own week. you ask once, \u201cget the night balm launch ready for thursday\u201d, and ten specialist agents write, design, plan and publish it on your pages and calendar. nothing goes out until you say yes.",
     facts: [
       { k: "you ask", text: "one sentence; starling splits it across the team" },

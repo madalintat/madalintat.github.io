@@ -19,14 +19,14 @@ export function startFlock(canvas: HTMLCanvasElement, opts: { count?: number; in
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
     const n = opts.count ?? (W < 720 ? 260 : 620);
-    while (birds.length < n) birds.push({ x: W * (0.45 + rnd() * 0.25), y: H * (W < 720 ? 0.5 + rnd() * 0.12 : 0.12 + rnd() * 0.25), vx: (rnd() - 0.5) * 2, vy: (rnd() - 0.5), z: 0.45 + rnd() * 0.55, ph: rnd() * 6.28 });
+    while (birds.length < n) birds.push({ x: W * (W < 720 ? 0.45 + rnd() * 0.25 : 0.06 + rnd() * 0.18), y: H * (W < 720 ? 0.76 + rnd() * 0.1 : 0.42 + rnd() * 0.16), vx: (rnd() - 0.5) * 2, vy: (rnd() - 0.5), z: 0.45 + rnd() * 0.55, ph: rnd() * 6.28 });
     birds.length = n;
   };
 
   const step = (t: number) => {
-    // the leader wanders a lazy figure of eight in the upper right of the sky
-    const ax = W * (W < 720 ? 0.35 : 0.72) + Math.sin(t * 0.00023) * W * (W < 720 ? 0.12 : 0.1);
-    const ay = H * (W < 720 ? 0.7 : 0.16) + Math.sin(t * 0.00041) * H * (W < 720 ? 0.05 : 0.06);
+    // the leader wanders a lazy figure of eight in open sky: on desktop left of the index, clear of my name
+    const ax = W * (W < 720 ? 0.35 : 0.15) + Math.sin(t * 0.00023) * W * (W < 720 ? 0.12 : 0.04);
+    const ay = H * (W < 720 ? 0.8 : 0.5) + Math.sin(t * 0.00041) * H * (W < 720 ? 0.03 : 0.05);
     const grid = new Map<number, Bird[]>();
     const key = (x: number, y: number) => Math.floor(x / 40) * 4096 + Math.floor(y / 40);
     for (const b of birds) { const k = key(b.x, b.y); const c = grid.get(k); if (c) c.push(b); else grid.set(k, [b]); }
