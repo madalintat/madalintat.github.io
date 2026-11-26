@@ -47,6 +47,7 @@ export const SCENES: Scene[] = [
     ],
     built: "the studio pages that set all of it up, the docs for it, and superstar, the team's workspace: people and agents plan and ship the week's posts in one place.",
     links: [
+      { label: "what i built there", href: "/work/surogates", icon: "play" },
       { label: "invergent-ai/surogates", href: "https://github.com/invergent-ai/surogates", icon: "github" },
       { label: "surogate.ai", href: "https://surogate.ai" },
     ],
@@ -63,6 +64,7 @@ export const SCENES: Scene[] = [
       { k: "real time", text: "amami speaking on a macbook air m3" },
     ],
     links: [
+      { label: "how they work", href: "/work/romanian-speech", icon: "play" },
       { label: "jackrabbit", href: "https://huggingface.co/surogate/jackrabbit-110m-ro", icon: "hf" },
       { label: "streaming", href: "https://huggingface.co/surogate/jackrabbit-110m-ro-streaming", icon: "hf" },
       { label: "amami voices", href: "https://huggingface.co/surogate/amami-357m-ro", icon: "hf" },
