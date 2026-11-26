@@ -5,6 +5,7 @@ import { Shell } from "../layout/Shell";
 import { Film } from "../components/Film";
 import { Chain, FIGURES } from "../figures/Chain";
 import { NotFound } from "./NotFound";
+import { Crew, Walk } from "../components/Walk";
 import type { Work } from "../content/types";
 import { IpporuDemo, type DemoData } from "../demo/IpporuDemo";
 import demo from "../../public/demo/all-japan-2024.json";
@@ -57,11 +58,12 @@ export function WorkPage() {
 
         {!film && numbers}
 
-        {w.slug === "ipporu" && <IpporuDemo src="/demo/all-japan-2024.mp4" poster="/demo/all-japan-2024.jpg" data={demo as DemoData} />}
+        {w.slug === "ipporu" && <IpporuDemo src="/demo/all-japan-2024.mp4" poster="/demo/all-japan-2024.jpg" data={demo as unknown as DemoData} />}
 
         <section>
           <h2>how it works</h2>
           {chain && <Chain title={chain.title} steps={chain.steps} />}
+          {w.walk && <Walk id={w.slug} walk={w.walk} />}
           {w.sections.map((s) => (
             <div key={s.heading} className="part">
               <h3>{s.heading}</h3>
@@ -69,6 +71,13 @@ export function WorkPage() {
             </div>
           ))}
         </section>
+
+        {w.crew && (
+          <section>
+            <h2>the team inside it</h2>
+            <Crew crew={w.crew} />
+          </section>
+        )}
 
         <section>
           <h2>what i did</h2>

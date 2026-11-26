@@ -7,7 +7,7 @@ const has = existsSync(D + "index.html");
 const read = (p) => readFileSync(D + p, "utf8");
 const ROUTES = {
   "": "mădălin tatarciuc",
-  "work/ipporu/": "ipporu", "work/romanian-speech/": "romanian speech", "work/superstarling/": "superstarling", "work/surogates/": "surogates",
+  "work/ipporu/": "ipporu", "work/romanian-speech/": "romanian speech", "work/superstarling/": "superstarling", "work/surogates/": "surogate at invergent",
   "notes/": "notes",
   "cv/": "Mădălin Tatarciuc",
 };

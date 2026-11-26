@@ -45,13 +45,14 @@ export const FIGURES: Record<string, { title: string; steps: Step[] }> = {
     ],
   },
   surogates: {
-    title: "one agent turn in surogates",
+    title: "the surogate loop. every step ships",
     steps: [
-      { name: "session", note: "durable, survives a restart", ships: true },
-      { name: "tool call", ships: true },
-      { name: "policy check", note: "before it runs", ships: true },
-      { name: "isolated run", ships: true },
-      { name: "result", note: "written back to the session", ships: true },
+      { name: "sessions", note: "become datasets", ships: true },
+      { name: "train", note: "small experts, on the engine", ships: true },
+      { name: "serve", note: "the models, and speech", ships: true },
+      { name: "surogates", note: "runs the agents", ships: true },
+      { name: "nine channels", note: "a phone call to web chat", ships: true },
+      { name: "studio", note: "sets up, bills, watches", ships: true },
     ],
   },
 };

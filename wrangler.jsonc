@@ -2,8 +2,12 @@
 {
   "name": "cetusian",
   "compatibility_date": "2026-11-01",
+  // only videos go through the worker, so they can answer byte ranges and seek
+  "main": "./src/worker/index.ts",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/demo/*", "/work/*.mp4", "/sea/*.mp4"],
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },

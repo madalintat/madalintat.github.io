@@ -1,10 +1,9 @@
 import { test, expect } from "vitest";
 import { renderToString } from "react-dom/server";
-import { IpporuDemo, clock } from "./IpporuDemo";
+import { IpporuDemo, clock, type DemoData } from "./IpporuDemo";
 import data from "../../public/demo/all-japan-2024.json";
-import type { DemoEvent } from "./events";
 
-const html = renderToString(<IpporuDemo src="/demo/a.mp4" poster="/demo/a.jpg" data={{ ...data, events: data.events as DemoEvent[] }} />);
+const html = renderToString(<IpporuDemo src="/demo/a.mp4" poster="/demo/a.jpg" data={data as unknown as DemoData} />);
 
 test("clock reads m:ss", () => {
   expect(clock(44.93)).toBe("0:44");
@@ -18,14 +17,18 @@ test("without js the page lists every event with its time", () => {
   expect(html).toContain("kote");
 });
 
-test("every event is a button named by what it shows: the time and the event", () => {
-  const buttons = html.match(/<button type="button"><time>[^<]+<\/time><span>[^<]+<\/span><\/button>/g) ?? [];
-  expect(buttons.length).toBe(data.events.length);
-  expect(html).not.toMatch(/aria-label="jump to/);
+test("one row per model, and a button for each ippon", () => {
+  for (const name of ["sound", "tracker", "pose", "strike finder", "flag reader", "ippon"]) expect(html).toContain(`<b>${name}</b>`);
+  expect(html.match(/>ippon <!-- -->\d/g)?.length).toBe(data.events.filter((e) => e.kind === "ippon").length);
 });
 
-test("never autoplays, credits the footage and says it is not held out", () => {
+test("the timeline is a slider a keyboard can reach", () => {
+  expect(html).toMatch(/role="slider" tabindex="0" aria-label="the match timeline"/);
+});
+
+test("never autoplays, has no native controls, credits the footage and says it is not held out", () => {
   expect(html).not.toContain("autoplay");
+  expect(html).not.toMatch(/<video[^>]*controls/);
   expect(html).toContain("public stream");
   expect(html).toContain("not a held-out match");
 });

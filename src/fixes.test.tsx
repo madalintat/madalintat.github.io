@@ -11,7 +11,7 @@ const at = (url: string) => renderToString(<StaticRouter location={url}><App /><
 
 test("the demo's video box and credit have their own classes, so home.css cannot restyle them", () => {
   const html = at("/work/ipporu");
-  expect(html).toContain('class="demo-stage"');
+  expect(html).toContain('class="rp-stage"');
   expect(html).toContain('class="demo-credit"');
   expect(css("./demo/demo.css")).not.toMatch(/^\.(stage|credit)\b/m);
 });

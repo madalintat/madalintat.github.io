@@ -13,5 +13,8 @@ export const sources: Source[] = [
   { id: "amami-downloads", text: "hugging face api, amami-357m-ro downloads", href: "https://huggingface.co/api/models/surogate/amami-357m-ro", date: "2026-11-24" },
   { id: "superstarling-readme", text: "superstarling readme", path: "~/superworkspace/README.md", date: "2026-11-23" },
   { id: "superstarling-code", text: "superstarling mcp endpoint", path: "~/superworkspace/apps/server/mcp", date: "2026-11-24" },
+  { id: "superstarling-agents", text: "superstarling agent briefs, one file per member", path: "~/superworkspace/catalogue/agents", date: "2026-11-26" },
+  { id: "superstarling-tests", text: "superstarling test files, server, web and browser service", path: "~/superworkspace", date: "2026-11-26" },
+  { id: "surogates-code", text: "invergent-ai/surogates, the channels and the fake chat servers", href: "https://github.com/invergent-ai/surogates", date: "2026-11-26" },
   { id: "surogates-prs", text: "invergent-ai/surogates, my merged pull requests", href: "https://github.com/invergent-ai/surogates/pulls?q=is%3Apr+is%3Amerged+author%3Amadalintat", date: "2026-11-24" },
 ];

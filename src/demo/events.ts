@@ -38,3 +38,14 @@ export function lastBefore(events: DemoEvent[], t: number, hold = 2): DemoEvent 
   for (const e of events) if (e.t <= t && t - e.t <= hold) best = e;
   return best;
 }
+
+// The moment after (dir 1) or before (dir -1) time t. Ties within 50 ms count as "here", so pressing again moves on.
+export function stepMoment(events: DemoEvent[], t: number, dir: 1 | -1): DemoEvent | undefined {
+  return dir === 1 ? events.find((e) => e.t > t + 0.05) : events.findLast((e) => e.t < t - 0.05);
+}
+
+// One vertical bar per sample in a 0..n by 0..1 box (y grows down), scaled to the loudest sample.
+export function waveBars(wave: number[], n = wave.length): string {
+  const top = Math.max(...wave, 1);
+  return wave.slice(0, n).map((v, i) => `M${i} 1V${+(1 - v / top).toFixed(3)}`).join("");
+}

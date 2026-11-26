@@ -10,6 +10,9 @@ export type Work = {
   numbers: Num[];
   links: { label: string; href: string }[];
   sections: { heading: string; body: string }[];
+  // a tabbed walk through the thing, one step at a time; `shot` is a screen, `mine` says which part of a team step is mine
+  walk?: { title: string; steps: { name: string; body: string; shot?: { src: string; alt: string; w: number; h: number }; mine?: string }[] };
+  crew?: { name: string; role: string; face: string }[];
   mine: string;
   limits: string[];
   next: { label: string; href: string };

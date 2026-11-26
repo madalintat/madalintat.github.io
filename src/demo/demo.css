@@ -1,40 +1,108 @@
 .demo { margin-top: 48px; padding-top: 12px; border-top: 1px solid var(--line); }
 .demo h2 { font-size: var(--size-small); font-weight: 500; color: var(--soft); }
-.demo header p { color: var(--soft); margin-top: 4px; max-width: 68ch; }
-
-.demo-stage { position: relative; margin-top: 16px; }
-.demo-stage video, .demo-stage img { display: block; width: 100%; border-radius: var(--radius); background: var(--surface); }
-.now { margin-top: 10px; padding: 2px 0 2px 10px; font-size: var(--size-small); color: var(--soft); white-space: pre; box-shadow: inset 2px 0 0 var(--line); }
-.now.strike, .now.ippon, .now.flag { color: var(--ink); }
-.now.aka { box-shadow: inset 3px 0 0 var(--aka); }
-.now.shiro { box-shadow: inset 3px 0 0 var(--ink); }
+.demo-head p { color: var(--body); margin-top: 6px; max-width: 72ch; }
 .demo-note { color: var(--soft); font-size: var(--size-small); margin-top: 8px; }
 
-.track { position: relative; height: 24px; margin-top: 12px; border-top: 1px solid var(--line); }
-.mark { /* deslop-ignore 19: a timeline dot is round */ position: absolute; top: 6px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--bg); }
-.mark.aka { background: var(--aka); border-color: var(--aka); }
-.mark.ippon { top: 2px; width: 4px; height: 18px; margin-left: -2px; border-radius: 1px; background: var(--accent); border-color: var(--accent); }
-.mark.flag { top: 16px; width: 6px; height: 6px; margin-left: -3px; border-radius: 1px; border-color: var(--soft); }
-.head { position: absolute; top: -1px; bottom: 0; width: 1px; background: var(--accent); }
-
-.layers { display: flex; gap: 8px; margin-top: 8px; }
-.layers button {
-  font: var(--size-small) var(--font-mono); color: var(--soft); background: none; cursor: pointer;
-  border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; min-height: 32px;
+/* the stage: the video with the engine's call written over it */
+.rp-stage { position: relative; margin-top: 16px; border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+.rp-stage video, .rp-stage img { display: block; width: 100%; aspect-ratio: 1128 / 520; cursor: pointer; }
+.rp-call {
+  position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 6px;
+  font: var(--size-small) var(--font-mono); color: var(--ink); background: var(--panel); box-shadow: inset 3px 0 0 var(--dim);
 }
-.layers button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); }
+.rp-call time { color: var(--soft); margin-right: 6px; }
+.rp-call.idle { color: var(--soft); }
+.rp-call.aka { box-shadow: inset 3px 0 0 var(--aka); }
+.rp-call.shiro { box-shadow: inset 3px 0 0 var(--ink); }
+.rp-ippon {
+  position: absolute; left: 12px; bottom: 12px; display: grid; justify-items: start; gap: 2px;
+  padding: 10px 22px 12px; border-radius: 8px; background: var(--panel); pointer-events: none;
+  animation: rp-ippon 3s var(--ease) both;
+}
+.rp-ippon b { font-size: clamp(24px, 3.6vw, 44px); font-weight: 600; letter-spacing: -0.02em; line-height: 1; color: var(--accent); }
+.rp-ippon span { font: var(--size-small) var(--font-mono); color: var(--ink); }
+@keyframes rp-ippon { 0% { opacity: 0; scale: 0.9; } 8%, 80% { opacity: 1; scale: 1; } 100% { opacity: 0; } }
+.rp-big {
+  /* deslop-ignore-next-line 19: a play button over a video is round */
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 64px; height: 64px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--ink); background: var(--panel); border: 1px solid var(--line); cursor: pointer;
+}
+.rp-big svg { width: 20px; height: 20px; margin-left: 3px; }
 
-.events { list-style: none; margin-top: 12px; columns: 2; column-gap: 32px; }
+/* the bar: play, time, call to call, and the two ippon */
+.rp-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 12px; font: var(--size-small) var(--font-mono); }
+.rp-bar button {
+  font: inherit; color: var(--body); background: none; border: 1px solid var(--line); border-radius: 6px;
+  min-height: 36px; padding: 0 12px; cursor: pointer;
+}
+.rp-bar button:hover { color: var(--ink); border-color: var(--soft); }
+.rp-play { display: grid; place-items: center; width: 40px; padding: 0; color: var(--ink); }
+.rp-time { color: var(--soft); font-variant-numeric: tabular-nums; }
+.rp-time b { color: var(--ink); font-weight: 500; }
+.rp-step, .rp-moments { display: flex; gap: 6px; }
+.rp-moments { margin-left: auto; }
+.rp-moments button { color: var(--ink); }
+.rp-moments button time { color: var(--accent); margin: 0 4px; }
+.rp-moments button.is-on { border-color: var(--accent); }
+
+/* the lanes: one model per row, the red line is now, what has not happened yet is dimmed */
+.rp-lanes { display: grid; grid-template-columns: 168px minmax(0, 1fr); margin-top: 14px; border-top: 1px solid var(--line); }
+.rp-names { list-style: none; }
+.rp-names li, .lane { height: 30px; border-bottom: 1px solid var(--line); }
+.rp-names li { display: flex; flex-direction: column; justify-content: center; padding-right: 10px; transition: color var(--t-out); }
+.rp-names b { font: 500 var(--size-tag) var(--font-mono); color: var(--body); line-height: 1.2; }
+.rp-names span { font-size: var(--size-tag); color: var(--dim); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rp-names li.lit b { color: var(--accent); }
+.rp-names li.lit span { color: var(--soft); }
+.rp-tracks { position: relative; cursor: ew-resize; touch-action: none; outline-offset: 2px; }
+.lane { position: relative; }
+.lane svg { position: absolute; inset: 4px 0; width: 100%; height: calc(100% - 8px); overflow: visible; }
+.lane.sound path { stroke: var(--soft); opacity: 0.5; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.lane.maai polyline { fill: none; stroke: var(--soft); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.lane i { position: absolute; top: 50%; translate: -50% -50%; }
+.crack { width: 1px; height: 16px; background: var(--soft); }
+.step { width: 3px; height: 14px; border-radius: 1px; background: var(--ink); }
+.step.aka { background: var(--aka); }
+.step.hiki { height: 7px; }
+.lane.strike .mark {
+  /* deslop-ignore-next-line 19: a timeline dot is round */
+  width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--bg);
+}
+.lane.strike .mark.aka { background: var(--aka); border-color: var(--aka); }
+.lane.flag .mark { width: 8px; height: 8px; border-radius: 1px; background: var(--ink); }
+.lane.ippon .mark {
+  display: grid; place-items: center; width: 18px; height: 20px; border-radius: 3px;
+  font: 600 var(--size-tag) var(--font-mono); color: var(--accent-ink); background: var(--accent); font-style: normal;
+}
+.rp-tracks .ahead { position: absolute; top: 0; bottom: 0; right: 0; background: var(--bg); opacity: 0.55; pointer-events: none; }
+.rp-tracks .head { position: absolute; top: -4px; bottom: 0; width: 2px; margin-left: -1px; background: var(--accent); pointer-events: none; }
+.rp-tracks .ghost { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--soft); pointer-events: none; }
+.rp-tracks .ghost time {
+  position: absolute; bottom: 100%; left: 0; translate: -50% -4px; padding: 1px 5px; border-radius: 4px;
+  font: var(--size-tag) var(--font-mono); color: var(--ink); background: var(--surface);
+}
+
+.rp-list { margin-top: 14px; }
+.rp-list summary { font-size: var(--size-small); color: var(--soft); cursor: pointer; min-height: 36px; display: flex; align-items: center; }
+.events { list-style: none; margin-top: 6px; columns: 2; column-gap: 32px; }
 .events li { break-inside: avoid; }
-.events li.off { display: none; }
 .events button {
-  display: flex; gap: 14px; width: 100%; min-height: 44px; align-items: center; padding: 0 8px;
+  display: flex; gap: 14px; width: 100%; min-height: 40px; align-items: center; padding: 0 8px;
   font: var(--size-small) var(--font-mono); color: var(--soft); background: none; border: 0; border-radius: 4px; cursor: pointer; text-align: left;
 }
 .events button:hover, .events .is-now button { background: var(--surface); color: var(--ink); }
 .events time { color: var(--ink); font-variant-numeric: tabular-nums; min-width: 3ch; }
 .events .aka time { box-shadow: inset 0 -2px 0 var(--aka); }
 .events .ippon span { color: var(--accent); }
-.demo-credit { margin-top: 16px; color: var(--soft); font-size: var(--size-small); max-width: 80ch; }
+.demo-credit { margin-top: 12px; color: var(--soft); font-size: var(--size-small); max-width: 80ch; }
 .demo-credit a { /* deslop-ignore 09: an underline on a real link */ text-decoration: underline; text-decoration-color: var(--line); }
-@media (max-width: 820px) { .events { columns: 1; } .layers button { min-height: 44px; } }
+
+@media (max-width: 820px) {
+  .rp-lanes { grid-template-columns: 106px minmax(0, 1fr); }
+  .rp-names b { white-space: nowrap; }
+  .rp-names span { display: none; }
+  .rp-moments { margin-left: 0; }
+  .rp-bar button { min-height: 44px; }
+  .events { columns: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .rp-ippon { animation: none; } }
