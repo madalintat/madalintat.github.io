@@ -45,7 +45,7 @@ export const SCENES: Scene[] = [
       { k: "channels", text: "discord, teams, whatsapp, telegram and a website widget" },
       { k: "simulate", text: "an ai plays the customer on every channel; a person can step in" },
     ],
-    built: "the studio pages that set all of it up, the docs for it, and superstar: the team's own workspace where people and agents run growth together.",
+    built: "the studio pages that set all of it up, the docs for it, and superstar, the team's workspace: people and agents plan and ship the week's posts in one place.",
     links: [
       { label: "invergent-ai/surogates", href: "https://github.com/invergent-ai/surogates", icon: "github" },
       { label: "surogate.ai", href: "https://surogate.ai" },
@@ -74,11 +74,11 @@ export const SCENES: Scene[] = [
     id: "bench", m: -1000, name: "the whales", icon: "hf",
     tag: "hugging face · small models, one job each",
     title: "small models, one job each",
-    line: "a wake word in 44k parameters, a 2b model that reads ledgers, an atlas that explains any idea offline. each small enough for a phone or a cpu.",
+    line: "a wake word in 44k parameters, a 2b model that reads ledgers, a 0.8b atlas that explains an idea offline, on a phone. each small enough for a phone or a cpu.",
     facts: [
       { k: "44k", text: "parameters in earshot, a wake word. 98.4% recall, no false wakes in 1.8 h" },
       { k: "14 of 14", text: "real ledgers read right by libra, a 2b model" },
-      { k: "0.8b", text: "pocket atlas explains any idea, offline" },
+      { k: "0.8b", text: "pocket atlas explains an idea offline, on a phone" },
       { k: "400k", text: "rows of chess training data, open" },
     ],
     links: [
